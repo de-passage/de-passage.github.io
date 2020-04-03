@@ -1,0 +1,27 @@
+{
+  "name": "de-passage.github.io",
+  "version": "1.0.0",
+  "description": "Personal website",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "parcel": "^1.12.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "spago test",
+    "dev": "spago build --watch & parcel index.html -p 8000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/de-passage/de-passage.github.io.git"
+  },
+  "author": "Sylvain Leclercq",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/de-passage/de-passage.github.io/issues"
+  },
+  "homepage": "https://github.com/de-passage/de-passage.github.io#readme"
+}
