@@ -1,8 +1,10 @@
 module Resume (component) where
 
 import Prelude
+
 import CSS (CSS)
 import CSS as CSS
+import Data.Newtype (class Newtype, unwrap)
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.CSS (style)
@@ -79,20 +81,30 @@ categoryTitleStyle = do
   CSS.color (CSS.rgb 33 37 41)
   CSS.textDecoration CSS.noneTextDecoration
 
+newtype ListItem w i = ListItem (HH.HTML w i)
+derive instance newtypeListItem :: Newtype (ListItem w i) _
+
+listGroup :: forall w i. Array (ListItem w i) -> HH.HTML w i
+listGroup = map unwrap >>> HH.ul [ HP.classes [ BS.listGroup, BS.listGroupFlush ] ]
+
+listItem :: forall w i. Array (HH.HTML w i) -> ListItem w i
+listItem = HH.li [ HP.class_ BS.listGroupItem ] >>> ListItem
+
+
 personalInformation :: forall w i. HH.HTML w i
 personalInformation =
   category "personal" "Personal Information"
-    [ HH.ul_
-        [ HH.li_ [ HH.text "Sylvain Leclercq" ]
-        , HH.li_ [ HH.text "contact@sylvainleclercq.com" ]
+    [ listGroup
+        [ listItem [ HH.text "Sylvain Leclercq" ]
+        , listItem [ HH.text "contact@sylvainleclercq.com" ]
         ]
     ]
 
 technicalSkills :: forall w i. HH.HTML w i
 technicalSkills =
   category "skills" "Technical skills"
-    [ HH.ul_
-        [ HH.li_ [ HH.text "Purescript" ]
-        , HH.li_ [ HH.text "HTML" ]
+    [ listGroup
+        [ listItem [ HH.text "Purescript" ]
+        , listItem [ HH.text "HTML" ]
         ]
     ]
