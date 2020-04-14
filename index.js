@@ -5,7 +5,6 @@ if (module.hot) {
     Array.from(document.querySelectorAll('body > div')).map(x => x.remove());
     require("./output/Main").main();
   });
-} else {
-  console.log('Starting app');
-  require("./output/Main").main();
 }
+console.log('Starting app');
+require("./output/Main").main();
