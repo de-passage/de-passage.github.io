@@ -123,6 +123,22 @@ let upstream =
 
 let overrides = {=}
 
-let additions = {=}
+let additions = { halogen-svg = 
+        { dependencies = 
+            [ "console"
+            , "effect"
+            , "halogen"
+            , "prelude"
+            , "psci-support"
+            , "strings"
+            , "web-uievents"
+            ]
+
+       , repo =
+           "https://github.com/FungusHumungus/purescript-halogen-svg.git"
+       , version =
+           "master"
+       }
+    }
 
 in  upstream // overrides // additions

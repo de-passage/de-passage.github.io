@@ -12,6 +12,7 @@ You can edit this file as you like.
   , "psci-support"
   , "web-dom"
   , "web-html"
+  , "halogen-svg"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
