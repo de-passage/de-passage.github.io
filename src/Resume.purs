@@ -64,7 +64,7 @@ component =
 render :: forall m. State -> H.ComponentHTML Action ChildSlots m
 render _ =
   let
-    personal = HH.div [ HP.classes [ BS.colMd4, BS.colSm5, BS.col12 ] ] [ personalInformation ]
+    personal = HH.div [ HP.classes [ BS.colMd4, BS.colSm5, BS.col12 ] ] [ personalInformation, languages ]
 
     skill = HH.div [ HP.classes [ BS.colMd8, BS.colSm7, BS.col12 ] ] [ technicalSkills ]
   in
@@ -82,7 +82,13 @@ globalStyle :: CSS
 globalStyle = do CSS.backgroundColor (CSS.rgb 240 240 240)
 
 category :: forall w i. String -> String -> Array (HH.HTML w i) -> HH.HTML w i
-category id title content =
+category = categoryB true
+
+categoryHidden :: forall w i. String -> String -> Array (HH.HTML w i) -> HH.HTML w i
+categoryHidden = categoryB false
+
+categoryB :: forall w i. Boolean -> String -> String -> Array (HH.HTML w i) -> HH.HTML w i
+categoryB b id title content =
   let
     collapseId = "collapse" <> id
   in
@@ -91,7 +97,7 @@ category id title content =
           [ collapseAttr
           , HP.href ("#" <> collapseId)
           , ARIA.role "button"
-          , ARIA.expanded "false"
+          , ARIA.expanded (if b then "true" else "false")
           , ARIA.controls collapseId
           , style categoryTitleStyle
           ]
@@ -100,7 +106,7 @@ category id title content =
               [ HH.text title ]
           ]
       , HH.div
-          [ HP.classes [ BS.collapse, BS.show ], HP.id_ collapseId ]
+          [ HP.classes (if b then [ BS.collapse, BS.show ] else [ BS.collapse ]), HP.id_ collapseId ]
           [ HH.div
               [ HP.classes [ BS.cardBody, BS.textCenter ] ]
               content
@@ -123,10 +129,13 @@ derive instance newtypeListItem :: Newtype (ListItem w i) _
 listGroup :: forall w i. Array (ListItem w i) -> HH.HTML w i
 listGroup = map unwrap >>> HH.ul [ HP.classes [ BS.listGroup, BS.listGroupFlush ] ]
 
+listGroupC :: forall w i. Array H.ClassName -> Array (ListItem w i) -> HH.HTML w i
+listGroupC classes = map unwrap >>> HH.ul [ HP.classes $ classes <> [ BS.listGroup, BS.listGroupFlush ] ]
+
 type AH w i
   = Array (HH.HTML w i)
 
-listItem props = HH.li (props `snoc` HP.class_ BS.listGroupItem) >>> ListItem
+listItem props = HH.li (props <> [HP.class_ BS.listGroupItem]) >>> ListItem
 
 listItem_ :: forall w i. Array (HH.HTML w i) -> ListItem w i
 listItem_ = listItem []
@@ -155,17 +164,16 @@ personalInformation =
     css = do
       CSS.display CSS.flex
       CSS.justifyContent CSS.spaceAround
-    
-    linkStyle = do 
+
+    linkStyle = do
       CSS.textDecoration CSS.noneTextDecoration
       CSS.color CSS.black
 
-    socialMedia r =
-        HH.a [ HP.title r.title, HP.href r.url, mkClass r.id, style linkStyle ] []
+    socialMedia r = HH.a [ HP.title r.title, HP.href r.url, mkClass r.id, style linkStyle ] []
   in
     category "personal" "Sylvain Leclercq"
       [ listGroup
-          [ listItem [style css] (map socialMedia medias)
+          [ listItem [ style css ] (map socialMedia medias)
           ]
       ]
 
@@ -233,4 +241,14 @@ technicalSkills =
             , (Tuple "html" S.html)
             , (Tuple "css" S.css)
             ]
+    ]
+
+languages :: forall w i. HH.HTML w i
+languages =
+  categoryHidden "languages" "Languages"
+    [ listGroupC [ BS.textLeft ]
+        [ listItem_ [ HH.text "French" ]
+        , listItem_ [ HH.text "English" ]
+        , listItem_ [ HH.text "Japanese" ]
+        ]
     ]
