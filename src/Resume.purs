@@ -6,6 +6,8 @@ import Assets as Assets
 import CSS (CSS)
 import CSS as CSS
 import CSS.Common (auto) as CSS
+import CSS.Overflow as CO
+import CSS.Text.Whitespace as CTW
 import Content.Skills as S
 import Data.Newtype (class Newtype, unwrap)
 import Data.Tuple (Tuple(..))
@@ -63,17 +65,23 @@ component =
 
 render :: forall m. State -> H.ComponentHTML Action ChildSlots m
 render _ =
-  HH.div [ HP.class_ BS.accordion ]
-    [ HH.div [ HP.class_ BS.cardDeck ] categories ]
+  let
+    personal = HH.div [ HP.classes [ BS.colMd4, BS.colSm , BS.col12 ] ] [ personalInformation ]
+
+    skill = HH.div [ HP.classes [ BS.colMd8, BS.colSm, BS.col12 ] ] [ technicalSkills ]
+  in
+    HH.div [ HP.class_ BS.container ]
+      [ HH.div [ HP.class_ BS.row ]
+          [ personal
+          , skill
+          ]
+      ]
 
 handleAction :: forall o m. Unit -> H.HalogenM State Action ChildSlots o m Unit
 handleAction _ = pure unit
 
 globalStyle :: CSS
 globalStyle = do CSS.backgroundColor (CSS.rgb 240 240 240)
-
-categories :: forall w i. Array (HH.HTML w i)
-categories = [ personalInformation, technicalSkills ]
 
 category :: forall w i. String -> String -> Array (HH.HTML w i) -> HH.HTML w i
 category id title content =
@@ -137,12 +145,12 @@ personalInformation =
   let
     socialMedia r = HH.a [ HP.title r.title, HP.href r.url ] [ Assets.icon r.id 4.0 ]
   in
-    category "personal" "Personal Information"
+    category "personal" "Sylvain Leclercq"
       [ listGroup
-          [ listItem [ HH.h3_ [ HH.text "Sylvain Leclercq" ] ]
-          , listItem
+          [ listItem
               [ HH.a
-                  [ HP.href "mailto:contact@sylvainleclercq.com", HP.class_ BS.fontWeightBold ]
+                  [ HP.href "mailto:contact@sylvainleclercq.com"
+                    , HP.class_ BS.fontWeightBold ]
                   [ HH.text "contact@sylvainleclercq.com" ]
               ]
           , listItem (map socialMedia medias)
@@ -150,19 +158,13 @@ personalInformation =
       ]
 
 mkSkillLink :: forall w i. String -> S.SkillDescription w i -> HH.HTML w i
-mkSkillLink id = withLink
-  where
-  st :: CSS
-  st = CSS.display CSS.flex
-
-  withLink :: forall w' i'. S.SkillDescription w' i' -> HH.HTML w' i'
-  withLink desc =
+mkSkillLink id desc =
     HH.div
       [ HP.class_ BS.card, style (CSS.display CSS.inlineBlock) ]
       [ HH.button
           [ dataToggle "modal"
           , dataTarget ("#modal" <> id)
-          , style st
+          , HP.title desc.title
           ]
           [ desc.icon 7.0
           ]
