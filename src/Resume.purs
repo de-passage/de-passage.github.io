@@ -2,17 +2,13 @@ module Resume (component) where
 
 import Prelude
 
-import Assets as Assets
 import CSS (CSS)
 import CSS as CSS
 import CSS.Common (auto) as CSS
-import CSS.Overflow as CO
-import CSS.Text.Whitespace as CTW
 import Content.Skills as S
 import Data.Array (snoc)
 import Data.Newtype (class Newtype, unwrap)
 import Data.Tuple (Tuple(..))
-import Halogen (ClassName(..))
 import Halogen as H
 import Halogen.HTML (IProp)
 import Halogen.HTML as HH
@@ -68,9 +64,9 @@ component =
 render :: forall m. State -> H.ComponentHTML Action ChildSlots m
 render _ =
   let
-    personal = HH.div [ HP.classes [ BS.colMd4, BS.colSm, BS.col12 ] ] [ personalInformation ]
+    personal = HH.div [ HP.classes [ BS.colMd4, BS.colSm5, BS.col12 ] ] [ personalInformation ]
 
-    skill = HH.div [ HP.classes [ BS.colMd8, BS.colSm, BS.col12 ] ] [ technicalSkills ]
+    skill = HH.div [ HP.classes [ BS.colMd8, BS.colSm7, BS.col12 ] ] [ technicalSkills ]
   in
     HH.div [ HP.class_ BS.container ]
       [ HH.div [ HP.class_ BS.row ]
@@ -106,7 +102,7 @@ category id title content =
       , HH.div
           [ HP.classes [ BS.collapse, BS.show ], HP.id_ collapseId ]
           [ HH.div
-              [ HP.class_ BS.cardBody ]
+              [ HP.classes [ BS.cardBody, BS.textCenter ] ]
               content
           ]
       ]

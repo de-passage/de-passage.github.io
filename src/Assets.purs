@@ -20,7 +20,7 @@ import CSS as CSS
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
-import Prelude (($), map, (<>), (<<<), discard, bind, pure, const)
+import Prelude (($), (<>), discard, bind, pure)
 
 type Icon w i
   = Number -> HH.HTML w i
