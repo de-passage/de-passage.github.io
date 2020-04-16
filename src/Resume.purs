@@ -9,8 +9,10 @@ import CSS.Common (auto) as CSS
 import CSS.Overflow as CO
 import CSS.Text.Whitespace as CTW
 import Content.Skills as S
+import Data.Array (snoc)
 import Data.Newtype (class Newtype, unwrap)
 import Data.Tuple (Tuple(..))
+import Halogen (ClassName(..))
 import Halogen as H
 import Halogen.HTML (IProp)
 import Halogen.HTML as HH
@@ -66,7 +68,7 @@ component =
 render :: forall m. State -> H.ComponentHTML Action ChildSlots m
 render _ =
   let
-    personal = HH.div [ HP.classes [ BS.colMd4, BS.colSm , BS.col12 ] ] [ personalInformation ]
+    personal = HH.div [ HP.classes [ BS.colMd4, BS.colSm, BS.col12 ] ] [ personalInformation ]
 
     skill = HH.div [ HP.classes [ BS.colMd8, BS.colSm, BS.col12 ] ] [ technicalSkills ]
   in
@@ -125,82 +127,96 @@ derive instance newtypeListItem :: Newtype (ListItem w i) _
 listGroup :: forall w i. Array (ListItem w i) -> HH.HTML w i
 listGroup = map unwrap >>> HH.ul [ HP.classes [ BS.listGroup, BS.listGroupFlush ] ]
 
-listItem :: forall w i. Array (HH.HTML w i) -> ListItem w i
-listItem = HH.li [ HP.class_ BS.listGroupItem ] >>> ListItem
+type AH w i
+  = Array (HH.HTML w i)
+
+listItem props = HH.li (props `snoc` HP.class_ BS.listGroupItem) >>> ListItem
+
+listItem_ :: forall w i. Array (HH.HTML w i) -> ListItem w i
+listItem_ = listItem []
 
 medias :: Array { title :: String, id :: String, url :: String }
 medias =
-  [ { title: "LinkedIn"
-    , id: "linkedin"
-    , url: "https://www.linkedin.com/in/sylvain-leclercq-12b933154/"
+  [ { title: "Email"
+    , id: "envelope"
+    , url: "mailto:contact@sylvainleclercq.com"
     }
   , { title: "GitHub"
     , id: "github"
     , url: "https://github.com/de-passage"
+    }
+  , { title: "LinkedIn"
+    , id: "linkedin"
+    , url: "https://www.linkedin.com/in/sylvain-leclercq-12b933154/"
     }
   ]
 
 personalInformation :: forall w i. HH.HTML w i
 personalInformation =
   let
-    socialMedia r = HH.a [ HP.title r.title, HP.href r.url ] [ Assets.icon r.id 4.0 ]
+    mkClass id = HP.class_ (HH.ClassName ("fa fa-" <> id <> " fa-2x"))
+
+    css = do
+      CSS.display CSS.flex
+      CSS.justifyContent CSS.spaceAround
+    
+    linkStyle = do 
+      CSS.textDecoration CSS.noneTextDecoration
+      CSS.color CSS.black
+
+    socialMedia r =
+        HH.a [ HP.title r.title, HP.href r.url, mkClass r.id, style linkStyle ] []
   in
     category "personal" "Sylvain Leclercq"
       [ listGroup
-          [ listItem
-              [ HH.a
-                  [ HP.href "mailto:contact@sylvainleclercq.com"
-                    , HP.class_ BS.fontWeightBold ]
-                  [ HH.text "contact@sylvainleclercq.com" ]
-              ]
-          , listItem (map socialMedia medias)
+          [ listItem [style css] (map socialMedia medias)
           ]
       ]
 
 mkSkillLink :: forall w i. String -> S.SkillDescription w i -> HH.HTML w i
 mkSkillLink id desc =
-    HH.div
-      [ HP.class_ BS.card, style (CSS.display CSS.inlineBlock) ]
-      [ HH.button
-          [ dataToggle "modal"
-          , dataTarget ("#modal" <> id)
-          , HP.title desc.title
-          ]
-          [ desc.icon 7.0
-          ]
-      , HH.div
-          [ HP.classes [ BS.modal, BS.fade ]
-          , HP.id_ ("modal" <> id)
-          , HP.tabIndex (-1)
-          , dataBackdrop "static"
-          , ARIA.role "dialog"
-          , ARIA.labelledBy ("backdropLabel" <> id)
-          , ARIA.hidden "true"
-          ]
-          [ HH.div [ HP.class_ BS.modalDialog ]
-              [ HH.div [ HP.class_ BS.modalContent ]
-                  [ HH.div [ HP.class_ BS.modalHeader ]
-                      [ desc.icon 5.0
-                      , HH.h3
-                          [ HP.class_ BS.modalTitle
-                          , style (CSS.margin CSS.auto CSS.auto CSS.auto CSS.auto)
-                          , HP.id_ ("backdropLabel" <> id)
-                          ]
-                          [ HH.text desc.title ]
-                      ]
-                  , HH.div [ HP.class_ BS.modalBody ] [ desc.content ]
-                  , HH.div [ HP.class_ BS.modalFooter ]
-                      [ HH.button
-                          [ HP.classes [ BS.btn, BS.btnOutlinePrimary ]
-                          , dataDismiss "modal"
-                          , HP.type_ HP.ButtonButton
-                          ]
-                          [ HH.text "Close" ]
-                      ]
-                  ]
-              ]
-          ]
-      ]
+  HH.div
+    [ HP.class_ BS.card, style (CSS.display CSS.inlineBlock) ]
+    [ HH.button
+        [ dataToggle "modal"
+        , dataTarget ("#modal" <> id)
+        , HP.title desc.title
+        ]
+        [ desc.icon 7.0
+        ]
+    , HH.div
+        [ HP.classes [ BS.modal, BS.fade ]
+        , HP.id_ ("modal" <> id)
+        , HP.tabIndex (-1)
+        , dataBackdrop "static"
+        , ARIA.role "dialog"
+        , ARIA.labelledBy ("backdropLabel" <> id)
+        , ARIA.hidden "true"
+        ]
+        [ HH.div [ HP.class_ BS.modalDialog ]
+            [ HH.div [ HP.class_ BS.modalContent ]
+                [ HH.div [ HP.class_ BS.modalHeader ]
+                    [ desc.icon 5.0
+                    , HH.h3
+                        [ HP.class_ BS.modalTitle
+                        , style (CSS.margin CSS.auto CSS.auto CSS.auto CSS.auto)
+                        , HP.id_ ("backdropLabel" <> id)
+                        ]
+                        [ HH.text desc.title ]
+                    ]
+                , HH.div [ HP.class_ BS.modalBody ] [ desc.content ]
+                , HH.div [ HP.class_ BS.modalFooter ]
+                    [ HH.button
+                        [ HP.classes [ BS.btn, BS.btnOutlinePrimary ]
+                        , dataDismiss "modal"
+                        , HP.type_ HP.ButtonButton
+                        ]
+                        [ HH.text "Close" ]
+                    ]
+                ]
+            ]
+        ]
+    ]
 
 technicalSkills :: forall w i. HH.HTML w i
 technicalSkills =
