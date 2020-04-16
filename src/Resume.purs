@@ -3,8 +3,10 @@ module Resume (component) where
 import Prelude
 
 import Assets as Assets
-import CSS (CSS, i)
+import CSS (CSS)
 import CSS as CSS
+import CSS.Common (auto) as CSS
+import Content.Skills as S
 import Data.Newtype (class Newtype, unwrap)
 import Data.Tuple (Tuple(..))
 import Halogen as H
@@ -60,7 +62,9 @@ component =
     }
 
 render :: forall m. State -> H.ComponentHTML Action ChildSlots m
-render _ = HH.div [ style globalStyle, HP.class_ BS.accordion ] categories
+render _ =
+  HH.div [ HP.class_ BS.accordion ]
+    [ HH.div [ HP.class_ BS.cardDeck ] categories ]
 
 handleAction :: forall o m. Unit -> H.HalogenM State Action ChildSlots o m Unit
 handleAction _ = pure unit
@@ -116,27 +120,43 @@ listGroup = map unwrap >>> HH.ul [ HP.classes [ BS.listGroup, BS.listGroupFlush 
 listItem :: forall w i. Array (HH.HTML w i) -> ListItem w i
 listItem = HH.li [ HP.class_ BS.listGroupItem ] >>> ListItem
 
+medias :: Array { title :: String, id :: String, url :: String }
+medias =
+  [ { title: "LinkedIn"
+    , id: "linkedin"
+    , url: "https://www.linkedin.com/in/sylvain-leclercq-12b933154/"
+    }
+  , { title: "GitHub"
+    , id: "github"
+    , url: "https://github.com/de-passage"
+    }
+  ]
+
 personalInformation :: forall w i. HH.HTML w i
 personalInformation =
-  category "personal" "Personal Information"
-    [ listGroup
-        [ listItem [ HH.text "Sylvain Leclercq" ]
-        , listItem
-            [ HH.a
-                [ HP.href "mailto:contact@sylvainleclercq.com" ]
-                [ HH.text "contact@sylvainleclercq.com" ]
-            ]
-        ]
-    ]
+  let
+    socialMedia r = HH.a [ HP.title r.title, HP.href r.url ] [ Assets.icon r.id 4.0 ]
+  in
+    category "personal" "Personal Information"
+      [ listGroup
+          [ listItem [ HH.h3_ [ HH.text "Sylvain Leclercq" ] ]
+          , listItem
+              [ HH.a
+                  [ HP.href "mailto:contact@sylvainleclercq.com", HP.class_ BS.fontWeightBold ]
+                  [ HH.text "contact@sylvainleclercq.com" ]
+              ]
+          , listItem (map socialMedia medias)
+          ]
+      ]
 
-mkSkillLink :: forall w i. String -> Assets.Icon w i -> Assets.Icon w i
-mkSkillLink id ic = Assets.decorate withLink ic
+mkSkillLink :: forall w i. String -> S.SkillDescription w i -> HH.HTML w i
+mkSkillLink id = withLink
   where
-  st :: CSS.CSS
+  st :: CSS
   st = CSS.display CSS.flex
 
-  withLink :: forall w' i'. HH.HTML w' i' -> HH.HTML w' i'
-  withLink icon =
+  withLink :: forall w' i'. S.SkillDescription w' i' -> HH.HTML w' i'
+  withLink desc =
     HH.div
       [ HP.class_ BS.card, style (CSS.display CSS.inlineBlock) ]
       [ HH.button
@@ -144,7 +164,7 @@ mkSkillLink id ic = Assets.decorate withLink ic
           , dataTarget ("#modal" <> id)
           , style st
           ]
-          [ icon
+          [ desc.icon 7.0
           ]
       , HH.div
           [ HP.classes [ BS.modal, BS.fade ]
@@ -157,13 +177,24 @@ mkSkillLink id ic = Assets.decorate withLink ic
           ]
           [ HH.div [ HP.class_ BS.modalDialog ]
               [ HH.div [ HP.class_ BS.modalContent ]
-                  [  HH.div [ HP.class_ BS.modalHeader ]
-                        [ HH.h5 [ HP.class_ BS.modalTitle, HP.id_ ("backdropLabel" <> id) ] [ HH.text id ]
-                        ]
-                    , HH.div [HP.class_ BS.modalBody ] []
-                    , HH.div [HP.class_ BS.modalFooter ] [
-                      HH.button [HP.class_ BS.btnOutlinePrimary, dataDismiss "modal", HP.type_ HP.ButtonButton] [HH.text "Close"]
-                    ] 
+                  [ HH.div [ HP.class_ BS.modalHeader ]
+                      [ desc.icon 5.0
+                      , HH.h3
+                          [ HP.class_ BS.modalTitle
+                          , style (CSS.margin CSS.auto CSS.auto CSS.auto CSS.auto)
+                          , HP.id_ ("backdropLabel" <> id)
+                          ]
+                          [ HH.text desc.title ]
+                      ]
+                  , HH.div [ HP.class_ BS.modalBody ] [ desc.content ]
+                  , HH.div [ HP.class_ BS.modalFooter ]
+                      [ HH.button
+                          [ HP.classes [ BS.btn, BS.btnOutlinePrimary ]
+                          , dataDismiss "modal"
+                          , HP.type_ HP.ButtonButton
+                          ]
+                          [ HH.text "Close" ]
+                      ]
                   ]
               ]
           ]
@@ -172,20 +203,20 @@ mkSkillLink id ic = Assets.decorate withLink ic
 technicalSkills :: forall w i. HH.HTML w i
 technicalSkills =
   category "skills" "Technical skills"
-    [ Assets.iconList_
+    [ HH.div [ style (CSS.justifyContent CSS.spaceAround) ]
         $ map (\(Tuple s i) -> mkSkillLink s i)
-            [ (Tuple "purescript" Assets.purescriptIcon)
-            , (Tuple "elm" Assets.elmIcon)
-            , (Tuple "cpp" Assets.cppIcon)
-            , (Tuple "haskell" Assets.haskellIcon)
-            , (Tuple "c" Assets.cIcon)
-            , (Tuple "lua" Assets.luaIcon)
-            , (Tuple "js" Assets.javascriptIcon)
-            , (Tuple "csharp" Assets.csharpIcon)
-            , (Tuple "coffeescript" Assets.coffeescriptIcon)
-            , (Tuple "ruby" Assets.rubyIcon)
-            , (Tuple "python" Assets.pythonIcon)
-            , (Tuple "html" Assets.htmlIcon)
-            , (Tuple "css" Assets.cssIcon)
+            [ (Tuple "purescript" S.purescript)
+            , (Tuple "elm" S.elm)
+            , (Tuple "cpp" S.cpp)
+            , (Tuple "haskell" S.haskell)
+            , (Tuple "c" S.c)
+            , (Tuple "lua" S.lua)
+            , (Tuple "js" S.javascript)
+            , (Tuple "csharp" S.csharp)
+            , (Tuple "coffeescript" S.coffeescript)
+            , (Tuple "ruby" S.ruby)
+            , (Tuple "python" S.python)
+            , (Tuple "html" S.html)
+            , (Tuple "css" S.css)
             ]
     ]
