@@ -1,10 +1,9 @@
 module Resume (component) where
 
 import Prelude
-
 import CSS (CSS)
 import CSS as CSS
-import CSS.Common (auto) as CSS
+import CSS.Common (auto, none) as CSS
 import Content.Skills as S
 import Data.Array (snoc)
 import Data.Newtype (class Newtype, unwrap)
@@ -15,6 +14,7 @@ import Halogen.HTML as HH
 import Halogen.HTML.CSS (style)
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
+import Halogen.Themes.Bootstrap4 (alignItemsStart)
 import Halogen.Themes.Bootstrap4 as BS
 
 type State
@@ -135,7 +135,7 @@ listGroupC classes = map unwrap >>> HH.ul [ HP.classes $ classes <> [ BS.listGro
 type AH w i
   = Array (HH.HTML w i)
 
-listItem props = HH.li (props <> [HP.class_ BS.listGroupItem]) >>> ListItem
+listItem props = HH.li (props <> [ HP.class_ BS.listGroupItem ]) >>> ListItem
 
 listItem_ :: forall w i. Array (HH.HTML w i) -> ListItem w i
 listItem_ = listItem []
@@ -245,10 +245,30 @@ technicalSkills =
 
 languages :: forall w i. HH.HTML w i
 languages =
-  categoryHidden "languages" "Languages"
-    [ listGroupC [ BS.textLeft ]
-        [ listItem_ [ HH.text "French" ]
-        , listItem_ [ HH.text "English" ]
-        , listItem_ [ HH.text "Japanese" ]
+  let
+    css = do
+      CSS.display CSS.inlineBlock
+      CSS.paddingRight (CSS.px 4.0)
+
+    langs =
+      [ Tuple "French" "Native"
+      , Tuple "English" "Near Bilingual"
+      , Tuple "Japanese" "Fluent"
+      ]
+
+    mkListItem (Tuple lang prof) =
+      listItem_
+        [ HH.button [ HP.class_ (H.ClassName "invisible-btn") ]
+            [ HH.div [ HP.class_ BS.row ]
+                [ HH.div [ HP.classes [ BS.textLeft, BS.col ] ]
+                    [ HH.text lang ]
+                , HH.div [ HP.classes [ BS.textRight, BS.col ] ]
+                    [ HH.text prof ]
+                , HH.div [ HP.classes [] ] [ HH.i [ HP.classes [ (H.ClassName "fa fa-info-circle") ] ] [] ]
+                ]
+            ]
         ]
-    ]
+  in
+    categoryHidden "languages" "Languages"
+      [ listGroup (map mkListItem langs)
+      ]

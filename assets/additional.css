@@ -1,0 +1,6 @@
+.invisible-btn {
+    border: solid 0 transparent;
+    background-color: transparent;
+    display: block;
+    width: 100%;
+}
