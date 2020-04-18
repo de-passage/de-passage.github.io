@@ -13,11 +13,22 @@ module Content.Skills
   , html
   , css
   , SkillDescription
+  , technicalSkills
   ) where
 
+import Prelude (($), map, (<>), negate)
 import Assets as A
+import Attributes
+import Category (category)
+import CSS as CSS
+import CSS.Common (auto)
+import Data.Tuple (Tuple(..))
 import Halogen.HTML (div_, p_, text)
 import Halogen.HTML as HH
+import Halogen.HTML.CSS as HC
+import Halogen.HTML.Properties as HP
+import Halogen.HTML.Properties.ARIA as ARIA
+import Halogen.Themes.Bootstrap4 as BS
 
 type SkillDescription w i
   = { icon :: A.Icon w i
@@ -132,3 +143,70 @@ css =
   , url: "https://en.wikipedia.org/wiki/Cascading_Style_Sheets"
   , content: div_ []
   }
+
+
+mkSkillLink :: forall w i. String -> SkillDescription w i -> HH.HTML w i
+mkSkillLink id desc =
+  HH.div
+    [ HP.class_ BS.card, HC.style (CSS.display CSS.inlineBlock) ]
+    [ HH.button
+        [ dataToggle "modal"
+        , dataTarget ("#modal" <> id)
+        , HP.title desc.title
+        ]
+        [ desc.icon 7.0
+        ]
+    , HH.div
+        [ HP.classes [ BS.modal, BS.fade ]
+        , HP.id_ ("modal" <> id)
+        , HP.tabIndex (-1)
+        , dataBackdrop "static"
+        , ARIA.role "dialog"
+        , ARIA.labelledBy ("backdropLabel" <> id)
+        , ARIA.hidden "true"
+        ]
+        [ HH.div [ HP.class_ BS.modalDialog ]
+            [ HH.div [ HP.class_ BS.modalContent ]
+                [ HH.div [ HP.class_ BS.modalHeader ]
+                    [ desc.icon 5.0
+                    , HH.h3
+                        [ HP.class_ BS.modalTitle
+                        , HC.style (CSS.margin auto auto auto auto)
+                        , HP.id_ ("backdropLabel" <> id)
+                        ]
+                        [ HH.text desc.title ]
+                    ]
+                , HH.div [ HP.class_ BS.modalBody ] [ desc.content ]
+                , HH.div [ HP.class_ BS.modalFooter ]
+                    [ HH.button
+                        [ HP.classes [ BS.btn, BS.btnOutlinePrimary ]
+                        , dataDismiss "modal"
+                        , HP.type_ HP.ButtonButton
+                        ]
+                        [ HH.text "Close" ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+
+technicalSkills :: forall w i. HH.HTML w i
+technicalSkills =
+  category "skills" "Technical skills"
+    [ HH.div [ HC.style (CSS.justifyContent CSS.spaceAround) ]
+        $ map (\(Tuple s i) -> mkSkillLink s i)
+            [ (Tuple "purescript" purescript)
+            , (Tuple "elm" elm)
+            , (Tuple "cpp" cpp)
+            , (Tuple "haskell" haskell)
+            , (Tuple "c" c)
+            , (Tuple "lua" lua)
+            , (Tuple "js" javascript)
+            , (Tuple "csharp" csharp)
+            , (Tuple "coffeescript" coffeescript)
+            , (Tuple "ruby" ruby)
+            , (Tuple "python" python)
+            , (Tuple "html" html)
+            , (Tuple "css" css)
+            ]
+    ]
