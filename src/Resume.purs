@@ -9,6 +9,7 @@ import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
 import Halogen.Themes.Bootstrap4 as BS
 import Languages as L
+import Work as W
 import Personal (personalInformation)
 
 type State
@@ -33,7 +34,7 @@ render _ =
   let
     personal = HH.div [ HP.classes [ BS.colMd4, BS.colSm5, BS.col12 ] ] [ personalInformation, L.languages ]
 
-    skill = HH.div [ HP.classes [ BS.colMd8, BS.colSm7, BS.col12 ] ] [ S.technicalSkills ]
+    skill = HH.div [ HP.classes [ BS.colMd8, BS.colSm7, BS.col12 ] ] [ W.workExperience, S.technicalSkills ]
   in
     HH.div [ HP.class_ BS.container ]
       [ HH.div [ HP.class_ BS.row ]
