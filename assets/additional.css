@@ -1,6 +1,9 @@
 .invisible-btn {
-    border: solid 0 transparent;
     background-color: transparent;
     display: block;
     width: 100%;
+}
+
+.invisible-btn:focus {
+    box-shadow: 0 0 0 0 transparent;
 }
