@@ -1,6 +1,5 @@
 module Resume (component) where
 
-import Prelude (Unit, Void, const, unit, pure)
 import CSS (CSS)
 import CSS as CSS
 import Content.Skills as S
@@ -9,8 +8,10 @@ import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
 import Halogen.Themes.Bootstrap4 as BS
 import Languages as L
-import Work as W
 import Personal (personalInformation)
+import Prelude (Unit, Void, const, unit, pure)
+import Projects (projects)
+import Work as W
 
 type State
   = Unit
@@ -34,7 +35,9 @@ render _ =
   let
     personal = HH.div [ HP.classes [ BS.colMd4, BS.colSm5, BS.col12 ] ] [ personalInformation, L.languages ]
 
-    skill = HH.div [ HP.classes [ BS.colMd8, BS.colSm7, BS.col12 ] ] [ W.workExperience, S.technicalSkills ]
+    skill =
+      HH.div [ HP.classes [ BS.colMd8, BS.colSm7, BS.col12 ] ]
+        [ W.workExperience, S.technicalSkills, projects ]
   in
     HH.div [ HP.class_ BS.container ]
       [ HH.div [ HP.class_ BS.row ]
