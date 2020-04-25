@@ -59,15 +59,15 @@ mkExperience :: forall w i. Experience w i -> HH.HTML w i
 mkExperience exp =
   HH.div [ HP.classes [ BS.textJustify ] ]
     [ HH.div 
-        [ HP.classes [ BS.row ] ]
+        [ HP.classes [ BS.row, BS.mb2 ] ]
         [ HH.h3
             [ HP.classes [ BS.col, BS.mtAuto ] ]
             [ HH.a
                 [ HP.href exp.url ]
                 [ HH.text exp.company ]
             ]
-        , HH.h4 [ HP.classes [ BS.col, BS.mtAuto ] ] [ HH.text exp.job ]
+        , HH.h5 [ HP.classes [ BS.col, BS.mtAuto ] ] [ HH.text exp.job ]
         ]
-    , HH.h4_ [ HH.text exp.period ]
+    , HH.h5 [ HP.class_ BS.mb2 ] [ HH.text exp.period ]
     , HH.div_ exp.description
     ]
