@@ -3336,9 +3336,23 @@ var PS = {};
   var CSS_Stylesheet = $PS["CSS.Stylesheet"];
   var Control_Applicative = $PS["Control.Applicative"];
   var Control_Bind = $PS["Control.Bind"];
+  var Data_Array = $PS["Data.Array"];
   var Halogen_HTML_CSS = $PS["Halogen.HTML.CSS"];
   var Halogen_HTML_Elements = $PS["Halogen.HTML.Elements"];
   var Halogen_HTML_Properties = $PS["Halogen.HTML.Properties"];                
+  var source = function (name) {
+      return Halogen_HTML_Properties.src("https://unpkg.com/simple-icons@latest/icons/" + (name + ".svg"));
+  };
+  var rubyIcon = "ruby";
+  var pythonIcon = "python";
+  var purescriptIcon = "purescript";
+  var luaIcon = "lua";
+  var javascriptIcon = "javascript";
+  var iconS = function (name) {
+      return function (a) {
+          return Halogen_HTML_Elements.img(Data_Array.snoc(a)(source(name)));
+      };
+  };
   var icon = function (name) {
       return Control_Bind.bind(Control_Bind.bindFn)(CSS_Size.em)(function (iconDimension) {
           var rem1 = CSS_Size.em(1.0);
@@ -3347,22 +3361,19 @@ var PS = {};
                   return CSS_Geometry.width(iconDimension);
               });
           });
-          return Control_Applicative.pure(Control_Applicative.applicativeFn)(Halogen_HTML_Elements.img([ Halogen_HTML_Properties.src("https://unpkg.com/simple-icons@latest/icons/" + (name + ".svg")), Halogen_HTML_CSS.style(style) ]));
+          return Control_Applicative.pure(Control_Applicative.applicativeFn)(Halogen_HTML_Elements.img([ source(name), Halogen_HTML_CSS.style(style) ]));
       });
   };
-  var javascriptIcon = icon("javascript");
-  var luaIcon = icon("lua");
-  var purescriptIcon = icon("purescript");
-  var pythonIcon = icon("python");
-  var rubyIcon = icon("ruby");
-  var htmlIcon = icon("html5");
-  var haskellIcon = icon("haskell");
-  var elmIcon = icon("elm");                
-  var cssIcon = icon("css3");
-  var csharpIcon = icon("csharp");
-  var cppIcon = icon("cplusplus");
-  var coffeescriptIcon = icon("coffeescript");
-  var cIcon = icon("c");
+  var htmlIcon = "html5";
+  var haskellIcon = "haskell";
+  var elmIcon = "elm";
+  var cssIcon = "css3";
+  var csharpIcon = "csharp";
+  var cppIcon = "cplusplus";
+  var coffeescriptIcon = "coffeescript";
+  var cIcon = "c";
+  exports["icon"] = icon;
+  exports["iconS"] = iconS;
   exports["purescriptIcon"] = purescriptIcon;
   exports["elmIcon"] = elmIcon;
   exports["cppIcon"] = cppIcon;
@@ -3522,7 +3533,7 @@ var PS = {};
   var listGroupFlush = "list-group-flush";
   var listGroup = "list-group";
   var fade = "fade";                     
-  var container = "container";  
+  var containerFluid = "container-fluid";
   var collapse = "collapse";
   var colSm7 = "col-sm-7";
   var colSm5 = "col-sm-5";
@@ -3555,7 +3566,7 @@ var PS = {};
   exports["colSm5"] = colSm5;
   exports["colSm7"] = colSm7;
   exports["collapse"] = collapse;
-  exports["container"] = container;
+  exports["containerFluid"] = containerFluid;
   exports["fade"] = fade;
   exports["listGroup"] = listGroup;
   exports["listGroupFlush"] = listGroupFlush;
@@ -3806,7 +3817,7 @@ var PS = {};
   };
   var mkSkillLink = function (id) {
       return function (desc) {
-          return Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.card), Halogen_HTML_CSS.style(CSS_Display.display(CSS_Display.inlineBlock)) ])([ Halogen_HTML_Elements.button([ Attributes.dataToggle("modal"), Attributes.dataTarget("#modal" + id), Halogen_HTML_Properties.title(desc.title) ])([ desc.icon(7.0) ]), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.modal, Halogen_Themes_Bootstrap4.fade ]), Halogen_HTML_Properties.id_("modal" + id), Halogen_HTML_Properties.tabIndex(-1 | 0), Attributes.dataBackdrop("static"), Halogen_HTML_Properties_ARIA.role("dialog"), Halogen_HTML_Properties_ARIA.labelledBy("backdropLabel" + id), Halogen_HTML_Properties_ARIA.hidden("true") ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalDialog), Halogen_HTML_CSS.style(CSS_Geometry.maxWidth(CSS_Size.pct(90.0))) ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalContent) ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalHeader) ])([ desc.icon(5.0), Halogen_HTML_Elements.h3([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalTitle), Halogen_HTML_CSS.style(CSS_Geometry.margin(CSS_Common.auto(CSS_Size.autoSize))(CSS_Common.auto(CSS_Size.autoSize))(CSS_Common.auto(CSS_Size.autoSize))(CSS_Common.auto(CSS_Size.autoSize))), Halogen_HTML_Properties.id_("backdropLabel" + id) ])([ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href(desc.url) ])([ Halogen_HTML_Core.text(desc.title) ]) ]) ]), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.modalBody, Halogen_Themes_Bootstrap4.textJustify ]) ])(quote(desc.quote)(desc.content)), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalFooter) ])([ Halogen_HTML_Elements.button([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.btn, Halogen_Themes_Bootstrap4.btnOutlinePrimary ]), Attributes.dataDismiss("modal"), Halogen_HTML_Properties.type_(Halogen_HTML_Core.isPropButtonType)(DOM_HTML_Indexed_ButtonType.ButtonButton.value) ])([ Halogen_HTML_Core.text("Close") ]) ]) ]) ]) ]) ]);
+          return Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.card), Halogen_HTML_CSS.style(CSS_Display.display(CSS_Display.inlineBlock)) ])([ Halogen_HTML_Elements.button([ Attributes.dataToggle("modal"), Attributes.dataTarget("#modal" + id), Halogen_HTML_Properties.title(desc.title) ])([ Assets.iconS(desc.icon)([ Halogen_HTML_Properties.class_("skillIcon") ]) ]), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.modal, Halogen_Themes_Bootstrap4.fade ]), Halogen_HTML_Properties.id_("modal" + id), Halogen_HTML_Properties.tabIndex(-1 | 0), Attributes.dataBackdrop("static"), Halogen_HTML_Properties_ARIA.role("dialog"), Halogen_HTML_Properties_ARIA.labelledBy("backdropLabel" + id), Halogen_HTML_Properties_ARIA.hidden("true") ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalDialog), Halogen_HTML_CSS.style(CSS_Geometry.maxWidth(CSS_Size.pct(90.0))) ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalContent) ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalHeader) ])([ Assets.icon(desc.icon)(5.0), Halogen_HTML_Elements.h3([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalTitle), Halogen_HTML_CSS.style(CSS_Geometry.margin(CSS_Common.auto(CSS_Size.autoSize))(CSS_Common.auto(CSS_Size.autoSize))(CSS_Common.auto(CSS_Size.autoSize))(CSS_Common.auto(CSS_Size.autoSize))), Halogen_HTML_Properties.id_("backdropLabel" + id) ])([ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href(desc.url) ])([ Halogen_HTML_Core.text(desc.title) ]) ]) ]), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.modalBody, Halogen_Themes_Bootstrap4.textJustify ]) ])(quote(desc.quote)(desc.content)), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalFooter) ])([ Halogen_HTML_Elements.button([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.btn, Halogen_Themes_Bootstrap4.btnOutlinePrimary ]), Attributes.dataDismiss("modal"), Halogen_HTML_Properties.type_(Halogen_HTML_Core.isPropButtonType)(DOM_HTML_Indexed_ButtonType.ButtonButton.value) ])([ Halogen_HTML_Core.text("Close") ]) ]) ]) ]) ]) ]);
       };
   };
   var c = {
@@ -10113,7 +10124,7 @@ var PS = {};
   var render = function (v) {
       var skill = Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.colMd8, Halogen_Themes_Bootstrap4.colSm7, Halogen_Themes_Bootstrap4.col12 ]) ])([ Work.workExperience, Content_Skills.technicalSkills, Projects.projects ]);
       var personal = Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.colMd4, Halogen_Themes_Bootstrap4.colSm5, Halogen_Themes_Bootstrap4.col12 ]) ])([ Personal.personalInformation, Languages.languages ]);
-      return Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.container) ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.row) ])([ personal, skill ]) ]);
+      return Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.containerFluid) ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.row) ])([ personal, skill ]) ]);
   };                                                                         
   var component = Halogen_Component.mkComponent({
       initialState: Data_Function["const"](Data_Unit.unit),
