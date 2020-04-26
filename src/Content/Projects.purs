@@ -6,6 +6,9 @@ import Data.Argonaut.Decode (decodeJson)
 import Data.Either (Either, either)
 import Data.Maybe (Maybe(..))
 import Halogen.HTML as HH
+import Halogen.HTML.Properties as HP
+import Halogen.HTML.Properties.ARIA as ARIA
+import Halogen.Themes.Bootstrap4 as BS
 import Lists (ListItem, listItem_, listGroup)
 import Prelude (map, (>>>))
 
@@ -24,7 +27,8 @@ mkProject :: forall w i. Project -> ListItem w i
 mkProject pro = listItem_ [ HH.text pro.html_url ]
 
 projects :: forall w i. Maybe String -> HH.HTML w i
-projects Nothing = categoryHidden "projects" "Projects" []
+projects Nothing = categoryHidden "projects" "Projects" 
+  [ HH.div [ HP.class_ BS.spinnerBorder, ARIA.role "status" ] [ HH.span [ HP.class_ BS.srOnly ] [] ] ]
 
 projects (Just s) =
   let
