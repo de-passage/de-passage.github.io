@@ -7,3 +7,19 @@
 .invisible-btn:focus {
     box-shadow: 0 0 0 0 transparent;
 }
+
+.caret:after {
+    display: inline-block;
+    font: normal normal normal 0.7em FontAwesome;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\f054";
+    transform: rotate(90deg) ;
+    transition: all linear 0.25s;
+    margin-left: 5px;
+ }   
+
+[aria-expanded="false"] > .caret:after {
+  transform: rotate(0deg) ;
+}

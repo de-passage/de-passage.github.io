@@ -1,8 +1,7 @@
 module Category (category, categoryHidden) where
 
-import Prelude ((<>), discard)
-
 import Attributes
+
 import CSS (CSS)
 import CSS as CSS
 import Halogen.HTML as HH
@@ -10,6 +9,7 @@ import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
+import Prelude ((<>), discard)
 
 category :: forall w i. String -> String -> Array (HH.HTML w i) -> HH.HTML w i
 category = categoryB true
@@ -32,7 +32,7 @@ categoryB b id title content =
           , HC.style categoryTitleStyle
           ]
           [ HH.h2
-              [ HP.classes [ BS.cardHeader ] ]
+              [ HP.classes [ BS.cardHeader, (HH.ClassName "caret"), BS.alignBottom ] ]
               [ HH.text title ]
           ]
       , HH.div
