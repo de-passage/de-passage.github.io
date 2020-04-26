@@ -20,13 +20,14 @@ module Content.Skills
   ) where
 
 import Attributes
+
 import Assets as A
 import CSS as CSS
 import CSS.Common (auto)
 import Category (category)
 import Data.Maybe as M
 import Data.Tuple (Tuple(..))
-import Format (para)
+import Format (para, h6)
 import Halogen.HTML (p_, text)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
@@ -57,6 +58,9 @@ type SkillDescription w i
     , quote :: M.Maybe Quote
     }
 
+projectTitle :: forall w i. HH.HTML w i
+projectTitle = h6 "Projects"
+
 purescript :: forall w i. SkillDescription w i
 purescript =
   { icon: A.purescriptIcon
@@ -64,12 +68,14 @@ purescript =
   , url: "https://purescript.org"
   , content:
       [ para
-          """
-              I started getting interested in Purescript because of its resemblance with Haskell and its focus
+          """ I started getting interested in Purescript because of its resemblance with Haskell and its focus
               on front-end development. I originally went with Elm, but the limitations of that language eventually
               brought me to seek a language with more expressive power. 
             """
-      , HH.h6_ [ HH.text "Projects" ]
+      , para """It is a very interesting language, although the compiler error output is very hard to understand, 
+          which slows down learning. My experience with the language is fairly limited but I expect to write a lot
+          more code using it."""
+      , projectTitle
       , p_
           [ text "This website is written using Purescript and Halogen."
           , HH.br_
@@ -106,7 +112,7 @@ elm =
           applications. This is simply not possible using Elm and was the motivation for trying out Purescript
           as an alternative.
           """
-      , HH.h6_ [ HH.text "Projects" ]
+      , projectTitle
       , HH.p_
           [ HH.text "I wrote a few simple games using Elm as a way to get into the language."
           , HH.br_
@@ -163,7 +169,7 @@ cpp =
       and lately I've been prefering languages in the Haskell family for their terseness. Developping and deploying
       visually appealing projects in C++ can also be bothersome which fueled my interest for front-end development.
       """
-      , HH.h6_ [ HH.text "Projects" ]
+      , projectTitle
       , para
           """Most of my personal projects deal with metaprogramming. It is the subset of C++ that I find the 
             most intellectually compelling.
@@ -208,13 +214,13 @@ haskell =
             """
       , HH.p_
           [ HH.text
-              """I have not yet gone to the extent of writting a full program in Haskell, although I did it with some
+              """I have not yet gone to the extent of writing a full program in Haskell, although I did it with some
               Haskell derivatives like Elm. Most of the Haskell code I wrote was as part of my learning, using
             """
           , HH.a [ HP.href "https://codewars.com" ] [ HH.text "codewars.com" ]
           , HH.text " as a support."
           ]
-      , HH.h6_ [ HH.text "Projects" ]
+      , projectTitle
       , HH.p_
           [ HH.text "I have a collection of disparate code fragments solving a variety of problems in Haskell."
           , HH.br_
@@ -238,7 +244,17 @@ lua =
   , title: "LUA"
   , url: "https://https://www.lua.org/"
   , content:
-      []
+      [ para
+          """LUA is an interpreted language with good performance characteristics and a clean C API.
+          I learned LUA shortly after C++, and integrating it in C++ applications taught me a lot about 
+          the inner workings of interpreted languages and the difference between interpretation and compilation.
+          """
+      , para
+          """LUA has a fairly unique metatable concept that was also my first introduction to metaprogramming.
+          It is unfortunately fairly verbose and dynamically typed, two characteristics that have detered me from
+          taking on new projects using it. I would still consider it as a good choice as a scripting language in
+          a larger project with strict performance requirements."""
+      ]
   , quote: M.Nothing
   }
 
@@ -247,7 +263,19 @@ javascript =
   { icon: A.javascriptIcon
   , title: "Javascript"
   , url: "https://en.wikipedia.org/wiki/JavaScript"
-  , content: []
+  , content:
+      [ para
+          """I have a strongly negative opinion of Javascript. It is a very poorly thought out language and
+        wholly unsuited for commercial use. It simply has too many flaws for any serious project, and with the 
+        number of alternative languages transpiling to Javascript, I do not see any reason to keep using it. """
+      , para
+          """It is still an important language to know in the front end development ecosystem and I have written
+      enough code using it (and Coffeescript, which is just Javascript with a nicer syntax) to be comfortable with
+      its concepts and aware of the multiple issues that plague development using JS."""
+      , para
+          """If given a choice, I would rather use a language with a very strong type system like Elm or Purescript,
+          or, if under very strict performance requirements, Coffeescript."""
+      ]
   , quote: M.Nothing
   }
 
@@ -256,7 +284,17 @@ csharp =
   { icon: A.csharpIcon
   , title: "C#"
   , url: "https://en.wikipedia.org/wiki/C_Sharp_(programming_language)"
-  , content: []
+  , content: 
+    [ para """I had to learn C# as part of my job at Nexter Systems, as most of the project was using C# and the 
+        .NET framework."""
+    , para """C# is a decent language for enterprise use, as it is fairly easy to use for the average programmer,
+        but I find it completely uninspiring. Type level programming is nigh impossible and metaprogramming involves
+        runtime reflexion, which is essentially throwing the benefits of the type system out the window, not to 
+        mention the performance penalty. The language also imposes the use of heap allocation and nullable 
+        references for most types, which causes an endless stream of runtime crashes due to invalid references."""
+    , para """The best part of C# is, in my opinion, the .NET framework rather than the language itself. It is 
+      a viable option for Windows specific development in a setting with a large team of people at various skill
+      levels, but I wouldn't use it for any personal project.""" ]
   , quote: M.Nothing
   }
 
@@ -265,7 +303,28 @@ coffeescript =
   { icon: A.coffeescriptIcon
   , title: "CoffeeScript"
   , url: "https://coffeescript.org/"
-  , content: []
+  , content: 
+    [ para """Coffeescript is a small language transpiling to Javascript. It is very interesting in that it is 
+        "just Javascript" with a clean syntax. It adds a few syntactic sugar and hides some of the pitfalls of
+        Javascript without abstracting it too much. It is usually very straightfoward to understand what the
+        generated Javascript will be, by just looking at the Coffeescript code."""
+      , para """However this also means that Coffeescript shares the inherent weaknesses of Javascript: lack 
+        of typing and lack of scoping. It also has fallen out of fashion with the advent of newer versions of
+        Javascript which included much of the syntactic sugar pioneered by Coffeescript."""
+      , para """If I had to work with a derivative of Javascript that allows low level control over the generated
+        code, Coffeescript is still a decent option in my opinion, but I would probably give Typescript or another
+        typed variety of Javascript a try."""
+      , projectTitle
+      , HH.p_ 
+        [ HH.text """I have a fair number of projects using Coffeescript on my Github, but I fell that most of them
+          aren't very interesting.""" 
+        , HH.br_
+        , HH.text "Here is an implementation of Conway's Game of life. "
+        , HH.a [ HP.href "https://github.com/de-passage/game-of-life.coffee" ] [ HH.text "Code " ]
+        , HH.a [ HP.href "https://codepen.io/de-passage/full/WjWExY" ] [ HH.text "Live "]
+        , HH.a [ HP.href "https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" ] [ HH.text "Wikipedia"]
+        ]
+    ]
   , quote: M.Nothing
   }
 
@@ -274,7 +333,13 @@ ruby =
   { icon: A.rubyIcon
   , title: "Ruby"
   , url: "https://www.ruby-lang.org/en/"
-  , content: []
+  , content: 
+    [ para """Ruby is by far my favorite scripting language. It has a very elegant syntax and allows for easy
+      metaprogramming. Its performance characteristics are poor, but I mostly use it for lightweight, single use
+      code. I got started with it with Ruby on Rails, although I don't have any public project using it anymore."""
+    , para """My main complaint against Ruby is the dynamic type system that often results in runtime errors due
+      to type mismatches. It is well suited as a scripting language for short programs and automating tedious tasks,
+      but I wouldn't consider it for serious production use.""" ]
   , quote: M.Nothing
   }
 
@@ -283,7 +348,16 @@ python =
   { icon: A.pythonIcon
   , title: "Python"
   , url: "https://www.python.org/"
-  , content: []
+  , content: 
+    [ para """Most of my knowledge of Python actually comes from translating my experience with Ruby to this 
+        language. Python is very popular in the space of interpreted, dynamically typed languages, but I believe
+        that it suffers from the same kind of problems as Ruby, namely poor performances and the lack of a strong
+        type system. Even though Python performances are better than Ruby, they are nowhere near that of compiled
+        languages."""
+    , para """I also find its syntax less clean than that of Ruby and the strict formatting annoying."""
+    , projectTitle
+    , para """I wrote a small website in Python using Django as a framework, but the code is not public as of now."""
+    ]
   , quote: M.Nothing
   }
 
@@ -292,7 +366,12 @@ html =
   { icon: A.htmlIcon
   , title: "HTML"
   , url: "https://en.wikipedia.org/wiki/HTML"
-  , content: []
+  , content: 
+    [ para """HTML is not really a programming language, it's a markup language. I list it here because I don't 
+        want someone to mistakenly assume that I don't know anything about it because it is not listed here, but 
+        there is really not much to know about it."""
+    , projectTitle
+    , para "All the front end projects I've written use HTML either directly or through some sort of preprocessing."]
   , quote: M.Nothing
   }
 
@@ -301,7 +380,19 @@ css =
   { icon: A.cssIcon
   , title: "CSS"
   , url: "https://en.wikipedia.org/wiki/Cascading_Style_Sheets"
-  , content: []
+  , content: 
+    [ para """CSS is a stylesheet language used to describe the presentation of a document, notably HTML. It is
+        interesting that the inherent flaws of the language and its implementations make it a technology that needs
+        proper training rather than a straightforward tool like HTML. Writing CSS is not something I enjoy, although
+        development using it has been considerably eased with realtime in-browser editing and visualization.
+      """
+    , para """A lot of languages transpiling to CSS (SASS, LESS...) have emerged to try to mitigate the pain of 
+        CSS development, but no matter the level of abstraction, I can't help but find using CSS and its derivative 
+        tedious and boring. I usually use Bootstrap as a framework and limit my work on the visual side to the
+        strict minimum."""
+    , projectTitle
+    , para "All my front end projects use CSS under one form or another."
+    ]
   , quote: M.Nothing
   }
 
