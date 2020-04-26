@@ -25,7 +25,35 @@
 }
 
 .skillIcon {
-    width: 7em;
-    height: 7em;
+    width: 4.5em;
+    height: 4.5em;
     padding: 1em;
+}
+
+@media (min-width: 576px) {
+    .skillIcon {
+        width: 5em;
+        height: 5em;
+    } 
+}
+
+@media (min-width: 768px) {
+    .skillIcon {
+        width: 6em;
+        height: 6em;
+    } 
+}
+
+@media (min-width: 992px) {
+    .skillIcon {
+        width: 7em;
+        height: 7em;
+    } 
+}
+
+@media (min-width: 1200px) {
+    .skillIcon {
+        width: 7em;
+        height: 7em;
+    } 
 }
