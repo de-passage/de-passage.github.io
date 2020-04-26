@@ -23,3 +23,9 @@
 [aria-expanded="false"] > .caret:after {
   transform: rotate(0deg) ;
 }
+
+.skillIcon {
+    width: 7em;
+    height: 7em;
+    padding: 1em;
+}

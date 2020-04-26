@@ -1,6 +1,7 @@
 module Assets
   ( Icon
   , icon
+  , iconS
   , purescriptIcon
   , elmIcon
   , cppIcon
@@ -17,13 +18,17 @@ module Assets
   ) where
 
 import CSS as CSS
+import Data.Array (snoc)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
+import Halogen.HTML.Elements as HE
 import Halogen.HTML.Properties as HP
 import Prelude (($), (<>), discard, bind, pure)
 
 type Icon w i
   = Number -> HH.HTML w i
+
+source name = HP.src $ "https://unpkg.com/simple-icons@latest/icons/" <> name <> ".svg"
 
 icon :: forall w i. String -> Icon w i
 icon name =
@@ -36,48 +41,47 @@ icon name =
           CSS.height iconDimension
           CSS.width iconDimension
       pure $ HH.img
-            [ HP.src $ "https://unpkg.com/simple-icons@latest/icons/" <> name <> ".svg"
+            [ source name
             , HC.style style
             ]
 
-d :: forall w i. String -> HH.IProp ( d :: String | w ) i
-d = HP.attr (HH.AttrName "d")
+iconS name a = HH.img (a `snoc` (source name))
 
-purescriptIcon :: forall w i. Icon w i
-purescriptIcon = icon "purescript"
+purescriptIcon :: String
+purescriptIcon = "purescript"
 
-elmIcon :: forall w i. Icon w i
-elmIcon = icon "elm"
+elmIcon :: String
+elmIcon = "elm"
 
-cppIcon :: forall w i. Icon w i
-cppIcon = icon "cplusplus"
+cppIcon :: String
+cppIcon = "cplusplus"
 
-haskellIcon :: forall w i. Icon w i
-haskellIcon = icon "haskell"
+haskellIcon :: String
+haskellIcon = "haskell"
 
-luaIcon :: forall w i. Icon w i
-luaIcon = icon "lua"
+luaIcon :: String
+luaIcon = "lua"
 
-cIcon :: forall w i. Icon w i
-cIcon = icon "c"
+cIcon :: String
+cIcon = "c"
 
-javascriptIcon :: forall w i. Icon w i
-javascriptIcon = icon "javascript"
+javascriptIcon :: String
+javascriptIcon = "javascript"
 
-csharpIcon :: forall w i. Icon w i
-csharpIcon = icon "csharp"
+csharpIcon :: String
+csharpIcon = "csharp"
 
-coffeescriptIcon :: forall w i. Icon w i
-coffeescriptIcon = icon "coffeescript"
+coffeescriptIcon :: String
+coffeescriptIcon = "coffeescript"
 
-rubyIcon :: forall w i. Icon w i
-rubyIcon = icon "ruby"
+rubyIcon :: String
+rubyIcon = "ruby"
 
-pythonIcon :: forall w i. Icon w i
-pythonIcon = icon "python"
+pythonIcon :: String
+pythonIcon = "python"
 
-htmlIcon :: forall w i. Icon w i
-htmlIcon = icon "html5"
+htmlIcon :: String
+htmlIcon = "html5"
 
-cssIcon :: forall w i. Icon w i
-cssIcon = icon "css3"
+cssIcon :: String
+cssIcon = "css3"

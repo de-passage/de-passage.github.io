@@ -51,7 +51,7 @@ type Quote
     }
 
 type SkillDescription w i
-  = { icon :: A.Icon w i
+  = { icon :: String
     , title :: String
     , content :: Array (HH.HTML w i)
     , url :: String
@@ -426,7 +426,7 @@ mkSkillLink id desc =
         , dataTarget ("#modal" <> id)
         , HP.title desc.title
         ]
-        [ desc.icon 7.0
+        [ A.iconS desc.icon [HP.class_ (HH.ClassName "skillIcon")]
         ]
     , HH.div
         [ HP.classes [ BS.modal, BS.fade ]
@@ -440,7 +440,7 @@ mkSkillLink id desc =
         [ HH.div [ HP.class_ BS.modalDialog, HC.style (CSS.maxWidth (CSS.pct 90.0)) ]
             [ HH.div [ HP.class_ BS.modalContent ]
                 [ HH.div [ HP.class_ BS.modalHeader ]
-                    [ desc.icon 5.0
+                    [ A.icon desc.icon 5.0
                     , HH.h3
                         [ HP.class_ BS.modalTitle
                         , HC.style (CSS.margin auto auto auto auto)
