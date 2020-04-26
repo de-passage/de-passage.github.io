@@ -39,7 +39,7 @@ render _ =
       HH.div [ HP.classes [ BS.colMd8, BS.colSm7, BS.col12 ] ]
         [ W.workExperience, S.technicalSkills, projects ]
   in
-    HH.div [ HP.class_ BS.container ]
+    HH.div [ HP.class_ BS.containerFluid ]
       [ HH.div [ HP.class_ BS.row ]
           [ personal
           , skill

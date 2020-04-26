@@ -1,6 +1,5 @@
 module Personal where
 
-import CSS (paddingRight)
 import CSS as CSS
 import Category (category)
 import Data.Array (snoc)
