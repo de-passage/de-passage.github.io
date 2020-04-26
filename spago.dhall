@@ -4,15 +4,17 @@ You can edit this file as you like.
 -}
 { name = "my-project"
 , dependencies =
-  [ "console"
+  [ "affjax"
+  , "argonaut"
+  , "console"
   , "effect"
   , "halogen"
   , "halogen-bootstrap4"
   , "halogen-css"
+  , "halogen-svg"
   , "psci-support"
   , "web-dom"
   , "web-html"
-  , "halogen-svg"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
