@@ -3,8 +3,6 @@ module Projects where
 import Data.Map
 
 import Assets as A
-import Assets as A
-import CSS as CSS
 import Category (categoryHidden)
 import Data.Argonaut (Json, jsonParser)
 import Data.Argonaut.Decode (decodeJson)
@@ -16,7 +14,7 @@ import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
-import Lists (ListItem, listGroup, listGroupC, listItem_)
+import Lists (ListItem, listGroupC, listItem_)
 import Prelude (map, (>>>), (>>=), flip, (#), ($))
 
 type Project
@@ -37,7 +35,7 @@ icons =
     , "Haskell" /\ A.haskellIcon
     , "Ruby" /\ A.rubyIcon
     , "JavaScript" /\ A.javascriptIcon
-    , "Rust" /\ "rust"
+    , "Rust" /\ A.rustIcon
     , "Elm" /\ A.elmIcon
     , "HTML" /\ A.htmlIcon
     , "CSS" /\ A.cssIcon

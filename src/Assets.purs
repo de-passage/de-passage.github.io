@@ -15,13 +15,13 @@ module Assets
   , coffeescriptIcon
   , htmlIcon
   , cssIcon
+  , rustIcon
   ) where
 
 import CSS as CSS
 import Data.Array (snoc)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
-import Halogen.HTML.Elements as HE
 import Halogen.HTML.Properties as HP
 import Prelude (($), (<>), discard, bind, pure)
 
@@ -85,3 +85,6 @@ htmlIcon = "html5"
 
 cssIcon :: String
 cssIcon = "css3"
+
+rustIcon :: String
+rustIcon = "rust"
