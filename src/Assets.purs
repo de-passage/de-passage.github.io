@@ -34,10 +34,10 @@ icon :: forall w i. String -> Icon w i
 icon name =
     do
       iconDimension <- CSS.em
-      let rem1 = CSS.em 1.0
+      let em1 = CSS.em 1.0
       let
         style = do
-          CSS.padding rem1 rem1 rem1 rem1
+          CSS.padding em1 em1 em1 em1
           CSS.height iconDimension
           CSS.width iconDimension
       pure $ HH.img

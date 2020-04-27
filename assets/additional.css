@@ -24,6 +24,11 @@
   transform: rotate(0deg) ;
 }
 
+.projectIcon {
+    width: 1.2em;
+    height: 1.2em;
+}
+
 .skillIcon {
     width: 4em;
     height: 4em;
