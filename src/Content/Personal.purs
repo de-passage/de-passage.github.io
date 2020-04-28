@@ -1,7 +1,7 @@
 module Personal where
 
 import Assets as A
-import Attributes (dataBackdrop, dataDismiss, dataTarget, dataToggle)
+import Attributes (dataBackdrop, dataDismiss, dataTarget, dataToggle, scopeRow)
 import CSS as CSS
 import CSS.Common (auto, none)
 import Category (category)
@@ -17,9 +17,6 @@ import Prelude (map, (<>), discard, (*>), negate)
 
 type Media
   = { title :: String, id :: String, url :: String }
-
-scopeRow :: forall r i. HH.IProp r i
-scopeRow = HH.attr (HH.AttrName "scope") "row"
 
 mailMe :: String
 mailMe = "mailto:contact@sylvainleclercq.com"

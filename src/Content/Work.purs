@@ -1,8 +1,13 @@
 module Work where
 
 import Prelude
-import Category (categoryHidden)
+
+import Attributes (scopeRow, scopeCol)
+import CSS as CSS
+import CSS.Overflow as CSS.Overflow
+import Category (categoryHidden, subcategoryHidden)
 import Halogen.HTML as HH
+import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
 import Halogen.Themes.Bootstrap4 as BS
 
@@ -58,7 +63,7 @@ workExperience =
 mkExperience :: forall w i. Experience w i -> HH.HTML w i
 mkExperience exp =
   HH.div [ HP.classes [ BS.textJustify ] ]
-    [ HH.div 
+    [ HH.div
         [ HP.classes [ BS.row, BS.mb2 ] ]
         [ HH.h3
             [ HP.classes [ BS.col, BS.mtAuto ] ]
@@ -70,4 +75,91 @@ mkExperience exp =
         ]
     , HH.h5 [ HP.class_ BS.mb2 ] [ HH.text exp.period ]
     , HH.div_ exp.description
+    , subcategoryHidden "otherwork" "Other work experiences"
+        [ HH.p [ HP.class_ BS.textLeft ]
+            [ HH.text
+                """From 2011 to 2017 I occupied a number of unqualified positions around the world.
+                Most of them were short term, sometimes volunteering, and in general irrelevant to my current 
+                situation."""
+            ]
+        , HH.div
+            [ HC.style (CSS.Overflow.overflow CSS.Overflow.overflowAuto *> CSS.height (CSS.px 300.0)) ]
+            [ HH.table [ HP.class_ BS.table ]
+                [ HH.thead_
+                    [ HH.tr_
+                        [ HH.th [ scopeCol ] [ HH.text "Year" ]
+                        , HH.th [ scopeCol ] [ HH.text "Duration" ]
+                        , HH.th [ scopeCol ] [ HH.text "Job" ]
+                        , HH.th [ scopeCol ] [ HH.text "Location" ]
+                        ]
+                    ]
+                , HH.tbody_ $ map mkRow jobs
+                ]
+            ]
+        ]
     ]
+  where
+  mkRow :: Job -> HH.HTML w i
+  mkRow job =
+    HH.tr_
+      [ HH.th [ scopeRow ] [ HH.text job.year ]
+      , HH.td_ [ HH.text job.duration ]
+      , HH.td_ [ HH.text job.job ]
+      , HH.td_ [ HH.text job.location ]
+      ]
+
+type Job
+  = { job :: String
+    , year :: String
+    , location :: String
+    , duration :: String
+    }
+
+jobs :: Array Job
+jobs =
+  [ { year: "2017 - 2018"
+    , duration: "6 months"
+    , job: "Farm hand"
+    , location: "Various places in Australia"
+    }
+  , { year: "2017"
+    , duration: "2 months"
+    , job: "Factory hand"
+    , location: "Victoria, Australia"
+    }
+  , { year: "2016"
+    , duration: "4 months"
+    , job: "Hostel employee"
+    , location: "Several places in Taiwan"
+    }
+  , { year: "2016"
+    , duration: "2 months"
+    , job: "Hotel receptionist"
+    , location: "Tokyo, Japan"
+    }
+  , { year: "2015"
+    , duration: "4 months"
+    , job: "Kitchen hand"
+    , location: "Busan, South Korea"
+    }
+  , { year: "2015"
+    , duration: "1 months"
+    , job: "English conversation assistant"
+    , location: "Busan, South Korea"
+    }
+  , { year: "2013 - 2014"
+    , duration: "1 year"
+    , job: "Shop clerk"
+    , location: "Tokyo, Japan"
+    }
+  , { year: "2013"
+    , duration: "4 months"
+    , job: "Hostel employee"
+    , location: "Tokyo, Japan"
+    }
+  , { year: "2012"
+    , duration: "3 months"
+    , job: "Shop clerk"
+    , location: "France"
+    }
+  ]

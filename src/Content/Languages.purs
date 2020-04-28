@@ -4,8 +4,7 @@ import Attributes (dataBackdrop, dataDismiss, dataTarget, dataToggle)
 import CSS as CSS
 import CSS.Common (auto)
 import Category (categoryHidden)
-import Data.Tuple (Tuple(..))
-import Data.Tuple.Nested (Tuple3, tuple3)
+import Data.Tuple.Nested (Tuple3, tuple3, (/\))
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
@@ -66,7 +65,7 @@ languages =
       ]
 
     mkListItem :: forall r j. Tuple3 String String (Array (HH.HTML r j)) -> ListItem r j
-    mkListItem (Tuple lang (Tuple prof (Tuple desc _))) =
+    mkListItem (lang /\ prof /\ desc /\ _) =
       listItem_
         [ HH.button
             [ HP.classes [ BS.btn, (H.ClassName "invisible-btn") ]

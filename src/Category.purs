@@ -1,9 +1,10 @@
-module Category (category, categoryHidden) where
+module Category (category, categoryHidden, subcategory, subcategoryHidden) where
 
 import Attributes
 
 import CSS (CSS)
 import CSS as CSS
+import DOM.HTML.Indexed as I
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
@@ -18,7 +19,17 @@ categoryHidden :: forall w i. String -> String -> Array (HH.HTML w i) -> HH.HTML
 categoryHidden = categoryB false
 
 categoryB :: forall w i. Boolean -> String -> String -> Array (HH.HTML w i) -> HH.HTML w i
-categoryB b id title content =
+categoryB = categoryRaw HH.h2
+
+categoryRaw ::
+  forall w i.
+  (HH.Node I.HTMLh1 w i) ->
+  Boolean ->
+  String ->
+  String ->
+  Array (HH.HTML w i) ->
+  HH.HTML w i
+categoryRaw h b id title content =
   let
     collapseId = "collapse" <> id
   in
@@ -31,7 +42,7 @@ categoryB b id title content =
           , ARIA.controls collapseId
           , HC.style categoryTitleStyle
           ]
-          [ HH.h2
+          [ h
               [ HP.classes [ BS.cardHeader, (HH.ClassName "caret"), BS.alignBottom ] ]
               [ HH.text title ]
           ]
@@ -42,6 +53,15 @@ categoryB b id title content =
               content
           ]
       ]
+
+subcategoryB :: forall w i. Boolean -> String -> String -> Array (HH.HTML w i) -> HH.HTML w i
+subcategoryB = categoryRaw HH.h4
+
+subcategory :: forall w i. String -> String -> Array (HH.HTML w i) -> HH.HTML w i
+subcategory = subcategoryB true
+
+subcategoryHidden :: forall w i. String -> String -> Array (HH.HTML w i) -> HH.HTML w i 
+subcategoryHidden = subcategoryB false
 
 categoryStyle :: CSS
 categoryStyle = do CSS.color (CSS.black)

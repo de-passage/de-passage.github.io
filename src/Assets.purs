@@ -20,6 +20,7 @@ module Assets
   ) where
 
 import CSS as CSS
+import DOM.HTML.Indexed (HTMLimg)
 import Data.Array (snoc)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
@@ -29,6 +30,7 @@ import Prelude (($), (<>), discard, bind, pure)
 type Icon w i
   = Number -> HH.HTML w i
 
+source :: forall i r. String -> HH.IProp ( src :: String | r ) i
 source name = HP.src $ "https://unpkg.com/simple-icons@latest/icons/" <> name <> ".svg"
 
 icon :: forall w i. String -> Icon w i
@@ -46,6 +48,7 @@ icon name =
             , HC.style style
             ]
 
+iconS :: forall w i. String -> Array (HH.IProp HTMLimg i) -> HH.HTML w i
 iconS name a = HH.img (a `snoc` (source name))
 
 purescriptIcon :: String
