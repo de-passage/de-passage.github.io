@@ -16,6 +16,7 @@ module Assets
   , htmlIcon
   , cssIcon
   , rustIcon
+  , resume
   ) where
 
 import CSS as CSS
@@ -88,3 +89,6 @@ cssIcon = "css3"
 
 rustIcon :: String
 rustIcon = "rust"
+
+resume :: String 
+resume = "assets/resume.pdf"

@@ -91,7 +91,7 @@ languages =
             , ARIA.labelledBy ("backdropLabel" <> lang)
             , ARIA.hidden "true"
             ]
-            [ HH.div [ HP.class_ BS.modalDialog ]
+            [ HH.div [ HP.classes [ BS.modalDialog, (HH.ClassName "modal-window")] ]
                 [ HH.div [ HP.class_ BS.modalContent ]
                     [ HH.div [ HP.class_ BS.modalHeader ]
                         [ HH.h3

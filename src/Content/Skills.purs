@@ -482,7 +482,7 @@ mkSkillLink id desc =
         , ARIA.labelledBy ("backdropLabel" <> id)
         , ARIA.hidden "true"
         ]
-        [ HH.div [ HP.class_ BS.modalDialog, HC.style (CSS.maxWidth (CSS.pct 90.0)) ]
+        [ HH.div [ HP.classes [ BS.modalDialog, (HH.ClassName "modal-window") ] ]
             [ HH.div [ HP.class_ BS.modalContent ]
                 [ HH.div [ HP.class_ BS.modalHeader ]
                     [ A.icon desc.icon 5.0
