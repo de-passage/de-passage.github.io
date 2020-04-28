@@ -75,7 +75,7 @@ projects Nothing =
   categoryHidden "projects" "Projects"
     [ HH.div [ HP.class_ BS.spinnerBorder, ARIA.role "status" ] [ HH.span [ HP.class_ BS.srOnly ] [] ] ]
 
-projects (Just (Left s)) = listGroup $ mkErrorMsg (printError s)
+projects (Just (Left s)) = categoryHidden "projects" "Projects" [ listGroup $ mkErrorMsg (printError s) ]
 
 projects (Just (Right s)) =
   let

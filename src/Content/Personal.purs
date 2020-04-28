@@ -1,15 +1,18 @@
 module Personal where
 
+import Attributes (dataBackdrop, dataDismiss, dataTarget, dataToggle)
 import CSS as CSS
 import CSS.Common (auto)
 import Category (category)
 import Data.Array (snoc)
+import Format (para)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
-import Lists (listGroup, listItem)
-import Prelude (map, (<>), discard, (*>))
+import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
+import Lists (listGroup, listItem)
+import Prelude (map, (<>), discard, (*>), negate)
 
 type Media
   = { title :: String, id :: String, url :: String }
@@ -34,13 +37,6 @@ blog :: Media
 blog =
   { title: "Blog"
   , id: "pencil"
-  , url: "#"
-  }
-
-info :: Media
-info =
-  { title: "Presentation"
-  , id: "info-circle"
   , url: "#"
   }
 
@@ -82,10 +78,52 @@ personalInformation =
       [ listGroup
           [ listItem []
               [ HH.div [ HP.class_ BS.row ]
-                  [ HH.div [ HP.classes [ BS.col ] ] 
-                    [ HH.img [ HP.class_ (HH.ClassName "profile-picture"), HP.src "/assets/me.jpg" ] ]
-                  , HH.div [ HP.classes [ BS.col ], HC.style css ] 
-                    [ {- socialMediaS blog additionalStyle, -} socialMediaS info additionalStyle ]
+                  [ HH.div [ HP.classes [ BS.col ] ]
+                      [ HH.img [ HP.class_ (HH.ClassName "profile-picture"), HP.src "/assets/me.jpg" ] ]
+                  , HH.div [ HP.classes [ BS.col ], HC.style css ]
+                      [ {- socialMediaS blog additionalStyle, -} HH.a
+                          [ ARIA.role "button"
+                          , dataToggle "modal"
+                          , dataTarget ("#modalBio")
+                          , HP.title "Biography"
+                          , mkClass "info-circle"
+                          , HC.style (linkStyle *> additionalStyle)
+                          ]
+                          []
+                      , HH.div
+                          [ HP.classes [ BS.modal, BS.fade ]
+                          , HP.id_ ("modalBio")
+                          , HP.tabIndex (-1)
+                          , dataBackdrop "static"
+                          , ARIA.role "dialog"
+                          , ARIA.labelledBy ("backdropLabelBio")
+                          , ARIA.hidden "true"
+                          ]
+                          [ HH.div [ HP.class_ BS.modalDialog, HC.style (CSS.maxWidth (CSS.pct 90.0)) ]
+                              [ HH.div [ HP.class_ BS.modalContent ]
+                                  [ HH.div [ HP.class_ BS.modalHeader ]
+                                      [ HH.h3
+                                          [ HP.class_ BS.modalTitle
+                                          , HC.style (CSS.margin auto auto auto auto)
+                                          , HP.id_ ("backdropLabelBio")
+                                          ]
+                                          [ HH.text "About me" ]
+                                      ]
+                                  , HH.div [ HP.classes [ BS.modalBody, BS.textJustify ] ]
+                                      [ para """Something interesting"""
+                                      ]
+                                  , HH.div [ HP.class_ BS.modalFooter ]
+                                      [ HH.button
+                                          [ HP.classes [ BS.btn, BS.btnOutlinePrimary ]
+                                          , dataDismiss "modal"
+                                          , HP.type_ HP.ButtonButton
+                                          ]
+                                          [ HH.text "Close" ]
+                                      ]
+                                  ]
+                              ]
+                          ]
+                      ]
                   ]
               ]
           , listItem [ HC.style css ] (map socialMedia medias `snoc` dl)
