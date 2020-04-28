@@ -3,7 +3,7 @@ module Resume (component) where
 import Affjax as AX
 import Affjax.ResponseFormat as AXRF
 import Content.Skills as S
-import Data.Either (either)
+import Data.Either (Either(..), either)
 import Data.Maybe (Maybe(..))
 import Effect.Aff.Class (class MonadAff)
 import Halogen as H
@@ -17,7 +17,7 @@ import Projects (projects)
 import Work as W
 
 type State
-  = Maybe String
+  = Maybe (Either AX.Error String)
 
 data Action
   = Init
@@ -52,4 +52,4 @@ render state =
 handleAction :: forall o m. MonadAff m => Action -> H.HalogenM State Action ChildSlots o m Unit
 handleAction Init = do 
   response <- H.liftAff $ AX.get AXRF.string "https://api.github.com/users/de-passage/repos?sort=updated"
-  H.put (either (const Nothing) (_.body >>> Just) response)
+  H.put (either (Left >>> Just) (_.body >>> Right >>> Just) response)

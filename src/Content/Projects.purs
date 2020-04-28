@@ -2,11 +2,12 @@ module Projects where
 
 import Data.Map
 
+import Affjax (Error, printError)
 import Assets as A
 import Category (categoryHidden)
 import Data.Argonaut (Json, jsonParser)
 import Data.Argonaut.Decode (decodeJson)
-import Data.Either (Either, either)
+import Data.Either (Either(..), either)
 import Data.Maybe (fromMaybe, maybe, Maybe(..))
 import Data.Tuple.Nested ((/\))
 import Format as F
@@ -14,7 +15,7 @@ import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
-import Lists (ListItem, listGroupC, listItem_)
+import Lists (ListItem, listGroup, listGroupC, listItem_)
 import Prelude (map, (>>>), (>>=), flip, (#), ($))
 
 type Project
@@ -64,12 +65,18 @@ mkProject pro =
           ]
       ]
 
-projects :: forall w i. Maybe String -> HH.HTML w i
+mkErrorMsg :: forall x j. String -> Array (ListItem x j)
+mkErrorMsg err = [ listItem_ [ HH.text err ] ]
+
+projects :: forall w i. Maybe (Either Error String) -> HH.HTML w i
 projects Nothing =
   categoryHidden "projects" "Projects"
     [ HH.div [ HP.class_ BS.spinnerBorder, ARIA.role "status" ] [ HH.span [ HP.class_ BS.srOnly ] [] ] ]
 
-projects (Just s) =
+projects (Just (Left s)) =
+  listGroup $ mkErrorMsg (printError s)
+
+projects (Just (Right s)) =
   let
     parsed = jsonParser s
 
@@ -81,6 +88,3 @@ projects (Just s) =
   where
   decodeThenMk :: forall x j. Json -> Array (ListItem x j)
   decodeThenMk = jsonToProject >>> either mkErrorMsg (map mkProject)
-
-  mkErrorMsg :: forall x j. String -> Array (ListItem x j)
-  mkErrorMsg err = [ listItem_ [ HH.text err ] ]
