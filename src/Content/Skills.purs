@@ -484,7 +484,7 @@ mkSkillLink id desc =
 technicalSkills :: forall w i. HH.HTML w i
 technicalSkills =
   category "skills" "Technical skills"
-    [ HH.div [ HC.style (CSS.justifyContent CSS.spaceAround) ]
+    [ HH.div_
         $ map (\(Tuple s i) -> mkSkillLink s i)
             [ (Tuple "purescript" purescript)
             , (Tuple "elm" elm)
