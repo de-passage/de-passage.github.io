@@ -415,6 +415,32 @@ css =
   , quote: M.Nothing
   }
 
+rust :: forall w i. SkillDescription w i
+rust =
+  { icon: A.rustIcon
+  , title: "Rust"
+  , url: "https://www.rust-lang.org/"
+  , quote:
+      M.Just
+        { text: "A language empowering everyone to build reliable and efficient software."
+        , source: USource { url: "https://www.rust-lang.org/", name: "rust-lang.org" }
+        }
+  , content:
+      [ para
+          """I originally started playing with Rust as a potential competitor for C++. The
+            promise of sensible defaults and compiler enforced lifetime management soundedd appealing, but at 
+            the time, support and documentation for macros was limited and the possibilities for EDSL development
+            and metaprogramming felt limited."""
+      , para
+          """Moreover, although the reference lifetime system is a wonderful feature, it feels like a 
+            missed opportunity. As it is not extensible by any mean, there is no way that I found to encode strong 
+            invariants about the program using it. It is a limited form of dependent typing, allowing the compiler 
+            to track information that is usually known at runtime (is the reference valid or not) at compile time. It
+            would have been interesting to be able to manage more information at compile time, such as collection sizes
+            or value ranges."""
+      ]
+  }
+
 cite :: forall w i. Source -> Array (HH.HTML w i)
 cite (USource source) = [ HH.cite [ HP.title source.name ] [ HH.a [ HP.href source.url ] [ HH.text source.name ] ] ]
 
@@ -499,5 +525,6 @@ technicalSkills =
             , (Tuple "python" python)
             , (Tuple "html" html)
             , (Tuple "css" css)
+            , (Tuple "rust" rust)
             ]
     ]

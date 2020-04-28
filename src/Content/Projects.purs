@@ -1,7 +1,6 @@
 module Projects where
 
 import Data.Map
-
 import Affjax (Error, printError)
 import Assets as A
 import Category (categoryHidden)
@@ -51,17 +50,20 @@ mkProject pro =
     iconDiv =
       pro.language
         >>= flip lookup icons
-        # maybe (HH.text "") (\language -> A.iconS language [ HP.class_ (HH.ClassName "projectIcon") ])
+        # maybe (HH.text "")
+            ( \language ->
+                HH.div [ HP.class_ BS.col1 ]
+                  [ A.iconS language [ HP.class_ (HH.ClassName "projectIcon") ] ]
+            )
   in
     listItem_
       [ HH.div
           [ HP.class_ BS.row ]
-          [ HH.div [ HP.class_ BS.col1 ]
-              [ iconDiv ]
+          [ iconDiv
           , HH.div [ HP.classes [ BS.col10, BS.colLg ] ]
               [ HH.a [ HP.href pro.html_url ] [ HH.text pro.name ] ]
           , HH.div [ HP.classes [ BS.col12, BS.colLg ] ]
-            [ F.para $ fromMaybe "" pro.description ]
+              [ F.para $ fromMaybe "" pro.description ]
           ]
       ]
 
@@ -73,8 +75,7 @@ projects Nothing =
   categoryHidden "projects" "Projects"
     [ HH.div [ HP.class_ BS.spinnerBorder, ARIA.role "status" ] [ HH.span [ HP.class_ BS.srOnly ] [] ] ]
 
-projects (Just (Left s)) =
-  listGroup $ mkErrorMsg (printError s)
+projects (Just (Left s)) = listGroup $ mkErrorMsg (printError s)
 
 projects (Just (Right s)) =
   let
