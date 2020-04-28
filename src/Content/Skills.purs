@@ -20,10 +20,11 @@ module Content.Skills
   ) where
 
 import Attributes
+
 import Assets as A
 import CSS as CSS
 import CSS.Common (auto)
-import Category (category)
+import Category (category, subcategory, subcategoryHidden)
 import Data.Maybe as M
 import Data.Tuple (Tuple(..))
 import Format (para, h6)
@@ -510,21 +511,24 @@ mkSkillLink id desc =
 technicalSkills :: forall w i. HH.HTML w i
 technicalSkills =
   category "skills" "Technical skills"
-    [ HH.div [ HC.style (CSS.justifyContent CSS.spaceAround) ]
-        $ map (\(Tuple s i) -> mkSkillLink s i)
-            [ (Tuple "purescript" purescript)
-            , (Tuple "elm" elm)
-            , (Tuple "cpp" cpp)
-            , (Tuple "haskell" haskell)
-            , (Tuple "c" c)
-            , (Tuple "lua" lua)
-            , (Tuple "js" javascript)
-            , (Tuple "csharp" csharp)
-            , (Tuple "coffeescript" coffeescript)
-            , (Tuple "ruby" ruby)
-            , (Tuple "python" python)
-            , (Tuple "html" html)
-            , (Tuple "css" css)
-            , (Tuple "rust" rust)
-            ]
+    [ subcategory "progLanguage" "Languages"
+        [ HH.div [ HC.style (CSS.justifyContent CSS.spaceAround) ]
+            $ map (\(Tuple s i) -> mkSkillLink s i)
+                [ (Tuple "purescript" purescript)
+                , (Tuple "elm" elm)
+                , (Tuple "cpp" cpp)
+                , (Tuple "haskell" haskell)
+                , (Tuple "c" c)
+                , (Tuple "lua" lua)
+                , (Tuple "js" javascript)
+                , (Tuple "csharp" csharp)
+                , (Tuple "coffeescript" coffeescript)
+                , (Tuple "ruby" ruby)
+                , (Tuple "python" python)
+                , (Tuple "html" html)
+                , (Tuple "css" css)
+                , (Tuple "rust" rust)
+                ]
+        ]
+        , subcategoryHidden "progTech" "Other technologies" []
     ]

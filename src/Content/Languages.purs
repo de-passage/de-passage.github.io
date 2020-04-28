@@ -3,7 +3,7 @@ module Languages where
 import Attributes (dataBackdrop, dataDismiss, dataTarget, dataToggle)
 import CSS as CSS
 import CSS.Common (auto)
-import Category (categoryHidden)
+import Category (categoryHidden, subcategory, subcategoryHidden)
 import Data.Tuple.Nested (Tuple3, tuple3, (/\))
 import Halogen as H
 import Halogen.HTML as HH
@@ -114,6 +114,7 @@ languages =
             ]
         ]
   in
-    categoryHidden "languages" "Languages"
-      [ listGroup (map mkListItem langs)
+    categoryHidden "eduCategory" "Education"
+      [ subcategory "languages" "Languages" [ listGroup (map mkListItem langs) ]
+      , subcategoryHidden "education" "Formal Education" []
       ]

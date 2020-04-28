@@ -40,6 +40,7 @@ categoryRaw h b id title content =
           , ARIA.role "button"
           , ARIA.expanded (if b then "true" else "false")
           , ARIA.controls collapseId
+          , HP.class_ BS.textLeft
           , HC.style categoryTitleStyle
           ]
           [ h
@@ -47,9 +48,9 @@ categoryRaw h b id title content =
               [ HH.text title ]
           ]
       , HH.div
-          [ HP.classes (if b then [ BS.collapse, BS.show ] else [ BS.collapse ]), HP.id_ collapseId ]
+          [ HP.classes (if b then [ BS.collapse, BS.show, BS.p0 ] else [ BS.collapse, BS.p0 ]), HP.id_ collapseId ]
           [ HH.div
-              [ HP.classes [ BS.cardBody, BS.textCenter ] ]
+              [ HP.classes [ BS.cardBody, BS.textCenter, BS.p0 ] ]
               content
           ]
       ]
