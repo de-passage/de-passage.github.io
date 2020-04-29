@@ -111,3 +111,9 @@
     overflow-y: auto;
     max-height: 80vh;
 }
+
+.modal-content {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 95vh;
+}

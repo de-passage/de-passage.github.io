@@ -34,7 +34,7 @@ modal id btn title content =
                         [ HP.class_ BS.modalTitle
                         , HP.id_ ("backdropLabel" <> id)
                         ]
-                , HH.div [ HP.classes [ BS.modalBody, BS.textJustify ] ] content
+                , HH.div [ HP.classes [ BS.modalBody, BS.textJustify, (HH.ClassName "modal-content") ] ] content
                 , HH.div [ HP.class_ BS.modalFooter ]
                     [ HH.button
                         [ HP.classes [ BS.btn, BS.btnOutlinePrimary ]
