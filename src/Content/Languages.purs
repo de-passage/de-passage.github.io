@@ -96,8 +96,8 @@ languages =
     mkEducationItem ed =
       listItem_
         [ HH.div [ HP.classes [ BS.row ] ]
-            [ HH.div [ HP.classes [ BS.col12, BS.colLg6, BS.colXl, BS.fontWeightBold ] ] [ HH.text ed.period ]
-            , HH.div [ HP.classes [ BS.col12, BS.colLg6, BS.colXl, BS.fontWeightBold ] ] ed.name
+            [ HH.div [ HP.classes [ BS.col12, BS.colLg6, BS.fontWeightBold ] ] [ HH.text ed.period ]
+            , HH.div [ HP.classes [ BS.col12, BS.colLg6, BS.fontWeightBold ] ] ed.name
             , HH.div [ HP.classes [ BS.col12, BS.colXl ] ] ed.comment
             ]
         ]

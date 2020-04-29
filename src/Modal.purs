@@ -1,9 +1,12 @@
 module Modal where
 
 import Prelude
+
 import Attributes (dataBackdrop, dataDismiss, dataTarget, dataToggle)
+import CSS as CSS
 import DOM.HTML.Indexed (HTMLh1)
 import Halogen.HTML as HH
+import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
@@ -16,7 +19,7 @@ modal ::
   Array (HH.HTML w i) ->
   HH.HTML w i
 modal id btn title content =
-  HH.div_
+  HH.div [ HC.style (CSS.display CSS.flex)]
     [ btn [ dataToggle "modal", dataTarget ("#modal" <> id) ]
     , HH.div
         [ HP.classes [ BS.modal, BS.fade ]
