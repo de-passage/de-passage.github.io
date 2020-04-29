@@ -5656,9 +5656,11 @@ var PS = {};
   var CSS_String = $PS["CSS.String"];
   var CSS_Stylesheet = $PS["CSS.Stylesheet"];
   var Data_Tuple_Nested = $PS["Data.Tuple.Nested"];                
-  var width = CSS_Stylesheet.key(CSS_Size.valSize)(CSS_String.fromString(CSS_Property.isStringKey)("width"));           
+  var width = CSS_Stylesheet.key(CSS_Size.valSize)(CSS_String.fromString(CSS_Property.isStringKey)("width"));
+  var paddingTop = CSS_Stylesheet.key(CSS_Size.valSize)(CSS_String.fromString(CSS_Property.isStringKey)("padding-top"));
   var paddingRight = CSS_Stylesheet.key(CSS_Size.valSize)(CSS_String.fromString(CSS_Property.isStringKey)("padding-right"));
-  var paddingLeft = CSS_Stylesheet.key(CSS_Size.valSize)(CSS_String.fromString(CSS_Property.isStringKey)("padding-left"));    
+  var paddingLeft = CSS_Stylesheet.key(CSS_Size.valSize)(CSS_String.fromString(CSS_Property.isStringKey)("padding-left"));
+  var paddingBottom = CSS_Stylesheet.key(CSS_Size.valSize)(CSS_String.fromString(CSS_Property.isStringKey)("padding-bottom"));
   var padding = function (a) {
       return function (b) {
           return function (c) {
@@ -5684,6 +5686,8 @@ var PS = {};
   exports["height"] = height;
   exports["maxHeight"] = maxHeight;
   exports["padding"] = padding;
+  exports["paddingTop"] = paddingTop;
+  exports["paddingBottom"] = paddingBottom;
   exports["paddingLeft"] = paddingLeft;
   exports["paddingRight"] = paddingRight;
   exports["margin"] = margin;
@@ -6975,7 +6979,9 @@ var PS = {};
   var modalContent = "modal-content";
   var modalBody = "modal-body";        
   var modal = "modal";
-  var mb2 = "mb-2";                                  
+  var mb2 = "mb-2";                  
+  var listInlineItem = "list-inline-item";
+  var listInline = "list-inline";                    
   var listGroupItem = "list-group-item";
   var listGroupFlush = "list-group-flush";
   var listGroup = "list-group";             
@@ -7000,11 +7006,15 @@ var PS = {};
   var btnOutlinePrimary = "btn-outline-primary";
   var btn = "btn";      
   var blockquoteFooter = "blockquote-footer";
-  var blockquote = "blockquote";        
+  var blockquote = "blockquote";     
+  var badgeSecondary = "badge-secondary";
+  var badge = "badge";                  
   var alignMiddle = "align-middle";               
   var alignBottom = "align-bottom";
   exports["alignBottom"] = alignBottom;
   exports["alignMiddle"] = alignMiddle;
+  exports["badge"] = badge;
+  exports["badgeSecondary"] = badgeSecondary;
   exports["blockquote"] = blockquote;
   exports["blockquoteFooter"] = blockquoteFooter;
   exports["btn"] = btn;
@@ -7030,6 +7040,8 @@ var PS = {};
   exports["listGroup"] = listGroup;
   exports["listGroupFlush"] = listGroupFlush;
   exports["listGroupItem"] = listGroupItem;
+  exports["listInline"] = listInline;
+  exports["listInlineItem"] = listInlineItem;
   exports["mb2"] = mb2;
   exports["modal"] = modal;
   exports["modalBody"] = modalBody;
@@ -7129,7 +7141,9 @@ var PS = {};
   $PS["Modal"] = $PS["Modal"] || {};
   var exports = $PS["Modal"];
   var Attributes = $PS["Attributes"];
+  var CSS_Display = $PS["CSS.Display"];
   var DOM_HTML_Indexed_ButtonType = $PS["DOM.HTML.Indexed.ButtonType"];
+  var Halogen_HTML_CSS = $PS["Halogen.HTML.CSS"];
   var Halogen_HTML_Core = $PS["Halogen.HTML.Core"];
   var Halogen_HTML_Elements = $PS["Halogen.HTML.Elements"];
   var Halogen_HTML_Properties = $PS["Halogen.HTML.Properties"];
@@ -7139,7 +7153,7 @@ var PS = {};
       return function (btn) {
           return function (title) {
               return function (content) {
-                  return Halogen_HTML_Elements.div_([ btn([ Attributes.dataToggle("modal"), Attributes.dataTarget("#modal" + id) ]), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.modal, Halogen_Themes_Bootstrap4.fade ]), Halogen_HTML_Properties.id_("modal" + id), Halogen_HTML_Properties.tabIndex(-1 | 0), Attributes.dataBackdrop("static"), Halogen_HTML_Properties_ARIA.role("dialog"), Halogen_HTML_Properties_ARIA.labelledBy("backdropLabel" + id), Halogen_HTML_Properties_ARIA.hidden("true") ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.modalDialog, "modal-window" ]) ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalContent) ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalHeader) ])(title([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalTitle), Halogen_HTML_Properties.id_("backdropLabel" + id) ])), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.modalBody, Halogen_Themes_Bootstrap4.textJustify, "modal-content" ]) ])(content), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalFooter) ])([ Halogen_HTML_Elements.button([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.btn, Halogen_Themes_Bootstrap4.btnOutlinePrimary ]), Attributes.dataDismiss("modal"), Halogen_HTML_Properties.type_(Halogen_HTML_Core.isPropButtonType)(DOM_HTML_Indexed_ButtonType.ButtonButton.value) ])([ Halogen_HTML_Core.text("Close") ]) ]) ]) ]) ]) ]);
+                  return Halogen_HTML_Elements.div([ Halogen_HTML_CSS.style(CSS_Display.display(CSS_Display.flex)) ])([ btn([ Attributes.dataToggle("modal"), Attributes.dataTarget("#modal" + id) ]), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.modal, Halogen_Themes_Bootstrap4.fade ]), Halogen_HTML_Properties.id_("modal" + id), Halogen_HTML_Properties.tabIndex(-1 | 0), Attributes.dataBackdrop("static"), Halogen_HTML_Properties_ARIA.role("dialog"), Halogen_HTML_Properties_ARIA.labelledBy("backdropLabel" + id), Halogen_HTML_Properties_ARIA.hidden("true") ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.modalDialog, "modal-window" ]) ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalContent) ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalHeader) ])(title([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalTitle), Halogen_HTML_Properties.id_("backdropLabel" + id) ])), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.modalBody, Halogen_Themes_Bootstrap4.textJustify, "modal-content" ]) ])(content), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.modalFooter) ])([ Halogen_HTML_Elements.button([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.btn, Halogen_Themes_Bootstrap4.btnOutlinePrimary ]), Attributes.dataDismiss("modal"), Halogen_HTML_Properties.type_(Halogen_HTML_Core.isPropButtonType)(DOM_HTML_Indexed_ButtonType.ButtonButton.value) ])([ Halogen_HTML_Core.text("Close") ]) ]) ]) ]) ]) ]);
               };
           };
       };
@@ -7157,7 +7171,9 @@ var PS = {};
   var CSS_Flexbox = $PS["CSS.Flexbox"];
   var CSS_Geometry = $PS["CSS.Geometry"];
   var CSS_Size = $PS["CSS.Size"];
+  var CSS_Stylesheet = $PS["CSS.Stylesheet"];
   var Category = $PS["Category"];
+  var Control_Bind = $PS["Control.Bind"];
   var Data_Array = $PS["Data.Array"];
   var Data_Functor = $PS["Data.Functor"];
   var Data_Maybe = $PS["Data.Maybe"];
@@ -7342,9 +7358,18 @@ var PS = {};
       content: [ Format.para("C is an emblematic language and the first non proprietary language I learned (technically the first language\x0a          I ever programmed in was TI Basic but not for a very long time). It is also a very old language and not \x0a          one I would ever use nor recommend for any real application anymore. Although it can be argued that the \x0a          its feature set involve very little cost compared to raw assembly languages, there is nothing it does that \x0a          cannot be done equally well in C++. It also lacks any form of support for type level programming and code\x0a          generation (unless you really want to program with macros, which I wouldn't recommend). \x0a          "), Format.para("I quickly transitionned to C++ and never looked back. The language itself is simple enough that I \x0a          am confident that I could pick it up and work with it again if needed.\x0a          "), Format.para("Since I haven't written any code in C in a long time, I currently do not have any project in C.") ],
       quote: Data_Maybe.Nothing.value
   };
-  var technicalSkills = Category.category("skills")("Technical skills")([ Category.subcategory("progLanguage")("Languages")([ Halogen_HTML_Elements.div([ Halogen_HTML_CSS.style(CSS_Flexbox.justifyContent(CSS_Flexbox.spaceAround(CSS_Flexbox.spaceAroundJustifyContentValue))) ])(Data_Functor.map(Data_Functor.functorArray)(function (v) {
-      return mkSkillLink(v.value0)(v.value1);
-  })([ new Data_Tuple.Tuple("purescript", purescript), new Data_Tuple.Tuple("elm", elm), new Data_Tuple.Tuple("cpp", cpp), new Data_Tuple.Tuple("haskell", haskell), new Data_Tuple.Tuple("c", c), new Data_Tuple.Tuple("lua", lua), new Data_Tuple.Tuple("js", javascript), new Data_Tuple.Tuple("csharp", csharp), new Data_Tuple.Tuple("coffeescript", coffeescript), new Data_Tuple.Tuple("ruby", ruby), new Data_Tuple.Tuple("python", python), new Data_Tuple.Tuple("html", html), new Data_Tuple.Tuple("css", css), new Data_Tuple.Tuple("rust", rust) ])) ]), Category.subcategoryHidden("progTech")("Other technologies")([  ]) ]);
+  var technicalSkills = (function () {
+      var st = Control_Bind.discard(Control_Bind.discardUnit)(CSS_Stylesheet.bindStyleM)(CSS_Flexbox.justifyContent(CSS_Flexbox.spaceAround(CSS_Flexbox.spaceAroundJustifyContentValue)))(function () {
+          return Control_Bind.discard(Control_Bind.discardUnit)(CSS_Stylesheet.bindStyleM)(CSS_Geometry.paddingTop(CSS_Size.px(10.0)))(function () {
+              return CSS_Geometry.paddingBottom(CSS_Size.px(10.0));
+          });
+      });
+      return Category.category("skills")("Technical skills")([ Category.subcategory("progLanguage")("Languages")([ Halogen_HTML_Elements.div([ Halogen_HTML_CSS.style(st) ])(Data_Functor.map(Data_Functor.functorArray)(function (v) {
+          return mkSkillLink(v.value0)(v.value1);
+      })([ new Data_Tuple.Tuple("purescript", purescript), new Data_Tuple.Tuple("elm", elm), new Data_Tuple.Tuple("cpp", cpp), new Data_Tuple.Tuple("haskell", haskell), new Data_Tuple.Tuple("c", c), new Data_Tuple.Tuple("lua", lua), new Data_Tuple.Tuple("js", javascript), new Data_Tuple.Tuple("csharp", csharp), new Data_Tuple.Tuple("coffeescript", coffeescript), new Data_Tuple.Tuple("ruby", ruby), new Data_Tuple.Tuple("python", python), new Data_Tuple.Tuple("html", html), new Data_Tuple.Tuple("css", css), new Data_Tuple.Tuple("rust", rust) ])) ]), Category.subcategoryHidden("progTech")("Other technologies")([ Format.para("A non exhaustive list of technologies and frameworks I have worked with."), Halogen_HTML_Elements.ul([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.listInline ]) ])(Data_Functor.map(Data_Functor.functorArray)(function (s) {
+          return Halogen_HTML_Elements.li([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.listInlineItem ]) ])([ Halogen_HTML_Elements.span([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.badge, Halogen_Themes_Bootstrap4.badgeSecondary ]) ])([ Halogen_HTML_Core.text(s) ]) ]);
+      })([ "Git", "SQL (PostGreSQL)", "NoSQL DBMS (MongoDB)", "Linux CLI", "Clang toolchain", "gdb", "CMake/make", "dotTrace/dotMemory", ".NET", "Qt", "Boost", "WPF", "Node.js", "React", "Vuejs", "Django", "Ruby on Rails", "JIRA" ])) ]) ]);
+  })();
   exports["technicalSkills"] = technicalSkills;
 })(PS);
 (function($PS) {
@@ -12051,7 +12076,7 @@ var PS = {};
           })(v.value1.value1.value0) ]);
       };
       var mkEducationItem = function (ed) {
-          return Lists.listItem_([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.row ]) ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.col12, Halogen_Themes_Bootstrap4.colLg6, Halogen_Themes_Bootstrap4.colXl, Halogen_Themes_Bootstrap4.fontWeightBold ]) ])([ Halogen_HTML_Core.text(ed.period) ]), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.col12, Halogen_Themes_Bootstrap4.colLg6, Halogen_Themes_Bootstrap4.colXl, Halogen_Themes_Bootstrap4.fontWeightBold ]) ])(ed.name), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.col12, Halogen_Themes_Bootstrap4.colXl ]) ])(ed.comment) ]) ]);
+          return Lists.listItem_([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.row ]) ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.col12, Halogen_Themes_Bootstrap4.colLg6, Halogen_Themes_Bootstrap4.fontWeightBold ]) ])([ Halogen_HTML_Core.text(ed.period) ]), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.col12, Halogen_Themes_Bootstrap4.colLg6, Halogen_Themes_Bootstrap4.fontWeightBold ]) ])(ed.name), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.col12, Halogen_Themes_Bootstrap4.colXl, Halogen_Themes_Bootstrap4.textJustify ]) ])(ed.comment) ]) ]);
       };
       var langs = [ Data_Tuple_Nested.tuple3("French")("Native")([ Halogen_HTML_Elements.p([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.textJustify) ])([ Halogen_HTML_Core.text("I was born and raised in France, near Paris.\x0a               Although my website is in English and I don't use French much anymore,\x0a                it is still my mother tongue.") ]) ]), Data_Tuple_Nested.tuple3("English")("Near Bilingual")([ Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text(" I learned English as a teenager watching American TV shows. As my\x0a                  interests expanded into programming and I started living abroad, I naturally \x0a                  had both the incentive and the opportunity to improve my language abilities by\x0a                  reading technical litterature, watching various online content and interacting\x0a                  in English with others.\x0a                  ") ]), Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("Nowadays, most of my life is conducted in English.") ]), Halogen_HTML_Elements.h6_([ Halogen_HTML_Core.text("Certifications") ]), Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("TOIEC Passed in 2013 with 990 points.") ]) ]), Data_Tuple_Nested.tuple3("Japanese")("Fluent")([ Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text(" I started learning Japanese at around 16 years old, but my language\x0a                  ability only really took off during my studies at Meiji University, Japan,\x0a                  between 2012 and 2014. I studied on my own and achieved a fairly high level\x0a                  by the time I left Japan.\x0a                  ") ]), Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text(" I have since then done my best to maintain fluency both in speaking and writting.\x0a                  ") ]), Halogen_HTML_Elements.h6_([ Halogen_HTML_Core.text("Certifications") ]), Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("JLPT N1 Passed in 2014.") ]) ]) ];
       var css = Control_Bind.discard(Control_Bind.discardUnit)(CSS_Stylesheet.bindStyleM)(CSS_Display.display(CSS_Display.inlineBlock))(function () {
@@ -12062,7 +12087,6 @@ var PS = {};
   exports["languages"] = languages;
 })(PS);
 (function($PS) {
-  // Generated by purs version 0.13.6
   "use strict";
   $PS["Personal"] = $PS["Personal"] || {};
   var exports = $PS["Personal"];
@@ -12133,7 +12157,7 @@ var PS = {};
               return Halogen_HTML_Elements.a([ Halogen_HTML_Properties.title(r.title), Halogen_HTML_Properties.href(r.url), mkClass(r.id), Halogen_HTML_CSS.style(Control_Apply.applySecond(CSS_Stylesheet.applyStyleM)(linkStyle)(s)) ])([  ]);
           };
       };
-      var dl = Halogen_HTML_Elements.a([ Halogen_HTML_Properties.title("Download"), Halogen_HTML_Properties.href(Assets.resume), Halogen_HTML_Properties.download("download"), mkClass("download"), Halogen_HTML_CSS.style(linkStyle) ])([  ]);
+      var dl = Halogen_HTML_Elements.a([ Halogen_HTML_Properties.title("Download"), Halogen_HTML_Properties.href(Assets.resume), Halogen_HTML_Properties.download("Sylvain Leclercq"), mkClass("download"), Halogen_HTML_CSS.style(linkStyle) ])([  ]);
       var css = Control_Bind.discard(Control_Bind.discardUnit)(CSS_Stylesheet.bindStyleM)(CSS_Display.display(CSS_Display.flex))(function () {
           return Control_Bind.discard(Control_Bind.discardUnit)(CSS_Stylesheet.bindStyleM)(CSS_Flexbox.justifyContent(CSS_Flexbox.spaceAround(CSS_Flexbox.spaceAroundJustifyContentValue)))(function () {
               return Control_Bind.discard(Control_Bind.discardUnit)(CSS_Stylesheet.bindStyleM)(CSS_Geometry.paddingRight(CSS_Size.px(0.0)))(function () {
@@ -12153,7 +12177,6 @@ var PS = {};
   exports["personalInformation"] = personalInformation;
 })(PS);
 (function($PS) {
-  // Generated by purs version 0.13.6
   "use strict";
   $PS["Projects"] = $PS["Projects"] || {};
   var exports = $PS["Projects"];
