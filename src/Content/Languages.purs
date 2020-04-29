@@ -3,6 +3,7 @@ module Languages where
 import Attributes (dataBackdrop, dataDismiss, dataTarget, dataToggle)
 import CSS as CSS
 import CSS.Common (auto)
+import CSS.Overflow as CSS.Overflow
 import Category (categoryHidden, subcategory, subcategoryHidden)
 import Data.Tuple.Nested (Tuple3, tuple3, (/\))
 import Halogen as H
@@ -12,7 +13,7 @@ import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
 import Lists (listGroup, listItem_, ListItem)
-import Prelude ((<>), map, discard, negate)
+import Prelude (discard, map, negate, ($), (*>), (<>))
 
 languages :: forall w i. HH.HTML w i
 languages =
@@ -90,7 +91,7 @@ languages =
             , ARIA.labelledBy ("backdropLabel" <> lang)
             , ARIA.hidden "true"
             ]
-            [ HH.div [ HP.classes [ BS.modalDialog, (HH.ClassName "modal-window")] ]
+            [ HH.div [ HP.classes [ BS.modalDialog, (HH.ClassName "modal-window") ] ]
                 [ HH.div [ HP.class_ BS.modalContent ]
                     [ HH.div [ HP.class_ BS.modalHeader ]
                         [ HH.h3
@@ -113,8 +114,55 @@ languages =
                 ]
             ]
         ]
+
+    mkEducationItem :: Education w i -> ListItem w i
+    mkEducationItem ed =
+      listItem_
+        [ HH.div [ HP.class_ BS.row ]
+            [ HH.div [ HP.classes [ BS.col12, BS.colLg6, BS.colXl ] ] [ HH.text ed.period ]
+            , HH.div [ HP.classes [ BS.col12, BS.colLg6, BS.colXl ] ] ed.name
+            , HH.div [ HP.classes [ BS.col12, BS.colXl ] ] ed.comment
+            ]
+        ]
   in
     categoryHidden "eduCategory" "Education"
       [ subcategory "languages" "Languages" [ listGroup (map mkListItem langs) ]
-      , subcategoryHidden "education" "Formal Education" []
+      , subcategoryHidden "education" "Formal Education"
+          [ HH.div [ HC.style (CSS.Overflow.overflowX CSS.Overflow.overflowAuto *> CSS.maxHeight (CSS.vh 60.0)) ]
+              [ listGroup $ map mkEducationItem education ]
+          ]
       ]
+
+type Education w i
+  = { period :: String
+    , name :: Array (HH.HTML w i)
+    , comment :: Array (HH.HTML w i)
+    }
+
+education :: forall w i. Array (Education w i)
+education =
+  [ { period: "2010 - 2014"
+    , name: [ HH.text "Ecole Supérieure de Commerce et de Management" ]
+    , comment:
+        [ HH.a [ HP.href "https://en.wikipedia.org/wiki/Grandes_%C3%A9coles" ] [ HH.text "Grande école" ]
+        , HH.text " , business school, 4th and 5th semester spent as an exchange student in Meiji University, Japan"
+        ]
+    }
+  , { period: "2008 - 2010"
+    , name:
+        [ HH.a [ HP.href "https://en.wikipedia.org/wiki/Classe_pr%C3%A9paratoire_aux_grandes_%C3%A9coles" ]
+            [ HH.text "CPGE" ]
+        ]
+    , comment:
+        [ HH.text "2 years of preparatory classes for the entrance exams to the french  "
+        , HH.a [ HP.href "https://en.wikipedia.org/wiki/Grandes_%C3%A9coles" ] [ HH.text "grande écoles" ]
+        ]
+    }
+  , { period: "2008"
+    , name:
+        [ HH.a [ HP.href "https://en.wikipedia.org/wiki/Baccalaur%C3%A9at" ]
+            [ HH.text "Baccalauréat" ]
+        ]
+    , comment: [ HH.text "French high school degree" ]
+    }
+  ]

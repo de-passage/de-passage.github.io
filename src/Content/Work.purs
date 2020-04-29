@@ -83,13 +83,13 @@ mkExperience exp =
                 situation."""
             ]
         , HH.div
-            [ HC.style (CSS.Overflow.overflow CSS.Overflow.overflowAuto *> CSS.height (CSS.px 300.0)) ]
+            [ HC.style (CSS.Overflow.overflow CSS.Overflow.overflowAuto *> CSS.maxHeight (CSS.vh 60.0)) ]
             [ HH.table [ HP.class_ BS.table ]
                 [ HH.thead_
                     [ HH.tr_
                         [ HH.th [ scopeCol ] [ HH.text "Year" ]
                         , HH.th [ scopeCol ] [ HH.text "Duration" ]
-                        , HH.th [ scopeCol ] [ HH.text "Job" ]
+                        , HH.th [ scopeCol ] [ HH.text "Job" ]  
                         , HH.th [ scopeCol ] [ HH.text "Location" ]
                         ]
                     ]
