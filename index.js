@@ -6716,7 +6716,7 @@ var PS = {};
   };
   var rustIcon = "rust";
   var rubyIcon = "ruby";
-  var resume = "assets/resume.pdf";
+  var resume = "assets/resume_sylvain_leclercq.pdf";
   var pythonIcon = "python";
   var purescriptIcon = "purescript";
   var luaIcon = "lua";
