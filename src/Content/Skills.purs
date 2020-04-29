@@ -33,7 +33,7 @@ import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
 import Halogen.Themes.Bootstrap4 as BS
 import Modal (modal)
-import Prelude (($), map)
+import Prelude (($), map, discard)
 
 type UrlSource
   = { url :: String
@@ -474,36 +474,69 @@ mkSkillLink id desc =
               ]
         )
         ( \a ->
-              [ A.icon desc.icon 5.0
-              , HH.h3
-                  (a `snoc` HC.style (CSS.margin auto auto auto auto))
-                  [ HH.a [ HP.href desc.url ] [ HH.text desc.title ] ]
-              ]
+            [ A.icon desc.icon 5.0
+            , HH.h3
+                (a `snoc` HC.style (CSS.margin auto auto auto auto))
+                [ HH.a [ HP.href desc.url ] [ HH.text desc.title ] ]
+            ]
         )
         (quote desc.quote desc.content)
     ]
 
 technicalSkills :: forall w i. HH.HTML w i
 technicalSkills =
-  category "skills" "Technical skills"
-    [ subcategory "progLanguage" "Languages"
-        [ HH.div [ HC.style (CSS.justifyContent CSS.spaceAround) ]
-            $ map (\(Tuple s i) -> mkSkillLink s i)
-                [ (Tuple "purescript" purescript)
-                , (Tuple "elm" elm)
-                , (Tuple "cpp" cpp)
-                , (Tuple "haskell" haskell)
-                , (Tuple "c" c)
-                , (Tuple "lua" lua)
-                , (Tuple "js" javascript)
-                , (Tuple "csharp" csharp)
-                , (Tuple "coffeescript" coffeescript)
-                , (Tuple "ruby" ruby)
-                , (Tuple "python" python)
-                , (Tuple "html" html)
-                , (Tuple "css" css)
-                , (Tuple "rust" rust)
-                ]
-        ]
-    , subcategoryHidden "progTech" "Other technologies" []
-    ]
+  let
+    st = do
+      CSS.justifyContent CSS.spaceAround
+      CSS.paddingTop (CSS.px 10.0)
+      CSS.paddingBottom (CSS.px 10.0)
+  in
+    category "skills" "Technical skills"
+      [ subcategory "progLanguage" "Languages"
+          [ HH.div [ HC.style st ]
+              $ map (\(Tuple s i) -> mkSkillLink s i)
+                  [ (Tuple "purescript" purescript)
+                  , (Tuple "elm" elm)
+                  , (Tuple "cpp" cpp)
+                  , (Tuple "haskell" haskell)
+                  , (Tuple "c" c)
+                  , (Tuple "lua" lua)
+                  , (Tuple "js" javascript)
+                  , (Tuple "csharp" csharp)
+                  , (Tuple "coffeescript" coffeescript)
+                  , (Tuple "ruby" ruby)
+                  , (Tuple "python" python)
+                  , (Tuple "html" html)
+                  , (Tuple "css" css)
+                  , (Tuple "rust" rust)
+                  ]
+          ]
+      , subcategoryHidden "progTech" "Other technologies"
+          [ para """A non exhaustive list of technologies and frameworks I have worked with."""
+          , HH.ul [ HP.classes [ BS.listInline ] ]
+              $ map
+                  ( \s ->
+                      HH.li [ HP.classes [ BS.listInlineItem ] ]
+                        [ HH.span [ HP.classes [ BS.badge, BS.badgeSecondary ] ] [ HH.text s ] ]
+                  )
+                  [ "Git"
+                  , "SQL (PostGreSQL)"
+                  , "NoSQL DBMS (MongoDB)"
+                  , "Linux CLI"
+                  , "Clang toolchain"
+                  , "gdb"
+                  , "CMake/make"
+                  , "dotTrace/dotMemory"
+                  , ".NET"
+                  , "Qt"
+                  , "Boost"
+                  , "WPF"
+                  , "Node.js"
+                  , "React"
+                  , "Vuejs"
+                  , "Django"
+                  , "Ruby on Rails"
+                  , "JIRA"
+                  ]
+          ]
+      ]

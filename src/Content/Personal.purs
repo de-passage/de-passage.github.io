@@ -75,7 +75,7 @@ personalInformation =
       HH.a
         [ HP.title "Download"
         , HP.href A.resume
-        , HP.download "download"
+        , HP.download "Sylvain Leclercq"
         , mkClass "download"
         , HC.style linkStyle
         ]

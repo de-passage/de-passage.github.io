@@ -11,8 +11,8 @@ import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
 import Halogen.Themes.Bootstrap4 as BS
 import Lists (listGroup, listItem_, ListItem)
-import Prelude (discard, map, ($), (*>), (<>))
 import Modal (modal)
+import Prelude (discard, map, ($), (*>), (<>))
 
 languages :: forall w i. HH.HTML w i
 languages =
@@ -98,7 +98,7 @@ languages =
         [ HH.div [ HP.classes [ BS.row ] ]
             [ HH.div [ HP.classes [ BS.col12, BS.colLg6, BS.fontWeightBold ] ] [ HH.text ed.period ]
             , HH.div [ HP.classes [ BS.col12, BS.colLg6, BS.fontWeightBold ] ] ed.name
-            , HH.div [ HP.classes [ BS.col12, BS.colXl ] ] ed.comment
+            , HH.div [ HP.classes [ BS.col12, BS.colXl, BS.textJustify ] ] ed.comment
             ]
         ]
   in
