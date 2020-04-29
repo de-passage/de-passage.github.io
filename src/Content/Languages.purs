@@ -85,7 +85,6 @@ languages =
                   ]
             )
             ( \a ->
-                HH.div_
                   [ HH.h3 a [ HH.text lang ]
                   , HH.h4 [ HC.style (CSS.marginTop auto) ] [ HH.text prof ]
                   ]

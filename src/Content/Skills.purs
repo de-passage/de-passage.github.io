@@ -19,12 +19,11 @@ module Content.Skills
   , UrlSource(..)
   ) where
 
-import Attributes
-
 import Assets as A
 import CSS as CSS
 import CSS.Common (auto)
 import Category (category, subcategory, subcategoryHidden)
+import Data.Array (snoc)
 import Data.Maybe as M
 import Data.Tuple (Tuple(..))
 import Format (para, h6)
@@ -32,9 +31,9 @@ import Halogen.HTML (p_, text)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
-import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
-import Prelude (($), map, (<>), negate)
+import Modal (modal)
+import Prelude (($), map)
 
 type UrlSource
   = { url :: String
@@ -467,45 +466,21 @@ mkSkillLink :: forall w i. String -> SkillDescription w i -> HH.HTML w i
 mkSkillLink id desc =
   HH.div
     [ HP.class_ BS.card, HC.style (CSS.display CSS.inlineBlock) ]
-    [ HH.button
-        [ dataToggle "modal"
-        , dataTarget ("#modal" <> id)
-        , HP.title desc.title
-        ]
-        [ A.iconS desc.icon [ HP.class_ (HH.ClassName "skillIcon") ]
-        ]
-    , HH.div
-        [ HP.classes [ BS.modal, BS.fade ]
-        , HP.id_ ("modal" <> id)
-        , HP.tabIndex (-1)
-        , dataBackdrop "static"
-        , ARIA.role "dialog"
-        , ARIA.labelledBy ("backdropLabel" <> id)
-        , ARIA.hidden "true"
-        ]
-        [ HH.div [ HP.classes [ BS.modalDialog, (HH.ClassName "modal-window") ] ]
-            [ HH.div [ HP.class_ BS.modalContent ]
-                [ HH.div [ HP.class_ BS.modalHeader ]
-                    [ A.icon desc.icon 5.0
-                    , HH.h3
-                        [ HP.class_ BS.modalTitle
-                        , HC.style (CSS.margin auto auto auto auto)
-                        , HP.id_ ("backdropLabel" <> id)
-                        ]
-                        [ HH.a [ HP.href desc.url ] [ HH.text desc.title ] ]
-                    ]
-                , HH.div [ HP.classes [ BS.modalBody, BS.textJustify ] ] (quote desc.quote desc.content)
-                , HH.div [ HP.class_ BS.modalFooter ]
-                    [ HH.button
-                        [ HP.classes [ BS.btn, BS.btnOutlinePrimary ]
-                        , dataDismiss "modal"
-                        , HP.type_ HP.ButtonButton
-                        ]
-                        [ HH.text "Close" ]
-                    ]
-                ]
-            ]
-        ]
+    [ modal id
+        ( \a ->
+            HH.button
+              (a `snoc` HP.title desc.title)
+              [ A.iconS desc.icon [ HP.class_ (HH.ClassName "skillIcon") ]
+              ]
+        )
+        ( \a ->
+              [ A.icon desc.icon 5.0
+              , HH.h3
+                  (a `snoc` HC.style (CSS.margin auto auto auto auto))
+                  [ HH.a [ HP.href desc.url ] [ HH.text desc.title ] ]
+              ]
+        )
+        (quote desc.quote desc.content)
     ]
 
 technicalSkills :: forall w i. HH.HTML w i
@@ -530,5 +505,5 @@ technicalSkills =
                 , (Tuple "rust" rust)
                 ]
         ]
-        , subcategoryHidden "progTech" "Other technologies" []
+    , subcategoryHidden "progTech" "Other technologies" []
     ]

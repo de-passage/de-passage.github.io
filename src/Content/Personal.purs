@@ -1,7 +1,7 @@
 module Personal where
 
 import Assets as A
-import Attributes (dataBackdrop, dataDismiss, dataTarget, dataToggle, scopeRow)
+import Attributes (scopeRow)
 import CSS as CSS
 import CSS.Common (auto, none)
 import Category (category)
@@ -13,7 +13,8 @@ import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
 import Lists (listGroup, listItem)
-import Prelude (map, (<>), discard, (*>), negate)
+import Modal (modal)
+import Prelude (map, (<>), discard, (*>))
 
 type Media
   = { title :: String, id :: String, url :: String }
@@ -87,46 +88,23 @@ personalInformation =
                   [ HH.div [ HP.classes [ BS.col ] ]
                       [ HH.img [ HP.class_ (HH.ClassName "profile-picture"), HP.src "/assets/me.jpg" ] ]
                   , HH.div [ HP.classes [ BS.col ], HC.style css ]
-                      [ {- socialMediaS blog additionalStyle, -} HH.a
-                          [ ARIA.role "button"
-                          , dataToggle "modal"
-                          , dataTarget ("#modalBio")
-                          , HP.title "Biography"
-                          , mkClass "info-circle"
-                          , HC.style (linkStyle *> additionalStyle)
-                          ]
-                          []
-                      , HH.div
-                          [ HP.classes [ BS.modal, BS.fade ]
-                          , HP.id_ ("modalBio")
-                          , HP.tabIndex (-1)
-                          , dataBackdrop "static"
-                          , ARIA.role "dialog"
-                          , ARIA.labelledBy ("backdropLabelBio")
-                          , ARIA.hidden "true"
-                          ]
-                          [ HH.div [ HP.classes [ BS.modalDialog, (HH.ClassName "modal-window") ] ]
-                              [ HH.div [ HP.class_ BS.modalContent ]
-                                  [ HH.div [ HP.class_ BS.modalHeader ]
-                                      [ HH.h3
-                                          [ HP.class_ BS.modalTitle
-                                          , HC.style (CSS.margin auto auto auto auto)
-                                          , HP.id_ ("backdropLabelBio")
-                                          ]
-                                          [ HH.text "About me" ]
-                                      ]
-                                  , HH.div [ HP.classes [ BS.modalBody, BS.textJustify ] ] aboutMe
-                                  , HH.div [ HP.class_ BS.modalFooter ]
-                                      [ HH.button
-                                          [ HP.classes [ BS.btn, BS.btnOutlinePrimary ]
-                                          , dataDismiss "modal"
-                                          , HP.type_ HP.ButtonButton
-                                          ]
-                                          [ HH.text "Close" ]
-                                      ]
+                      [ {- socialMediaS blog additionalStyle, -} modal "Bio"
+                          ( \a ->
+                              HH.a
+                                ( [ ARIA.role "button"
+                                  , HP.title "Biography"
+                                  , mkClass "info-circle"
+                                  , HC.style (linkStyle *> additionalStyle)
                                   ]
-                              ]
-                          ]
+                                    <> a
+                                )
+                                []
+                          )
+                          ( \a ->
+                              [ HH.h3 ([ HC.style (CSS.margin auto auto auto auto) ] <> a)
+                                [ HH.text "About me" ] ]
+                          )
+                          aboutMe
                       ]
                   ]
               ]
@@ -137,10 +115,8 @@ personalInformation =
 aboutMe :: forall w i. Array (HH.HTML w i)
 aboutMe =
   [ HH.div [ HC.style (CSS.width (CSS.pct 100.0)) ]
-      [ 
-           HH.img [ HP.class_ (HH.ClassName "bio-picture"), HP.src "/assets/me.jpg" ]
-      , HH.p [ HC.style (CSS.float none)]
-          
+      [ HH.img [ HP.class_ (HH.ClassName "bio-picture"), HP.src "/assets/me.jpg" ]
+      , HH.p [ HC.style (CSS.float none) ]
           [ HH.text
               """After almost 15 years of programming as a passion, I decided a couple years 
         ago to follow my calling and become a full-time software engineer."""
@@ -177,18 +153,18 @@ aboutMe =
         reached the end of high school, I didn't see it as anything more than a hobby and I went on to study 
         management in university."""
   , para
-    """I moved to Japan in early 2012 as an exchange student, and lived there until mid-2014. I then dropped out of 
+      """I moved to Japan in early 2012 as an exchange student, and lived there until mid-2014. I then dropped out of 
       university as I realized that management wasn't my calling and went on to travel the world. From there, 
       I spent a year in South Korea, 5 months in Taiwan and a year in Australia, before going back to France in late 2017."""
-  , para 
-    """This was also the moment I decided I would pursue software engineering as a career, after over 13 years of 
+  , para
+      """This was also the moment I decided I would pursue software engineering as a career, after over 13 years of 
       self study. I worked for almost two years as a C++ and C# engineer on desktop applications at Nexter Systems, 
       before growing sufficiently dissatisfied with the management of the IT projects and quitting in December 2019."""
   ]
 
 tableRow :: forall w i. String -> Array (HH.HTML w i) -> HH.HTML w i
 tableRow title content =
-  HH.tr [ HP.class_ (HH.ClassName "bio-table")]
+  HH.tr [ HP.class_ (HH.ClassName "bio-table") ]
     [ HH.th [ scopeRow ] [ HH.text title ]
     , HH.td_ content
     ]
