@@ -84,7 +84,7 @@ projects (Just (Right s)) =
     prjkts = either mkErrorMsg decodeThenMk parsed
   in
     categoryHidden "projects" "Projects"
-      [ listGroupC [ BS.textLeft ] prjkts
+      [ listGroupC [ BS.textLeft, (HH.ClassName "project-list") ] prjkts
       ]
   where
   decodeThenMk :: forall x j. Json -> Array (ListItem x j)

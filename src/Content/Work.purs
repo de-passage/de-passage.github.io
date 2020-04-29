@@ -58,25 +58,9 @@ nexter =
 workExperience :: forall w i. HH.HTML w i
 workExperience =
   categoryHidden "work" "Work Experience"
-    $ map mkExperience [ nexter ]
-
-mkExperience :: forall w i. Experience w i -> HH.HTML w i
-mkExperience exp =
-  HH.div [ HP.classes [ BS.textJustify ] ]
-    [ HH.div
-        [ HP.classes [ BS.row, BS.mb2 ] ]
-        [ HH.h3
-            [ HP.classes [ BS.col, BS.mtAuto ] ]
-            [ HH.a
-                [ HP.href exp.url ]
-                [ HH.text exp.company ]
-            ]
-        , HH.h5 [ HP.classes [ BS.col, BS.mtAuto ] ] [ HH.text exp.job ]
-        ]
-    , HH.h5 [ HP.class_ BS.mb2 ] [ HH.text exp.period ]
-    , HH.div_ exp.description
+    [ HH.div [ HP.class_ (HH.ClassName "work-experience") ] $ map mkExperience [ nexter ]
     , subcategoryHidden "otherwork" "Other work experiences"
-        [ HH.p [ HP.class_ BS.textLeft ]
+        [ HH.p [ HP.classes [ BS.textLeft, BS.p2 ] ]
             [ HH.text
                 """From 2011 to 2017 I occupied a number of unqualified positions around the world.
                 Most of them were short term, sometimes volunteering, and in general irrelevant to my current 
@@ -98,15 +82,32 @@ mkExperience exp =
             ]
         ]
     ]
-  where
-  mkRow :: Job -> HH.HTML w i
-  mkRow job =
-    HH.tr_
-      [ HH.th [ scopeRow ] [ HH.text job.year ]
-      , HH.td_ [ HH.text job.duration ]
-      , HH.td_ [ HH.text job.job ]
-      , HH.td_ [ HH.text job.location ]
-      ]
+
+mkExperience :: forall w i. Experience w i -> HH.HTML w i
+mkExperience exp =
+  HH.div [ HP.classes [ BS.textJustify, BS.p2 ] ]
+    [ HH.div
+        [ HP.classes [ BS.row, BS.mb2 ] ]
+        [ HH.h3
+            [ HP.classes [ BS.col, BS.mtAuto ] ]
+            [ HH.a
+                [ HP.href exp.url ]
+                [ HH.text exp.company ]
+            ]
+        , HH.h5 [ HP.classes [ BS.col, BS.mtAuto ] ] [ HH.text exp.job ]
+        ]
+    , HH.h5 [ HP.class_ BS.mb2 ] [ HH.text exp.period ]
+    , HH.div_ exp.description
+    ]
+  
+mkRow :: forall w i. Job -> HH.HTML w i
+mkRow job =
+  HH.tr_
+    [ HH.th [ scopeRow ] [ HH.text job.year ]
+    , HH.td_ [ HH.text job.duration ]
+    , HH.td_ [ HH.text job.job ]
+    , HH.td_ [ HH.text job.location ]
+    ]
 
 type Job
   = { job :: String

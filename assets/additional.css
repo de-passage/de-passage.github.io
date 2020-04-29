@@ -99,3 +99,15 @@
     max-width: 90%;
 }
 }
+
+.work-experience {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 75vh;
+}
+
+.project-list {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 80vh;
+}

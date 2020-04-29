@@ -118,9 +118,9 @@ languages =
     mkEducationItem :: Education w i -> ListItem w i
     mkEducationItem ed =
       listItem_
-        [ HH.div [ HP.class_ BS.row ]
-            [ HH.div [ HP.classes [ BS.col12, BS.colLg6, BS.colXl ] ] [ HH.text ed.period ]
-            , HH.div [ HP.classes [ BS.col12, BS.colLg6, BS.colXl ] ] ed.name
+        [ HH.div [ HP.classes [ BS.row ] ]
+            [ HH.div [ HP.classes [ BS.col12, BS.colLg6, BS.colXl, BS.fontWeightBold ] ] [ HH.text ed.period ]
+            , HH.div [ HP.classes [ BS.col12, BS.colLg6, BS.colXl, BS.fontWeightBold ] ] ed.name
             , HH.div [ HP.classes [ BS.col12, BS.colXl ] ] ed.comment
             ]
         ]
@@ -145,7 +145,7 @@ education =
     , name: [ HH.text "Ecole Supérieure de Commerce et de Management" ]
     , comment:
         [ HH.a [ HP.href "https://en.wikipedia.org/wiki/Grandes_%C3%A9coles" ] [ HH.text "Grande école" ]
-        , HH.text " , business school, 4th and 5th semester spent as an exchange student in Meiji University, Japan"
+        , HH.text " (business school), 4th and 5th semester spent as an exchange student in Meiji University, Japan"
         ]
     }
   , { period: "2008 - 2010"
