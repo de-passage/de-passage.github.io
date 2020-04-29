@@ -27,7 +27,7 @@ nexter =
   , url: "https://www.nexter-group.fr/en"
   , description:
       [ HH.p_
-          [ HH.text "Also I was technically employed by "
+          [ HH.text "Although I was technically employed by "
           , HH.a [ HP.href "https://www.akka-technologies.com/" ]
               [ HH.text "AKKA technologies" ]
           , HH.text " I only went to the office a handful of times. Most of my time was spent working at "

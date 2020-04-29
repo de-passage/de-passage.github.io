@@ -1,6 +1,5 @@
 module Languages where
 
-import Attributes (dataBackdrop, dataDismiss, dataTarget, dataToggle)
 import CSS as CSS
 import CSS.Common (auto)
 import CSS.Overflow as CSS.Overflow
@@ -10,10 +9,10 @@ import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
-import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
 import Lists (listGroup, listItem_, ListItem)
-import Prelude (discard, map, negate, ($), (*>), (<>))
+import Prelude (discard, map, ($), (*>), (<>))
+import Modal (modal)
 
 languages :: forall w i. HH.HTML w i
 languages =
@@ -68,51 +67,30 @@ languages =
     mkListItem :: forall r j. Tuple3 String String (Array (HH.HTML r j)) -> ListItem r j
     mkListItem (lang /\ prof /\ desc /\ _) =
       listItem_
-        [ HH.button
-            [ HP.classes [ BS.btn, (H.ClassName "invisible-btn") ]
-            , dataToggle "modal"
-            , dataTarget ("#modal" <> lang)
-            , HP.title lang
-            ]
-            [ HH.div [ HP.class_ BS.row ]
-                [ HH.div [ HP.classes [ BS.textLeft, BS.col ] ]
-                    [ HH.text lang ]
-                , HH.div [ HP.classes [ BS.textRight, BS.col ] ]
-                    [ HH.text prof ]
-                , HH.div_ [ HH.i [ HP.classes [ BS.alignMiddle, (H.ClassName "fa fa-info-circle") ] ] [] ]
-                ]
-            ]
-        , HH.div
-            [ HP.classes [ BS.modal, BS.fade ]
-            , HP.id_ ("modal" <> lang)
-            , HP.tabIndex (-1)
-            , dataBackdrop "static"
-            , ARIA.role "dialog"
-            , ARIA.labelledBy ("backdropLabel" <> lang)
-            , ARIA.hidden "true"
-            ]
-            [ HH.div [ HP.classes [ BS.modalDialog, (HH.ClassName "modal-window") ] ]
-                [ HH.div [ HP.class_ BS.modalContent ]
-                    [ HH.div [ HP.class_ BS.modalHeader ]
-                        [ HH.h3
-                            [ HP.class_ BS.modalTitle
-                            , HP.id_ ("backdropLabel" <> lang)
-                            ]
-                            [ HH.text lang ]
-                        , HH.h4 [ HC.style (CSS.marginTop auto) ] [ HH.text prof ]
-                        ]
-                    , HH.div [ HP.classes [ BS.modalBody, BS.textJustify ] ] desc
-                    , HH.div [ HP.class_ BS.modalFooter ]
-                        [ HH.button
-                            [ HP.classes [ BS.btn, BS.btnOutlinePrimary ]
-                            , dataDismiss "modal"
-                            , HP.type_ HP.ButtonButton
-                            ]
-                            [ HH.text "Close" ]
-                        ]
+        [ modal lang
+            ( \a ->
+                HH.button
+                  ( [ HP.classes [ BS.btn, (H.ClassName "invisible-btn") ]
+                    , HP.title lang
                     ]
-                ]
-            ]
+                      <> a
+                  )
+                  [ HH.div [ HP.class_ BS.row ]
+                      [ HH.div [ HP.classes [ BS.textLeft, BS.col ] ]
+                          [ HH.text lang ]
+                      , HH.div [ HP.classes [ BS.textRight, BS.col ] ]
+                          [ HH.text prof ]
+                      , HH.div_ [ HH.i [ HP.classes [ BS.alignMiddle, (H.ClassName "fa fa-info-circle") ] ] [] ]
+                      ]
+                  ]
+            )
+            ( \a ->
+                HH.div_
+                  [ HH.h3 a [ HH.text lang ]
+                  , HH.h4 [ HC.style (CSS.marginTop auto) ] [ HH.text prof ]
+                  ]
+            )
+            desc
         ]
 
     mkEducationItem :: Education w i -> ListItem w i
