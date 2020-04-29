@@ -94,4 +94,4 @@ rustIcon :: String
 rustIcon = "rust"
 
 resume :: String 
-resume = "assets/resume.pdf"
+resume = "assets/resume_sylvain_leclercq.pdf"
