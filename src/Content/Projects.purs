@@ -61,7 +61,7 @@ mkProject pro =
           [ HP.class_ BS.row ]
           [ iconDiv
           , HH.div [ HP.classes [ BS.col10, BS.colLg ] ]
-              [ HH.a [ HP.href pro.html_url ] [ HH.text pro.name ] ]
+              [ HH.a [ HP.href pro.html_url, HP.target "_blank" ] [ HH.text pro.name ] ]
           , HH.div [ HP.classes [ BS.col12, BS.colLg ] ]
               [ F.para $ fromMaybe "" pro.description ]
           ]

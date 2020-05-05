@@ -79,7 +79,7 @@ purescript =
       , p_
           [ text "This website is written using Purescript and Halogen."
           , HH.br_
-          , HH.a [ HP.href "https://https://github.com/de-passage/de-passage.github.io" ] [ HH.text "Code" ]
+          , HH.a [ HP.href "https://https://github.com/de-passage/de-passage.github.io", HP.target "_blank" ] [ HH.text "Code" ]
           ]
       ]
   , quote:
@@ -116,9 +116,9 @@ elm =
       , HH.p_
           [ HH.text "I wrote a few simple games using Elm as a way to get into the language."
           , HH.br_
-          , HH.a [ HP.href "/front-end-games.elm/" ] [ HH.text "Live" ]
+          , HH.a [ HP.href "/front-end-games.elm/", HP.target "_blank" ] [ HH.text "Live" ]
           , HH.br_
-          , HH.a [ HP.href "https://github.com/de-passage/front-end-games.elm/" ] [ HH.text "Code" ]
+          , HH.a [ HP.href "https://github.com/de-passage/front-end-games.elm/", HP.target "_blank" ] [ HH.text "Code" ]
           ]
       ]
   , quote:
@@ -181,20 +181,20 @@ cpp =
                     because I couldn't decide of the best way to represent more complicated concepts within the confine of the
                     language. 
                   """
-              , HH.a [ HP.href "https://github.com/de-passage/playing-with-category-theory.cpp" ] [ HH.text "Code" ]
+              , HH.a [ HP.href "https://github.com/de-passage/playing-with-category-theory.cpp", HP.target "_blank" ] [ HH.text "Code" ]
               ]
           , HH.li_
               [ HH.text
                   """A defunct project for code generation through combination of tags. The idea was to create classes 
                 with predefined behaviour, combine them, then customize parts of them.
               """
-              , HH.a [ HP.href "https://github.com/de-passage/properties.cpp" ] [ HH.text "Code" ]
+              , HH.a [ HP.href "https://github.com/de-passage/properties.cpp", HP.target "_blank" ] [ HH.text "Code" ]
               ]
           , HH.li_
               [ HH.text
                   """Hana-style metaprograming project providing a way to create types with mathematical operators.
               """
-              , HH.a [ HP.href "https://github.com/de-passage/algebraic-datatypes.cpp" ] [ HH.text "Code" ]
+              , HH.a [ HP.href "https://github.com/de-passage/algebraic-datatypes.cpp", HP.target "_blank" ] [ HH.text "Code" ]
               ]
           ]
       ]
@@ -217,14 +217,14 @@ haskell =
               """I have not yet gone to the extent of writing a full program in Haskell, although I did it with some
               Haskell derivatives like Elm. Most of the Haskell code I wrote was as part of my learning, using
             """
-          , HH.a [ HP.href "https://codewars.com" ] [ HH.text "codewars.com" ]
+          , HH.a [ HP.href "https://codewars.com", HP.target "_blank" ] [ HH.text "codewars.com" ]
           , HH.text " as a support."
           ]
       , projectTitle
       , HH.p_
           [ HH.text "I have a collection of disparate code fragments solving a variety of problems in Haskell."
           , HH.br_
-          , HH.a [ HP.href "https://https://github.com/de-passage/codewars-solutions" ] [ HH.text "Code" ]
+          , HH.a [ HP.href "https://https://github.com/de-passage/codewars-solutions", HP.target "_blank" ] [ HH.text "Code" ]
           ]
       ]
   , quote:
@@ -329,11 +329,11 @@ coffeescript =
           , HH.br_
           , HH.text "Here is an implementation of Conway's Game of life. "
           , HH.br_
-          , HH.a [ HP.href "https://github.com/de-passage/game-of-life.coffee" ] [ HH.text "Code " ]
+          , HH.a [ HP.href "https://github.com/de-passage/game-of-life.coffee", HP.target "_blank" ] [ HH.text "Code " ]
           , HH.br_
-          , HH.a [ HP.href "https://codepen.io/de-passage/full/WjWExY" ] [ HH.text "Live " ]
+          , HH.a [ HP.href "https://codepen.io/de-passage/full/WjWExY", HP.target "_blank" ] [ HH.text "Live " ]
           , HH.br_
-          , HH.a [ HP.href "https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" ] [ HH.text "Wikipedia" ]
+          , HH.a [ HP.href "https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life", HP.target "_blank" ] [ HH.text "Wikipedia" ]
           ]
       ]
   , quote: M.Nothing
@@ -442,7 +442,7 @@ rust =
   }
 
 cite :: forall w i. Source -> Array (HH.HTML w i)
-cite (USource source) = [ HH.cite [ HP.title source.name ] [ HH.a [ HP.href source.url ] [ HH.text source.name ] ] ]
+cite (USource source) = [ HH.cite [ HP.title source.name ] [ HH.a [ HP.href source.url, HP.target "_blank" ] [ HH.text source.name ] ] ]
 
 cite (Source source) = [ HH.cite [ HP.title source ] [ HH.text source ] ]
 

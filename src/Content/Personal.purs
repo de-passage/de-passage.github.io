@@ -62,10 +62,10 @@ personalInformation =
       CSS.paddingRight (CSS.px 2.0)
       CSS.key (CSS.fromString "cursor") "pointer"
 
-    socialMedia r = HH.a [ HP.title r.title, HP.href r.url, mkClass r.id, HC.style linkStyle ] []
+    socialMedia r = HH.a [ HP.title r.title, HP.href r.url, mkClass r.id, HC.style linkStyle, HP.target "_blank" ] []
 
     socialMediaS :: Media -> CSS.CSS -> HH.HTML w i
-    socialMediaS r s = HH.a [ HP.title r.title, HP.href r.url, mkClass r.id, HC.style (linkStyle *> s) ] []
+    socialMediaS r s = HH.a [ HP.title r.title, HP.href r.url, mkClass r.id, HC.style (linkStyle *> s), HP.target "_blank" ] []
 
     additionalStyle = do
       CSS.margin auto auto auto auto

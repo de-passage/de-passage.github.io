@@ -121,23 +121,23 @@ education =
   [ { period: "2010 - 2014"
     , name: [ HH.text "Ecole Supérieure de Commerce et de Management" ]
     , comment:
-        [ HH.a [ HP.href "https://en.wikipedia.org/wiki/Grandes_%C3%A9coles" ] [ HH.text "Grande école" ]
+        [ HH.a [ HP.href "https://en.wikipedia.org/wiki/Grandes_%C3%A9coles", HP.target "_blank" ] [ HH.text "Grande école" ]
         , HH.text " (business school), 4th and 5th semester spent as an exchange student in Meiji University, Japan"
         ]
     }
   , { period: "2008 - 2010"
     , name:
-        [ HH.a [ HP.href "https://en.wikipedia.org/wiki/Classe_pr%C3%A9paratoire_aux_grandes_%C3%A9coles" ]
+        [ HH.a [ HP.href "https://en.wikipedia.org/wiki/Classe_pr%C3%A9paratoire_aux_grandes_%C3%A9coles", HP.target "_blank" ]
             [ HH.text "CPGE" ]
         ]
     , comment:
         [ HH.text "2 years of preparatory classes for the entrance exams to the french  "
-        , HH.a [ HP.href "https://en.wikipedia.org/wiki/Grandes_%C3%A9coles" ] [ HH.text "grande écoles" ]
+        , HH.a [ HP.href "https://en.wikipedia.org/wiki/Grandes_%C3%A9coles", HP.target "_blank" ] [ HH.text "grande écoles" ]
         ]
     }
   , { period: "2008"
     , name:
-        [ HH.a [ HP.href "https://en.wikipedia.org/wiki/Baccalaur%C3%A9at" ]
+        [ HH.a [ HP.href "https://en.wikipedia.org/wiki/Baccalaur%C3%A9at", HP.target "_blank" ]
             [ HH.text "Baccalauréat" ]
         ]
     , comment: [ HH.text "French high school degree" ]

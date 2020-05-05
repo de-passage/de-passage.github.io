@@ -6536,6 +6536,7 @@ var PS = {};
   };                                                                   
   var src = prop(Halogen_HTML_Core.isPropString)("src");     
   var tabIndex = prop(Halogen_HTML_Core.isPropInt)("tabIndex");
+  var target = prop(Halogen_HTML_Core.isPropString)("target");
   var title = prop(Halogen_HTML_Core.isPropString)("title");
   var type_ = function (dictIsProp) {
       return prop(dictIsProp)("type");
@@ -6566,6 +6567,7 @@ var PS = {};
   exports["href"] = href;
   exports["id_"] = id_;
   exports["src"] = src;
+  exports["target"] = target;
   exports["title"] = title;
   exports["download"] = download;
   exports["type_"] = type_;
@@ -7228,7 +7230,7 @@ var PS = {};
       icon: Assets.purescriptIcon,
       title: "Purescript",
       url: "https://purescript.org",
-      content: [ Format.para(" I started getting interested in Purescript because of its resemblance with Haskell and its focus\x0a              on front-end development. I originally went with Elm, but the limitations of that language eventually\x0a              brought me to seek a language with more expressive power. \x0a            "), Format.para("It is a very interesting language, although the compiler error output is very hard to understand, \x0a          which slows down learning. My experience with the language is fairly limited but I expect to write a lot\x0a          more code using it."), projectTitle, Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("This website is written using Purescript and Halogen."), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://https://github.com/de-passage/de-passage.github.io") ])([ Halogen_HTML_Core.text("Code") ]) ]) ],
+      content: [ Format.para(" I started getting interested in Purescript because of its resemblance with Haskell and its focus\x0a              on front-end development. I originally went with Elm, but the limitations of that language eventually\x0a              brought me to seek a language with more expressive power. \x0a            "), Format.para("It is a very interesting language, although the compiler error output is very hard to understand, \x0a          which slows down learning. My experience with the language is fairly limited but I expect to write a lot\x0a          more code using it."), projectTitle, Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("This website is written using Purescript and Halogen."), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://https://github.com/de-passage/de-passage.github.io"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Code") ]) ]) ],
       quote: new Data_Maybe.Just({
           text: "Purescript is a strongly-typed functional programming language that compiles to JavaScript.",
           source: new USource({
@@ -7269,7 +7271,7 @@ var PS = {};
       icon: Assets.haskellIcon,
       title: "Haskell",
       url: "https://www.haskell.org/",
-      content: [ Format.para("I originally started Haskell because of its reputation as a difficult language, and one that pushes\x0a              to rethink the way one writes software. And it is indeed difficult for anyone used to the imperative \x0a              paradigms. A lot of what I learned with Haskell now pervades my style in other languages as well.\x0a            "), Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("I have not yet gone to the extent of writing a full program in Haskell, although I did it with some\x0a              Haskell derivatives like Elm. Most of the Haskell code I wrote was as part of my learning, using\x0a            "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://codewars.com") ])([ Halogen_HTML_Core.text("codewars.com") ]), Halogen_HTML_Core.text(" as a support.") ]), projectTitle, Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("I have a collection of disparate code fragments solving a variety of problems in Haskell."), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://https://github.com/de-passage/codewars-solutions") ])([ Halogen_HTML_Core.text("Code") ]) ]) ],
+      content: [ Format.para("I originally started Haskell because of its reputation as a difficult language, and one that pushes\x0a              to rethink the way one writes software. And it is indeed difficult for anyone used to the imperative \x0a              paradigms. A lot of what I learned with Haskell now pervades my style in other languages as well.\x0a            "), Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("I have not yet gone to the extent of writing a full program in Haskell, although I did it with some\x0a              Haskell derivatives like Elm. Most of the Haskell code I wrote was as part of my learning, using\x0a            "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://codewars.com"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("codewars.com") ]), Halogen_HTML_Core.text(" as a support.") ]), projectTitle, Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("I have a collection of disparate code fragments solving a variety of problems in Haskell."), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://https://github.com/de-passage/codewars-solutions"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Code") ]) ]) ],
       quote: new Data_Maybe.Just({
           text: "An advanced, purely functional programming language",
           source: new USource({
@@ -7282,7 +7284,7 @@ var PS = {};
       icon: Assets.elmIcon,
       title: "Elm",
       url: "https://elm-lang.org",
-      content: [ Format.para("I started learning Elm as an alternative to Javascript for front-end development. I had already\x0a          been playing with Haskell for a while, and I was sold to the idea that strongly typed languages \x0a          offered a massive advantage over loosely typed ones. Elm has a very well thought out set of \x0a          features and libraries, and getting started and learning the language is a pain-free experience.\x0a          "), Format.para("Unfortunately, the insistence of the language authors to limit the amount of highly abstract features\x0a          (which is understandable considering the target audience) quickly got in my way. I am strongly in \x0a          favor of using high levels of abstraction to develop EDSLs representing the business domain of my \x0a          applications. This is simply not possible using Elm and was the motivation for trying out Purescript\x0a          as an alternative.\x0a          "), projectTitle, Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("I wrote a few simple games using Elm as a way to get into the language."), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("/front-end-games.elm/") ])([ Halogen_HTML_Core.text("Live") ]), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/front-end-games.elm/") ])([ Halogen_HTML_Core.text("Code") ]) ]) ],
+      content: [ Format.para("I started learning Elm as an alternative to Javascript for front-end development. I had already\x0a          been playing with Haskell for a while, and I was sold to the idea that strongly typed languages \x0a          offered a massive advantage over loosely typed ones. Elm has a very well thought out set of \x0a          features and libraries, and getting started and learning the language is a pain-free experience.\x0a          "), Format.para("Unfortunately, the insistence of the language authors to limit the amount of highly abstract features\x0a          (which is understandable considering the target audience) quickly got in my way. I am strongly in \x0a          favor of using high levels of abstraction to develop EDSLs representing the business domain of my \x0a          applications. This is simply not possible using Elm and was the motivation for trying out Purescript\x0a          as an alternative.\x0a          "), projectTitle, Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("I wrote a few simple games using Elm as a way to get into the language."), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("/front-end-games.elm/"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Live") ]), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/front-end-games.elm/"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Code") ]) ]) ],
       quote: new Data_Maybe.Just({
           text: "A delightful language for reliable webapps.",
           source: new USource({
@@ -7309,19 +7311,19 @@ var PS = {};
       icon: Assets.cppIcon,
       title: "C++",
       url: "https://en.wikipedia.org/wiki/C%2B%2B",
-      content: [ Format.para("C++ is the first language that I really enjoyed studying and still one of my favorite languages. I\x0a      have been using it since around 2006 and like it's ability to define EDSLs and generate code through templates.\x0a      It has fairly good support for type level programming and the capacity to produce both very low level, highly\x0a      efficient, and very high level, very highly expressive code. However template metaprogramming is very verbose,\x0a      and lately I've been prefering languages in the Haskell family for their terseness. Developping and deploying\x0a      visually appealing projects in C++ can also be bothersome which fueled my interest for front-end development.\x0a      "), projectTitle, Format.para("Most of my personal projects deal with metaprogramming. It is the subset of C++ that I find the \x0a            most intellectually compelling.\x0a          "), Halogen_HTML_Elements.ul_([ Halogen_HTML_Elements.li_([ Halogen_HTML_Core.text("Definition of some simple concepts of category theory in C++. The project was put on standby\x0a                    because I couldn't decide of the best way to represent more complicated concepts within the confine of the\x0a                    language. \x0a                  "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/playing-with-category-theory.cpp") ])([ Halogen_HTML_Core.text("Code") ]) ]), Halogen_HTML_Elements.li_([ Halogen_HTML_Core.text("A defunct project for code generation through combination of tags. The idea was to create classes \x0a                with predefined behaviour, combine them, then customize parts of them.\x0a              "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/properties.cpp") ])([ Halogen_HTML_Core.text("Code") ]) ]), Halogen_HTML_Elements.li_([ Halogen_HTML_Core.text("Hana-style metaprograming project providing a way to create types with mathematical operators.\x0a              "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/algebraic-datatypes.cpp") ])([ Halogen_HTML_Core.text("Code") ]) ]) ]) ],
+      content: [ Format.para("C++ is the first language that I really enjoyed studying and still one of my favorite languages. I\x0a      have been using it since around 2006 and like it's ability to define EDSLs and generate code through templates.\x0a      It has fairly good support for type level programming and the capacity to produce both very low level, highly\x0a      efficient, and very high level, very highly expressive code. However template metaprogramming is very verbose,\x0a      and lately I've been prefering languages in the Haskell family for their terseness. Developping and deploying\x0a      visually appealing projects in C++ can also be bothersome which fueled my interest for front-end development.\x0a      "), projectTitle, Format.para("Most of my personal projects deal with metaprogramming. It is the subset of C++ that I find the \x0a            most intellectually compelling.\x0a          "), Halogen_HTML_Elements.ul_([ Halogen_HTML_Elements.li_([ Halogen_HTML_Core.text("Definition of some simple concepts of category theory in C++. The project was put on standby\x0a                    because I couldn't decide of the best way to represent more complicated concepts within the confine of the\x0a                    language. \x0a                  "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/playing-with-category-theory.cpp"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Code") ]) ]), Halogen_HTML_Elements.li_([ Halogen_HTML_Core.text("A defunct project for code generation through combination of tags. The idea was to create classes \x0a                with predefined behaviour, combine them, then customize parts of them.\x0a              "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/properties.cpp"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Code") ]) ]), Halogen_HTML_Elements.li_([ Halogen_HTML_Core.text("Hana-style metaprograming project providing a way to create types with mathematical operators.\x0a              "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/algebraic-datatypes.cpp"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Code") ]) ]) ]) ],
       quote: Data_Maybe.Nothing.value
   };
   var coffeescript = {
       icon: Assets.coffeescriptIcon,
       title: "CoffeeScript",
       url: "https://coffeescript.org/",
-      content: [ Format.para("Coffeescript is a small language transpiling to Javascript. It is very interesting in that it is \x0a        \"just Javascript\" with a clean syntax. It adds a few syntactic sugar and hides some of the pitfalls of\x0a        Javascript without abstracting it too much. It is usually very straightfoward to understand what the\x0a        generated Javascript will be, by just looking at the Coffeescript code."), Format.para("However this also means that Coffeescript shares the inherent weaknesses of Javascript: lack \x0a        of typing and lack of scoping. It also has fallen out of fashion with the advent of newer versions of\x0a        Javascript which included much of the syntactic sugar pioneered by Coffeescript."), Format.para("If I had to work with a derivative of Javascript that allows low level control over the generated\x0a        code, Coffeescript is still a decent option in my opinion, but I would probably give Typescript or another\x0a        typed variety of Javascript a try."), projectTitle, Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("I have a fair number of projects using Coffeescript on my Github, but I fell that most of them\x0a          aren't very interesting."), Halogen_HTML_Elements.br_, Halogen_HTML_Core.text("Here is an implementation of Conway's Game of life. "), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/game-of-life.coffee") ])([ Halogen_HTML_Core.text("Code ") ]), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://codepen.io/de-passage/full/WjWExY") ])([ Halogen_HTML_Core.text("Live ") ]), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life") ])([ Halogen_HTML_Core.text("Wikipedia") ]) ]) ],
+      content: [ Format.para("Coffeescript is a small language transpiling to Javascript. It is very interesting in that it is \x0a        \"just Javascript\" with a clean syntax. It adds a few syntactic sugar and hides some of the pitfalls of\x0a        Javascript without abstracting it too much. It is usually very straightfoward to understand what the\x0a        generated Javascript will be, by just looking at the Coffeescript code."), Format.para("However this also means that Coffeescript shares the inherent weaknesses of Javascript: lack \x0a        of typing and lack of scoping. It also has fallen out of fashion with the advent of newer versions of\x0a        Javascript which included much of the syntactic sugar pioneered by Coffeescript."), Format.para("If I had to work with a derivative of Javascript that allows low level control over the generated\x0a        code, Coffeescript is still a decent option in my opinion, but I would probably give Typescript or another\x0a        typed variety of Javascript a try."), projectTitle, Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("I have a fair number of projects using Coffeescript on my Github, but I fell that most of them\x0a          aren't very interesting."), Halogen_HTML_Elements.br_, Halogen_HTML_Core.text("Here is an implementation of Conway's Game of life. "), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/game-of-life.coffee"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Code ") ]), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://codepen.io/de-passage/full/WjWExY"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Live ") ]), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Wikipedia") ]) ]) ],
       quote: Data_Maybe.Nothing.value
   };
   var cite = function (v) {
       if (v instanceof USource) {
-          return [ Halogen_HTML_Elements.cite([ Halogen_HTML_Properties.title(v.value0.name) ])([ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href(v.value0.url) ])([ Halogen_HTML_Core.text(v.value0.name) ]) ]) ];
+          return [ Halogen_HTML_Elements.cite([ Halogen_HTML_Properties.title(v.value0.name) ])([ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href(v.value0.url), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text(v.value0.name) ]) ]) ];
       };
       if (v instanceof Source) {
           return [ Halogen_HTML_Elements.cite([ Halogen_HTML_Properties.title(v.value0) ])([ Halogen_HTML_Core.text(v.value0) ]) ];
@@ -12057,14 +12059,14 @@ var PS = {};
   var education = [ {
       period: "2010 - 2014",
       name: [ Halogen_HTML_Core.text("Ecole Sup\xe9rieure de Commerce et de Management") ],
-      comment: [ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://en.wikipedia.org/wiki/Grandes_%C3%A9coles") ])([ Halogen_HTML_Core.text("Grande \xe9cole") ]), Halogen_HTML_Core.text(" (business school), 4th and 5th semester spent as an exchange student in Meiji University, Japan") ]
+      comment: [ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://en.wikipedia.org/wiki/Grandes_%C3%A9coles"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Grande \xe9cole") ]), Halogen_HTML_Core.text(" (business school), 4th and 5th semester spent as an exchange student in Meiji University, Japan") ]
   }, {
       period: "2008 - 2010",
-      name: [ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://en.wikipedia.org/wiki/Classe_pr%C3%A9paratoire_aux_grandes_%C3%A9coles") ])([ Halogen_HTML_Core.text("CPGE") ]) ],
-      comment: [ Halogen_HTML_Core.text("2 years of preparatory classes for the entrance exams to the french  "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://en.wikipedia.org/wiki/Grandes_%C3%A9coles") ])([ Halogen_HTML_Core.text("grande \xe9coles") ]) ]
+      name: [ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://en.wikipedia.org/wiki/Classe_pr%C3%A9paratoire_aux_grandes_%C3%A9coles"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("CPGE") ]) ],
+      comment: [ Halogen_HTML_Core.text("2 years of preparatory classes for the entrance exams to the french  "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://en.wikipedia.org/wiki/Grandes_%C3%A9coles"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("grande \xe9coles") ]) ]
   }, {
       period: "2008",
-      name: [ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://en.wikipedia.org/wiki/Baccalaur%C3%A9at") ])([ Halogen_HTML_Core.text("Baccalaur\xe9at") ]) ],
+      name: [ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://en.wikipedia.org/wiki/Baccalaur%C3%A9at"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Baccalaur\xe9at") ]) ],
       comment: [ Halogen_HTML_Core.text("French high school degree") ]
   } ];
   var languages = (function () {
@@ -12087,6 +12089,7 @@ var PS = {};
   exports["languages"] = languages;
 })(PS);
 (function($PS) {
+  // Generated by purs version 0.13.6
   "use strict";
   $PS["Personal"] = $PS["Personal"] || {};
   var exports = $PS["Personal"];
@@ -12150,11 +12153,11 @@ var PS = {};
           });
       });
       var socialMedia = function (r) {
-          return Halogen_HTML_Elements.a([ Halogen_HTML_Properties.title(r.title), Halogen_HTML_Properties.href(r.url), mkClass(r.id), Halogen_HTML_CSS.style(linkStyle) ])([  ]);
+          return Halogen_HTML_Elements.a([ Halogen_HTML_Properties.title(r.title), Halogen_HTML_Properties.href(r.url), mkClass(r.id), Halogen_HTML_CSS.style(linkStyle), Halogen_HTML_Properties.target("_blank") ])([  ]);
       };
       var socialMediaS = function (r) {
           return function (s) {
-              return Halogen_HTML_Elements.a([ Halogen_HTML_Properties.title(r.title), Halogen_HTML_Properties.href(r.url), mkClass(r.id), Halogen_HTML_CSS.style(Control_Apply.applySecond(CSS_Stylesheet.applyStyleM)(linkStyle)(s)) ])([  ]);
+              return Halogen_HTML_Elements.a([ Halogen_HTML_Properties.title(r.title), Halogen_HTML_Properties.href(r.url), mkClass(r.id), Halogen_HTML_CSS.style(Control_Apply.applySecond(CSS_Stylesheet.applyStyleM)(linkStyle)(s)), Halogen_HTML_Properties.target("_blank") ])([  ]);
           };
       };
       var dl = Halogen_HTML_Elements.a([ Halogen_HTML_Properties.title("Download"), Halogen_HTML_Properties.href(Assets.resume), Halogen_HTML_Properties.download("Sylvain Leclercq"), mkClass("download"), Halogen_HTML_CSS.style(linkStyle) ])([  ]);
@@ -12177,6 +12180,7 @@ var PS = {};
   exports["personalInformation"] = personalInformation;
 })(PS);
 (function($PS) {
+  // Generated by purs version 0.13.6
   "use strict";
   $PS["Projects"] = $PS["Projects"] || {};
   var exports = $PS["Projects"];
@@ -12221,7 +12225,7 @@ var PS = {};
       var iconDiv = Data_Maybe.maybe(Halogen_HTML_Core.text(""))(function (language) {
           return Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.col1) ])([ Assets.iconS(language)([ Halogen_HTML_Properties.class_("projectIcon") ]) ]);
       })(Control_Bind.bind(Data_Maybe.bindMaybe)(pro.language)(Data_Function.flip(Data_Map_Internal.lookup(Data_Ord.ordString))(icons)));
-      return Lists.listItem_([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.row) ])([ iconDiv, Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.col10, Halogen_Themes_Bootstrap4.colLg ]) ])([ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href(pro.html_url) ])([ Halogen_HTML_Core.text(pro.name) ]) ]), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.col12, Halogen_Themes_Bootstrap4.colLg ]) ])([ Format.para(Data_Maybe.fromMaybe("")(pro.description)) ]) ]) ]);
+      return Lists.listItem_([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.row) ])([ iconDiv, Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.col10, Halogen_Themes_Bootstrap4.colLg ]) ])([ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href(pro.html_url), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text(pro.name) ]) ]), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.col12, Halogen_Themes_Bootstrap4.colLg ]) ])([ Format.para(Data_Maybe.fromMaybe("")(pro.description)) ]) ]) ]);
   };
   var projects = function (v) {
       if (v instanceof Data_Maybe.Nothing) {
