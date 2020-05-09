@@ -18,10 +18,10 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Blog - Sylvain Leclercq
+title: Sylvain Leclercq
 email: contact@sylvainleclercq.com
 description: >- # this means to ignore newlines until "baseurl:"
-  A story of metaprogramming and strong types
+  A story of metaprogramming and strong typing
 baseurl: "/blog" # the subpath of your site, e.g. /blog
 url: "http://sylvainleclercq.com" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: null
@@ -51,3 +51,16 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+      type: "posts" # previously `post` in Jekyll 2.2.
+    values:
+      comments: true
+
+disqus:
+    # Leave shortname blank to disable comments site-wide.
+    # Disable comments for any post by adding `comments: false` to that post's YAML Front Matter.
+    shortname: sylvainleclercq
