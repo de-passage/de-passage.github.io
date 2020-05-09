@@ -76,6 +76,7 @@ personalInformation =
         [ HP.title "Download"
         , HP.href A.resume
         , HP.download "Sylvain Leclercq"
+        , HP.target "_blank"
         , mkClass "download"
         , HC.style linkStyle
         ]
@@ -128,7 +129,7 @@ aboutMe =
       skill for a job."""
           ]
       ]
-  , HH.div_ [ HH.a [ HP.download "download", HP.href A.resume ] [ HH.text "Download resume as pdf" ] ]
+  , HH.div_ [ HH.a [ HP.download "download", HP.href A.resume, HP.target "_blank" ] [ HH.text "Download resume as pdf" ] ]
   , HH.table [ HP.classes [ BS.tableStriped, BS.table ] ]
       [ HH.tbody_
           [ tableRow "Birthday" [ HH.text "26/03/1990" ]
