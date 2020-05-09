@@ -5,6 +5,7 @@ import Attributes (scopeRow)
 import CSS as CSS
 import CSS.Common (auto, none)
 import Category (category)
+import DOM.HTML.Indexed (HTMLa)
 import Data.Array (snoc)
 import Format (h5, para)
 import Halogen.HTML as HH
@@ -45,6 +46,17 @@ blog =
   , url: "#"
   }
 
+resume :: forall w i. Array (HH.IProp HTMLa i) -> Array (HH.HTML w i) -> HH.HTML w i
+resume props =
+  HH.a
+    ( props
+        <> [ HP.title "Download"
+          , HP.href A.resume
+          , HP.download "Sylvain Leclercq"
+          , HP.target "_blank"
+          ]
+    )
+
 personalInformation :: forall w i. HH.HTML w i
 personalInformation =
   let
@@ -72,12 +84,8 @@ personalInformation =
       CSS.fontSize (CSS.em 3.0)
 
     dl =
-      HH.a
-        [ HP.title "Download"
-        , HP.href A.resume
-        , HP.download "Sylvain Leclercq"
-        , HP.target "_blank"
-        , mkClass "download"
+      resume
+        [ mkClass "download"
         , HC.style linkStyle
         ]
         []
@@ -103,7 +111,8 @@ personalInformation =
                           )
                           ( \a ->
                               [ HH.h3 ([ HC.style (CSS.margin auto auto auto auto) ] <> a)
-                                [ HH.text "About me" ] ]
+                                  [ HH.text "About me" ]
+                              ]
                           )
                           aboutMe
                       ]
@@ -129,7 +138,7 @@ aboutMe =
       skill for a job."""
           ]
       ]
-  , HH.div_ [ HH.a [ HP.download "download", HP.href A.resume, HP.target "_blank" ] [ HH.text "Download resume as pdf" ] ]
+  , HH.div_ [ resume [] [ HH.text "Download resume as pdf" ] ]
   , HH.table [ HP.classes [ BS.tableStriped, BS.table ] ]
       [ HH.tbody_
           [ tableRow "Birthday" [ HH.text "26/03/1990" ]
