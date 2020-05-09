@@ -43,7 +43,7 @@ blog :: Media
 blog =
   { title: "Blog"
   , id: "pencil"
-  , url: "#"
+  , url: "/blog"
   }
 
 resume :: forall w i. Array (HH.IProp HTMLa i) -> Array (HH.HTML w i) -> HH.HTML w i
@@ -97,7 +97,8 @@ personalInformation =
                   [ HH.div [ HP.classes [ BS.col ] ]
                       [ HH.img [ HP.class_ (HH.ClassName "profile-picture"), HP.src "/assets/me.jpg" ] ]
                   , HH.div [ HP.classes [ BS.col ], HC.style css ]
-                      [ {- socialMediaS blog additionalStyle, -} modal "Bio"
+                      [ socialMediaS blog additionalStyle
+                      , modal "Bio"
                           ( \a ->
                               HH.a
                                 ( [ ARIA.role "button"
