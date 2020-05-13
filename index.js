@@ -12195,12 +12195,13 @@ var PS = {};
   var Affjax = $PS["Affjax"];
   var Assets = $PS["Assets"];
   var Category = $PS["Category"];
+  var Control_Applicative = $PS["Control.Applicative"];
   var Control_Bind = $PS["Control.Bind"];
   var Data_Argonaut_Decode_Class = $PS["Data.Argonaut.Decode.Class"];
   var Data_Argonaut_Parser = $PS["Data.Argonaut.Parser"];
+  var Data_Array = $PS["Data.Array"];
   var Data_Either = $PS["Data.Either"];
   var Data_Foldable = $PS["Data.Foldable"];
-  var Data_Function = $PS["Data.Function"];
   var Data_Functor = $PS["Data.Functor"];
   var Data_Map_Internal = $PS["Data.Map.Internal"];
   var Data_Maybe = $PS["Data.Maybe"];
@@ -12230,10 +12231,16 @@ var PS = {};
   }))()())()));
   var icons = Data_Map_Internal.fromFoldable(Data_Ord.ordString)(Data_Foldable.foldableArray)([ new Data_Tuple.Tuple("C++", Assets.cppIcon), new Data_Tuple.Tuple("PureScript", Assets.purescriptIcon), new Data_Tuple.Tuple("CoffeeScript", Assets.coffeescriptIcon), new Data_Tuple.Tuple("C", Assets.cIcon), new Data_Tuple.Tuple("Haskell", Assets.haskellIcon), new Data_Tuple.Tuple("Ruby", Assets.rubyIcon), new Data_Tuple.Tuple("JavaScript", Assets.javascriptIcon), new Data_Tuple.Tuple("Rust", Assets.rustIcon), new Data_Tuple.Tuple("Elm", Assets.elmIcon), new Data_Tuple.Tuple("HTML", Assets.htmlIcon), new Data_Tuple.Tuple("CSS", Assets.cssIcon) ]);
   var mkProject = function (pro) {
-      var iconDiv = Data_Maybe.maybe(Halogen_HTML_Core.text(""))(function (language) {
-          return Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.col1) ])([ Assets.iconS(language)([ Halogen_HTML_Properties.class_("projectIcon") ]) ]);
-      })(Control_Bind.bind(Data_Maybe.bindMaybe)(pro.language)(Data_Function.flip(Data_Map_Internal.lookup(Data_Ord.ordString))(icons)));
-      return Lists.listItem_([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.row) ])([ iconDiv, Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.col10, Halogen_Themes_Bootstrap4.colLg ]) ])([ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href(pro.html_url), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text(pro.name) ]) ]), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.col12, Halogen_Themes_Bootstrap4.colLg ]) ])([ Format.para(Data_Maybe.fromMaybe("")(pro.description)) ]) ]) ]);
+      var projNameDiv = Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.col10, Halogen_Themes_Bootstrap4.colLg ]) ])([ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href(pro.html_url), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text(pro.name) ]) ]);
+      var iconDiv = Control_Bind.bind(Data_Maybe.bindMaybe)(pro.language)(function (lang) {
+          return Control_Bind.bind(Data_Maybe.bindMaybe)(Data_Map_Internal.lookup(Data_Ord.ordString)(lang)(icons))(function (iconName) {
+              return Control_Applicative.pure(Data_Maybe.applicativeMaybe)(Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.col1) ])([ Assets.iconS(iconName)([ Halogen_HTML_Properties.class_("projectIcon") ]) ]));
+          });
+      });
+      var titleDiv = Data_Maybe.maybe([ projNameDiv, Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.col1 ]) ])([  ]) ])(function (icon) {
+          return [ icon, projNameDiv ];
+      })(iconDiv);
+      return Lists.listItem_([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.row) ])(Data_Array.snoc(titleDiv)(Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.col12, Halogen_Themes_Bootstrap4.colLg ]) ])([ Format.para(Data_Maybe.fromMaybe("")(pro.description)) ]))) ]);
   };
   var projects = function (v) {
       if (v instanceof Data_Maybe.Nothing) {
@@ -12253,7 +12260,7 @@ var PS = {};
           var prjkts = Data_Either.either(mkErrorMsg)(decodeThenMk)(parsed);
           return Category.categoryHidden("projects")("Projects")([ Lists.listGroupC([ Halogen_Themes_Bootstrap4.textLeft, "project-list" ])(prjkts) ]);
       };
-      throw new Error("Failed pattern match at Projects (line 73, column 1 - line 73, column 67): " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Projects (line 78, column 1 - line 78, column 67): " + [ v.constructor.name ]);
   };
   exports["projects"] = projects;
 })(PS);
