@@ -97,7 +97,7 @@ personalInformation =
                   [ HH.div [ HP.classes [ BS.col ] ]
                       [ HH.img [ HP.class_ (HH.ClassName "profile-picture"), HP.src "/assets/me.jpg" ] ]
                   , HH.div [ HP.classes [ BS.col ], HC.style css ]
-                      [ socialMediaS blog additionalStyle
+                      [ HH.div [ HC.style (CSS.display CSS.flex)] [ socialMediaS blog additionalStyle ]
                       , modal "Bio"
                           ( \a ->
                               HH.a
