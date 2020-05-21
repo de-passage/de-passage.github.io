@@ -1,14 +1,14 @@
 module Projects where
 
+import Data.Map
 import Affjax (Error, printError)
 import Assets as A
 import Category (categoryHidden)
 import Data.Argonaut (Json, jsonParser)
 import Data.Argonaut.Decode (decodeJson)
 import Data.Array (snoc)
-import Data.Either (Either(..), either)
-import Data.Map
-import Data.Maybe (fromMaybe, maybe, Maybe(..))
+import Data.Either (Either, either)
+import Data.Maybe (fromMaybe, maybe, Maybe)
 import Data.Tuple.Nested ((/\))
 import Format as F
 import Halogen.HTML as HH
@@ -16,7 +16,7 @@ import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
 import Lists (ListItem, listGroup, listGroupC, listItem_)
-import Prelude (map, (>>>), ($), pure, bind)
+import Prelude (bind, map, pure, ($), (>>=))
 
 type Project
   = { html_url :: String
@@ -25,6 +25,11 @@ type Project
     , language :: Maybe String
     , homepage :: Maybe String
     }
+
+data LoadStatus
+  = Loading
+  | LoadingError Error
+  | Loaded String
 
 icons :: Map String String
 icons =
@@ -75,22 +80,24 @@ mkProject pro =
 mkErrorMsg :: forall x j. String -> Array (ListItem x j)
 mkErrorMsg err = [ listItem_ [ HH.text err ] ]
 
-projects :: forall w i. Maybe (Either Error String) -> HH.HTML w i
-projects Nothing =
+projects :: forall w i. LoadStatus -> HH.HTML w i
+projects Loading =
   categoryHidden "projects" "Projects"
-    [ HH.div [ HP.class_ BS.spinnerBorder, ARIA.role "status" ] [ HH.span [ HP.class_ BS.srOnly ] [] ] ]
+    [ HH.div
+        [ HP.class_ BS.spinnerBorder, ARIA.role "status" ]
+        [ HH.span [ HP.class_ BS.srOnly ] [] ]
+    ]
 
-projects (Just (Left s)) = categoryHidden "projects" "Projects" [ listGroup $ mkErrorMsg (printError s) ]
+projects (LoadingError s) =
+  categoryHidden "projects" "Projects"
+    [ listGroup $ mkErrorMsg (printError s) ]
 
-projects (Just (Right s)) =
+projects (Loaded s) =
   let
-    parsed = jsonParser s
+    c = jsonParser s >>= jsonToProject
 
-    prjkts = either mkErrorMsg decodeThenMk parsed
+    container = listGroupC [ BS.textLeft, (HH.ClassName "project-list") ]
+
+    content = container (either mkErrorMsg (map mkProject) c)
   in
-    categoryHidden "projects" "Projects"
-      [ listGroupC [ BS.textLeft, (HH.ClassName "project-list") ] prjkts
-      ]
-  where
-  decodeThenMk :: forall x j. Json -> Array (ListItem x j)
-  decodeThenMk = jsonToProject >>> either mkErrorMsg (map mkProject)
+    categoryHidden "projects" "Projects" [ content ]
