@@ -134,7 +134,7 @@ mkProjectList langs prjkts =
     filtr p = langs == Nil || maybe false (_ `elem` langs) p.language
   in
   HH.div []
-    [ HH.div [] (mapMaybe (_.language) prjkts # nub >>> sort >>> map (mkLanguageButton langs))
+    [ HH.div [ HP.class_ BS.my2 ] (mapMaybe (_.language) prjkts # nub >>> sort >>> map (mkLanguageButton langs))
     , listGroupC [ BS.textLeft, (HH.ClassName "project-list") ] (filter filtr prjkts # map mkProject)
     ]
 
