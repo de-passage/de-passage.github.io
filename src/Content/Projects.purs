@@ -7,9 +7,11 @@ import Assets as A
 import Category (categoryHidden)
 import Data.Argonaut (Json, jsonParser)
 import Data.Argonaut.Decode (decodeJson)
-import Data.Array (mapMaybe, nub, snoc, sort)
+import Data.Array (filter, mapMaybe, nub, snoc, sort)
 import Data.Const (Const)
 import Data.Either (Either, either)
+import Data.Foldable (elem)
+import Data.List (List(..), (:))
 import Data.Map (Map, fromFoldable, lookup)
 import Data.Maybe (Maybe(..), fromMaybe, maybe)
 import Data.Tuple.Nested ((/\))
@@ -17,11 +19,12 @@ import Effect.Aff.Class (class MonadAff)
 import Format as F
 import Halogen as H
 import Halogen.HTML as HH
+import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
 import Lists (ListItem, listGroupC, listItem_)
-import Prelude (Unit, Void, bind, const, map, pure, (#), ($), (>>=), (>>>))
+import Prelude (Unit, Void, bind, const, map, otherwise, pure, (#), ($), (==), (>=>), (>>>), (||))
 
 type Project
   = { html_url :: String
@@ -40,10 +43,23 @@ type Query
 data LoadStatus
   = Loading
   | LoadingError Error
-  | Loaded String
+  | Loaded
+    { projects :: Either String (Array Project)
+    , languageFilter :: List String
+    }
 
 type Slot
   = H.Slot Query Message
+
+data Action
+  = Init
+  | Toggle String
+
+type State
+  = LoadStatus
+
+type ChildSlots
+  = ()
 
 icons :: Map String String
 icons =
@@ -94,7 +110,7 @@ mkProject pro =
 mkErrorMsg :: forall x j. String -> HH.HTML x j
 mkErrorMsg err = HH.div [ HP.classes [ BS.alertDanger, BS.alert ] ] [ HH.text err ]
 
-projects :: forall w i. LoadStatus -> HH.HTML w i
+projects :: forall w. LoadStatus -> HH.HTML w Action
 projects Loading =
   categoryHidden "projects" "Projects"
     [ HH.div
@@ -108,30 +124,30 @@ projects (LoadingError s) =
 
 projects (Loaded s) =
   let
-    c = jsonParser s >>= jsonToProject
-
-    content = either mkErrorMsg mkProjectList c
+    content = either mkErrorMsg (mkProjectList s.languageFilter) s.projects
   in
     categoryHidden "projects" "Projects" [ content ]
 
-mkProjectList :: forall w i. Array Project -> HH.HTML w i
-mkProjectList prjkts =
+mkProjectList :: forall w. List String -> Array Project -> HH.HTML w Action
+mkProjectList langs prjkts =
+  let 
+    filtr p = langs == Nil || maybe false (_ `elem` langs) p.language
+  in
   HH.div []
-    [ HH.div [] (mapMaybe (_.language) prjkts # nub >>> sort >>> map mkLanguageButton)
-    , listGroupC [ BS.textLeft, (HH.ClassName "project-list") ] (map mkProject prjkts)
+    [ HH.div [] (mapMaybe (_.language) prjkts # nub >>> sort >>> map (mkLanguageButton langs))
+    , listGroupC [ BS.textLeft, (HH.ClassName "project-list") ] (filter filtr prjkts # map mkProject)
     ]
 
-mkLanguageButton :: forall w i. String -> HH.HTML w i
-mkLanguageButton p = HH.button [ HP.classes [ BS.btn, BS.btnOutlineSecondary, BS.mr1 ] ] [ HH.text p ]
-
-type State
-  = LoadStatus
-
-data Action
-  = Init
-
-type ChildSlots
-  = ()
+mkLanguageButton :: forall w. List String -> String -> HH.HTML w Action
+mkLanguageButton f p =
+  let 
+    style = if p `elem` f then BS.btnSecondary else BS.btnOutlineSecondary
+  in
+  HH.button
+    [ HE.onClick (const (Just $ Toggle p))
+    , HP.classes [ BS.btn, BS.mr1, style ]
+    ]
+    [ HH.text p ]
 
 component :: forall i m. MonadAff m => H.Component HH.HTML Query i Void m
 component =
@@ -145,6 +161,26 @@ render :: forall m. State -> H.ComponentHTML Action ChildSlots m
 render state = projects state
 
 handleAction :: forall o m. MonadAff m => Action -> H.HalogenM State Action ChildSlots o m Unit
-handleAction Init = do
-  response <- H.liftAff $ AX.get AXRF.string "https://api.github.com/users/de-passage/repos?sort=updated"
-  H.put (either LoadingError (_.body >>> Loaded) response)
+handleAction = case _ of
+  Init -> do
+    response <- H.liftAff $ AX.get AXRF.string "https://api.github.com/users/de-passage/repos?sort=updated"
+    H.put (either LoadingError (_.body >>> parse >>> loaded) response)
+  Toggle lang -> H.modify_ (adaptFilter lang)
+  where
+  go :: String -> List String -> List String
+  go s Nil = s : Nil
+
+  go s (x : xs)
+    | x == s = xs
+    | otherwise = x : go s xs
+
+  adaptFilter :: String -> LoadStatus -> LoadStatus
+  adaptFilter lang (Loaded s) = Loaded $ s { languageFilter = go lang s.languageFilter }
+
+  adaptFilter _ s = s
+
+parse :: String -> Either String (Array Project)
+parse = jsonParser >=> jsonToProject
+
+loaded :: Either String (Array Project) -> LoadStatus
+loaded content = Loaded { projects: content, languageFilter: Nil }
