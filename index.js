@@ -474,9 +474,6 @@ var PS = {};
   $PS["Data.Eq"] = $PS["Data.Eq"] || {};
   var exports = $PS["Data.Eq"];
   var $foreign = $PS["Data.Eq"];
-  var Eq1 = function (eq1) {
-      this.eq1 = eq1;
-  };
   var Eq = function (eq) {
       this.eq = eq;
   }; 
@@ -489,9 +486,6 @@ var PS = {};
   var eqNumber = new Eq($foreign.eqNumberImpl);
   var eqInt = new Eq($foreign.eqIntImpl);  
   var eqBoolean = new Eq($foreign.eqBooleanImpl);
-  var eq1 = function (dict) {
-      return dict.eq1;
-  };
   var eq = function (dict) {
       return dict.eq;
   };
@@ -505,8 +499,6 @@ var PS = {};
   exports["Eq"] = Eq;
   exports["eq"] = eq;
   exports["notEq"] = notEq;
-  exports["Eq1"] = Eq1;
-  exports["eq1"] = eq1;
   exports["eqBoolean"] = eqBoolean;
   exports["eqInt"] = eqInt;
   exports["eqNumber"] = eqNumber;
@@ -1198,10 +1190,8 @@ var PS = {};
   var $foreign = $PS["Data.Foldable"];
   var Control_Applicative = $PS["Control.Applicative"];
   var Control_Apply = $PS["Control.Apply"];
-  var Data_Eq = $PS["Data.Eq"];
   var Data_Function = $PS["Data.Function"];
   var Data_Functor = $PS["Data.Functor"];
-  var Data_HeytingAlgebra = $PS["Data.HeytingAlgebra"];
   var Data_Maybe = $PS["Data.Maybe"];
   var Data_Monoid = $PS["Data.Monoid"];
   var Data_Monoid_Disj = $PS["Data.Monoid.Disj"];
@@ -1295,15 +1285,6 @@ var PS = {};
           return Data_Newtype.alaF(Data_Functor.functorFn)(Data_Functor.functorFn)(Data_Newtype.newtypeDisj)(Data_Newtype.newtypeDisj)(Data_Monoid_Disj.Disj)(foldMap(dictFoldable)(Data_Monoid_Disj.monoidDisj(dictHeytingAlgebra)));
       };
   };
-  var elem = function (dictFoldable) {
-      return function (dictEq) {
-          var $204 = any(dictFoldable)(Data_HeytingAlgebra.heytingAlgebraBoolean);
-          var $205 = Data_Eq.eq(dictEq);
-          return function ($206) {
-              return $204($205($206));
-          };
-      };
-  };
   exports["Foldable"] = Foldable;
   exports["foldr"] = foldr;
   exports["foldl"] = foldl;
@@ -1311,7 +1292,6 @@ var PS = {};
   exports["traverse_"] = traverse_;
   exports["for_"] = for_;
   exports["any"] = any;
-  exports["elem"] = elem;
   exports["foldableArray"] = foldableArray;
   exports["foldableMaybe"] = foldableMaybe;
 })(PS);
@@ -3003,7 +2983,6 @@ var PS = {};
   var Control_Applicative = $PS["Control.Applicative"];
   var Control_Apply = $PS["Control.Apply"];
   var Control_Plus = $PS["Control.Plus"];
-  var Data_Eq = $PS["Data.Eq"];
   var Data_Foldable = $PS["Data.Foldable"];
   var Data_Function = $PS["Data.Function"];
   var Data_Functor = $PS["Data.Functor"];
@@ -3132,48 +3111,6 @@ var PS = {};
           return Data_Foldable.foldr(foldableList)(Cons.create)(ys)(xs);
       };
   });
-  var eq1List = new Data_Eq.Eq1(function (dictEq) {
-      return function (xs) {
-          return function (ys) {
-              var go = function ($copy_v) {
-                  return function ($copy_v1) {
-                      return function ($copy_v2) {
-                          var $tco_var_v = $copy_v;
-                          var $tco_var_v1 = $copy_v1;
-                          var $tco_done = false;
-                          var $tco_result;
-                          function $tco_loop(v, v1, v2) {
-                              if (!v2) {
-                                  $tco_done = true;
-                                  return false;
-                              };
-                              if (v instanceof Nil && v1 instanceof Nil) {
-                                  $tco_done = true;
-                                  return v2;
-                              };
-                              if (v instanceof Cons && v1 instanceof Cons) {
-                                  $tco_var_v = v.value1;
-                                  $tco_var_v1 = v1.value1;
-                                  $copy_v2 = v2 && Data_Eq.eq(dictEq)(v1.value0)(v.value0);
-                                  return;
-                              };
-                              $tco_done = true;
-                              return false;
-                          };
-                          while (!$tco_done) {
-                              $tco_result = $tco_loop($tco_var_v, $tco_var_v1, $copy_v2);
-                          };
-                          return $tco_result;
-                      };
-                  };
-              };
-              return go(xs)(ys)(true);
-          };
-      };
-  });
-  var eqList = function (dictEq) {
-      return new Data_Eq.Eq(Data_Eq.eq1(eq1List)(dictEq));
-  }; 
   var applyList = new Control_Apply.Apply(function () {
       return functorList;
   }, function (v) {
@@ -3201,7 +3138,6 @@ var PS = {};
   exports["Nil"] = Nil;
   exports["Cons"] = Cons;
   exports["NonEmptyList"] = NonEmptyList;
-  exports["eqList"] = eqList;
   exports["semigroupList"] = semigroupList;
   exports["foldableList"] = foldableList;
   exports["applicativeList"] = applicativeList;
@@ -12823,13 +12759,10 @@ var PS = {};
   var Data_Argonaut_Decode_Class = $PS["Data.Argonaut.Decode.Class"];
   var Data_Argonaut_Parser = $PS["Data.Argonaut.Parser"];
   var Data_Array = $PS["Data.Array"];
-  var Data_Boolean = $PS["Data.Boolean"];
   var Data_Either = $PS["Data.Either"];
-  var Data_Eq = $PS["Data.Eq"];
   var Data_Foldable = $PS["Data.Foldable"];
   var Data_Function = $PS["Data.Function"];
   var Data_Functor = $PS["Data.Functor"];
-  var Data_List_Types = $PS["Data.List.Types"];
   var Data_Map_Internal = $PS["Data.Map.Internal"];
   var Data_Maybe = $PS["Data.Maybe"];
   var Data_Ord = $PS["Data.Ord"];
@@ -12890,8 +12823,8 @@ var PS = {};
   var mkLanguageButton = function (f) {
       return function (p) {
           var style = (function () {
-              var $12 = Data_Foldable.elem(Data_List_Types.foldableList)(Data_Eq.eqString)(p)(f);
-              if ($12) {
+              var $11 = p === f;
+              if ($11) {
                   return Halogen_Themes_Bootstrap4.btnSecondary;
               };
               return Halogen_Themes_Bootstrap4.btnOutlineSecondary;
@@ -12905,7 +12838,7 @@ var PS = {};
   var loaded = function (content) {
       return new Loaded({
           projects: content,
-          languageFilter: Data_List_Types.Nil.value
+          languageFilter: ""
       });
   };
   var jsonToProject = Data_Argonaut_Decode_Class.decodeJson(Data_Argonaut_Decode_Class.decodeArray(Data_Argonaut_Decode_Class.decodeRecord(Data_Argonaut_Decode_Class.gDecodeJsonCons(Data_Argonaut_Decode_Class.decodeJsonMaybe(Data_Argonaut_Decode_Class.decodeJsonString))(Data_Argonaut_Decode_Class.gDecodeJsonCons(Data_Argonaut_Decode_Class.decodeJsonMaybe(Data_Argonaut_Decode_Class.decodeJsonString))(Data_Argonaut_Decode_Class.gDecodeJsonCons(Data_Argonaut_Decode_Class.decodeJsonString)(Data_Argonaut_Decode_Class.gDecodeJsonCons(Data_Argonaut_Decode_Class.decodeJsonMaybe(Data_Argonaut_Decode_Class.decodeJsonString))(Data_Argonaut_Decode_Class.gDecodeJsonCons(Data_Argonaut_Decode_Class.decodeJsonString)(Data_Argonaut_Decode_Class.gDecodeJsonNil)(new Data_Symbol.IsSymbol(function () {
@@ -12936,22 +12869,22 @@ var PS = {};
   var mkProjectList = function (langs) {
       return function (prjkts) {
           var filtr = function (p) {
-              return Data_Eq.eq(Data_List_Types.eqList(Data_Eq.eqString))(langs)(Data_List_Types.Nil.value) || Data_Maybe.maybe(false)(function (v) {
-                  return Data_Foldable.elem(Data_List_Types.foldableList)(Data_Eq.eqString)(v)(langs);
+              return langs === "" || Data_Maybe.maybe(false)(function (v) {
+                  return v === langs;
               })(p.language);
           };
           return Halogen_HTML_Elements.div([  ])([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.my2) ])((function () {
-              var $25 = Data_Functor.map(Data_Functor.functorArray)(mkLanguageButton(langs));
-              var $26 = Data_Array.sort(Data_Ord.ordString);
-              return function ($27) {
-                  return $25($26($27));
+              var $21 = Data_Functor.map(Data_Functor.functorArray)(mkLanguageButton(langs));
+              var $22 = Data_Array.sort(Data_Ord.ordString);
+              return function ($23) {
+                  return $21($22($23));
               };
           })()(Data_Array.nub(Data_Ord.ordString)(Data_Array.mapMaybe(function (v) {
               return v.language;
           })(prjkts)))), Lists.listGroupC([ Halogen_Themes_Bootstrap4.textLeft, "project-list" ])(Data_Functor.map(Data_Functor.functorArray)(mkProject)(Data_Array.filter(filtr)(prjkts))) ]);
       };
   };
-  var projects = function (v) {
+  var render = function (v) {
       if (v instanceof Loading) {
           return Category.categoryHidden("projects")("Projects")([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.spinnerBorder), Halogen_HTML_Properties_ARIA.role("status") ])([ Halogen_HTML_Elements.span([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.srOnly) ])([  ]) ]) ]);
       };
@@ -12962,34 +12895,21 @@ var PS = {};
           var content = Data_Either.either(mkErrorMsg)(mkProjectList(v.value0.languageFilter))(v.value0.projects);
           return Category.categoryHidden("projects")("Projects")([ content ]);
       };
-      throw new Error("Failed pattern match at Projects (line 113, column 1 - line 113, column 53): " + [ v.constructor.name ]);
-  };
-  var render = function (state) {
-      return projects(state);
+      throw new Error("Failed pattern match at Projects (line 142, column 1 - line 142, column 65): " + [ v.constructor.name ]);
   };
   var handleAction = function (dictMonadAff) {
-      var go = function (s) {
-          return function (v) {
-              if (v instanceof Data_List_Types.Nil) {
-                  return new Data_List_Types.Cons(s, Data_List_Types.Nil.value);
-              };
-              if (v instanceof Data_List_Types.Cons) {
-                  if (v.value0 === s) {
-                      return v.value1;
-                  };
-                  if (Data_Boolean.otherwise) {
-                      return new Data_List_Types.Cons(v.value0, go(s)(v.value1));
-                  };
-              };
-              throw new Error("Failed pattern match at Projects (line 170, column 3 - line 170, column 45): " + [ s.constructor.name, v.constructor.name ]);
-          };
-      };
       var adaptFilter = function (v) {
           return function (v1) {
               if (v1 instanceof Loaded) {
                   return Loaded.create({
                       projects: v1.value0.projects,
-                      languageFilter: go(v)(v1.value0.languageFilter)
+                      languageFilter: (function () {
+                          var $17 = v1.value0.languageFilter === v;
+                          if ($17) {
+                              return "";
+                          };
+                          return v;
+                      })()
                   });
               };
               return v1;
@@ -12998,17 +12918,17 @@ var PS = {};
       return function (v) {
           if (v instanceof Init) {
               return Control_Bind.bind(Halogen_Query_HalogenM.bindHalogenM)(Effect_Aff_Class.liftAff(Halogen_Query_HalogenM.monadAffHalogenM(dictMonadAff))(Affjax.get(Affjax_ResponseFormat.string)("https://api.github.com/users/de-passage/repos?sort=updated")))(function (response) {
-                  return Control_Monad_State_Class.put(Halogen_Query_HalogenM.monadStateHalogenM)(Data_Either.either(LoadingError.create)(function ($28) {
+                  return Control_Monad_State_Class.put(Halogen_Query_HalogenM.monadStateHalogenM)(Data_Either.either(LoadingError.create)(function ($24) {
                       return loaded(parse((function (v1) {
                           return v1.body;
-                      })($28)));
+                      })($24)));
                   })(response));
               });
           };
           if (v instanceof Toggle) {
               return Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(adaptFilter(v.value0));
           };
-          throw new Error("Failed pattern match at Projects (line 164, column 16 - line 168, column 46): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Projects (line 161, column 16 - line 165, column 46): " + [ v.constructor.name ]);
       };
   };
   var component = function (dictMonadAff) {
