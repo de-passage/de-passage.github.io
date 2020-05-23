@@ -45,8 +45,11 @@ data LoadStatus
   | LoadingError Error
   | Loaded
     { projects :: Either String (Array Project)
-    , languageFilter :: List String
+    , languageFilter :: String
     }
+
+type State
+  = LoadStatus
 
 type Slot
   = H.Slot Query Message
@@ -54,9 +57,6 @@ type Slot
 data Action
   = Init
   | Toggle String
-
-type State
-  = LoadStatus
 
 type ChildSlots
   = ()
@@ -110,44 +110,26 @@ mkProject pro =
 mkErrorMsg :: forall x j. String -> HH.HTML x j
 mkErrorMsg err = HH.div [ HP.classes [ BS.alertDanger, BS.alert ] ] [ HH.text err ]
 
-projects :: forall w. LoadStatus -> HH.HTML w Action
-projects Loading =
-  categoryHidden "projects" "Projects"
-    [ HH.div
-        [ HP.class_ BS.spinnerBorder, ARIA.role "status" ]
-        [ HH.span [ HP.class_ BS.srOnly ] [] ]
-    ]
-
-projects (LoadingError s) =
-  categoryHidden "projects" "Projects"
-    [ mkErrorMsg (printError s) ]
-
-projects (Loaded s) =
-  let
-    content = either mkErrorMsg (mkProjectList s.languageFilter) s.projects
-  in
-    categoryHidden "projects" "Projects" [ content ]
-
-mkProjectList :: forall w. List String -> Array Project -> HH.HTML w Action
+mkProjectList :: forall w. String -> Array Project -> HH.HTML w Action
 mkProjectList langs prjkts =
-  let 
-    filtr p = langs == Nil || maybe false (_ `elem` langs) p.language
+  let
+    filtr p = langs == "" || maybe false (_ == langs) p.language
   in
-  HH.div []
-    [ HH.div [ HP.class_ BS.my2 ] (mapMaybe (_.language) prjkts # nub >>> sort >>> map (mkLanguageButton langs))
-    , listGroupC [ BS.textLeft, (HH.ClassName "project-list") ] (filter filtr prjkts # map mkProject)
-    ]
+    HH.div []
+      [ HH.div [ HP.class_ BS.my2 ] (mapMaybe (_.language) prjkts # nub >>> sort >>> map (mkLanguageButton langs))
+      , listGroupC [ BS.textLeft, (HH.ClassName "project-list") ] (filter filtr prjkts # map mkProject)
+      ]
 
-mkLanguageButton :: forall w. List String -> String -> HH.HTML w Action
+mkLanguageButton :: forall w. String -> String -> HH.HTML w Action
 mkLanguageButton f p =
-  let 
-    style = if p `elem` f then BS.btnSecondary else BS.btnOutlineSecondary
+  let
+    style = if p == f then BS.btnSecondary else BS.btnOutlineSecondary
   in
-  HH.button
-    [ HE.onClick (const (Just $ Toggle p))
-    , HP.classes [ BS.btn, BS.mr1, style ]
-    ]
-    [ HH.text p ]
+    HH.button
+      [ HE.onClick (const (Just $ Toggle p))
+      , HP.classes [ BS.btn, BS.mr1, style ]
+      ]
+      [ HH.text p ]
 
 component :: forall i m. MonadAff m => H.Component HH.HTML Query i Void m
 component =
@@ -158,7 +140,22 @@ component =
     }
 
 render :: forall m. State -> H.ComponentHTML Action ChildSlots m
-render state = projects state
+render Loading =
+  categoryHidden "projects" "Projects"
+    [ HH.div
+        [ HP.class_ BS.spinnerBorder, ARIA.role "status" ]
+        [ HH.span [ HP.class_ BS.srOnly ] [] ]
+    ]
+
+render (LoadingError s) =
+  categoryHidden "projects" "Projects"
+    [ mkErrorMsg (printError s) ]
+
+render (Loaded s) =
+  let
+    content = either mkErrorMsg (mkProjectList s.languageFilter) s.projects
+  in
+    categoryHidden "projects" "Projects" [ content ]
 
 handleAction :: forall o m. MonadAff m => Action -> H.HalogenM State Action ChildSlots o m Unit
 handleAction = case _ of
@@ -167,20 +164,12 @@ handleAction = case _ of
     H.put (either LoadingError (_.body >>> parse >>> loaded) response)
   Toggle lang -> H.modify_ (adaptFilter lang)
   where
-  go :: String -> List String -> List String
-  go s Nil = s : Nil
-
-  go s (x : xs)
-    | x == s = xs
-    | otherwise = x : go s xs
-
   adaptFilter :: String -> LoadStatus -> LoadStatus
-  adaptFilter lang (Loaded s) = Loaded $ s { languageFilter = go lang s.languageFilter }
-
+  adaptFilter lang (Loaded s) = Loaded $ s { languageFilter = if s.languageFilter == lang then "" else lang }
   adaptFilter _ s = s
 
 parse :: String -> Either String (Array Project)
 parse = jsonParser >=> jsonToProject
 
 loaded :: Either String (Array Project) -> LoadStatus
-loaded content = Loaded { projects: content, languageFilter: Nil }
+loaded content = Loaded { projects: content, languageFilter: "" }

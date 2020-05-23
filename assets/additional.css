@@ -109,7 +109,7 @@
 .project-list {
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: 80vh;
+    height: 75vh;
 }
 
 .modal-content {
