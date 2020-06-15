@@ -7581,7 +7581,7 @@ var PS = {};
       icon: Assets.purescriptIcon,
       title: "Purescript",
       url: "https://purescript.org",
-      content: [ Format.para(" I started getting interested in Purescript because of its resemblance with Haskell and its focus\x0a              on front-end development. I originally went with Elm, but the limitations of that language eventually\x0a              brought me to seek a language with more expressive power. \x0a            "), Format.para("It is a very interesting language, although the compiler error output is very hard to understand, \x0a          which slows down learning. My experience with the language is fairly limited but I expect to write a lot\x0a          more code using it."), projectTitle, Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("This website is written using Purescript and Halogen."), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://https://github.com/de-passage/de-passage.github.io"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Code") ]) ]) ],
+      content: [ Format.para(" I started getting interested in Purescript because of its resemblance with Haskell and its focus\x0a              on front-end development. I originally went with Elm, but the limitations of that language eventually\x0a              brought me to seek a language with more expressive power. \x0a            "), Format.para("It is a very interesting language, although the compiler error output is very hard to understand, \x0a          which slows down learning. My experience with the language is fairly limited but I expect to write a lot\x0a          more code using it."), projectTitle, Halogen_HTML_Elements.ul_([ Halogen_HTML_Elements.li_([ Halogen_HTML_Core.text("This website is written using Purescript and Halogen."), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/de-passage.github.io"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Code") ]) ]), Halogen_HTML_Elements.li_([ Halogen_HTML_Core.text("A feature-complete implementation of a "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://realworld.io/"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Conduit") ]), Halogen_HTML_Core.text(" front-end. Conduit is simple clone of the popular blogging plateform "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://medium.com"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Medium") ]), Halogen_HTML_Core.text(". This implementation is made with Halogen."), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/conduit.purs"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Code") ]), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://sylvainleclercq.com/conduit.purs"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Live") ]) ]) ]) ],
       quote: new Data_Maybe.Just({
           text: "Purescript is a strongly-typed functional programming language that compiles to JavaScript.",
           source: new USource({
@@ -7679,7 +7679,7 @@ var PS = {};
       if (v instanceof Source) {
           return [ Halogen_HTML_Elements.cite([ Halogen_HTML_Properties.title(v.value0) ])([ Halogen_HTML_Core.text(v.value0) ]) ];
       };
-      throw new Error("Failed pattern match at Content.Skills (line 444, column 1 - line 444, column 50): " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Content.Skills (line 463, column 1 - line 463, column 50): " + [ v.constructor.name ]);
   };
   var quote = function (v) {
       return function (content) {
@@ -7692,7 +7692,7 @@ var PS = {};
               };
               return [ format(v.value0), Halogen_HTML_Elements.div_(content) ];
           };
-          throw new Error("Failed pattern match at Content.Skills (line 449, column 1 - line 449, column 81): " + [ v.constructor.name, content.constructor.name ]);
+          throw new Error("Failed pattern match at Content.Skills (line 468, column 1 - line 468, column 81): " + [ v.constructor.name, content.constructor.name ]);
       };
   };
   var mkSkillLink = function (id) {
