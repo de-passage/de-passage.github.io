@@ -6971,6 +6971,7 @@ var PS = {};
   var element = Halogen_HTML_Core.element(Data_Maybe.Nothing.value);
   var footer = element("footer");
   var h2 = element("h2");
+  var h2_ = h2([  ]);
   var h3 = element("h3");
   var h4 = element("h4");
   var h5 = element("h5");
@@ -6978,6 +6979,9 @@ var PS = {};
   var h6 = element("h6");
   var h6_ = h6([  ]);    
   var i = element("i");
+  var iframe = function (props) {
+      return element("iframe")(props)([  ]);
+  };
   var img = function (props) {
       return element("img")(props)([  ]);
   };                         
@@ -7019,12 +7023,14 @@ var PS = {};
   exports["div_"] = div_;
   exports["footer"] = footer;
   exports["h2"] = h2;
+  exports["h2_"] = h2_;
   exports["h3"] = h3;
   exports["h4"] = h4;
   exports["h5"] = h5;
   exports["h5_"] = h5_;
   exports["h6_"] = h6_;
   exports["i"] = i;
+  exports["iframe"] = iframe;
   exports["img"] = img;
   exports["li"] = li;
   exports["li_"] = li_;
@@ -7322,7 +7328,8 @@ var PS = {};
   var modalContent = "modal-content";
   var modalBody = "modal-body";        
   var modal = "modal";
-  var mb2 = "mb-2";                  
+  var mb2 = "mb-2";
+  var m2 = "m-2";                    
   var listInlineItem = "list-inline-item";
   var listInline = "list-inline";                    
   var listGroupItem = "list-group-item";
@@ -7393,6 +7400,7 @@ var PS = {};
   exports["listGroupItem"] = listGroupItem;
   exports["listInline"] = listInline;
   exports["listInlineItem"] = listInlineItem;
+  exports["m2"] = m2;
   exports["mb2"] = mb2;
   exports["modal"] = modal;
   exports["modalBody"] = modalBody;
@@ -7698,7 +7706,7 @@ var PS = {};
   var mkSkillLink = function (id) {
       return function (desc) {
           return Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.card), Halogen_HTML_CSS.style(CSS_Display.display(CSS_Display.inlineBlock)) ])([ Modal.modal(id)(function (a) {
-              return Halogen_HTML_Elements.button(Data_Array.snoc(a)(Halogen_HTML_Properties.title(desc.title)))([ Assets.iconS(desc.icon)([ Halogen_HTML_Properties.class_("skillIcon") ]) ]);
+              return Halogen_HTML_Elements.button(Data_Array.snoc(Data_Array.snoc(a)(Halogen_HTML_Properties.title(desc.title)))(Halogen_HTML_Properties.class_("skillButton")))([ Assets.iconS(desc.icon)([ Halogen_HTML_Properties.class_("skillIcon") ]) ]);
           })(function (a) {
               return [ Assets.icon(desc.icon)(5.0), Halogen_HTML_Elements.h3(Data_Array.snoc(a)(Halogen_HTML_CSS.style(CSS_Geometry.margin(CSS_Common.auto(CSS_Size.autoSize))(CSS_Common.auto(CSS_Size.autoSize))(CSS_Common.auto(CSS_Size.autoSize))(CSS_Common.auto(CSS_Size.autoSize)))))([ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href(desc.url) ])([ Halogen_HTML_Core.text(desc.title) ]) ]) ];
           })(quote(desc.quote)(desc.content)) ]);
@@ -12884,18 +12892,20 @@ var PS = {};
           })(prjkts)))), Lists.listGroupC([ Halogen_Themes_Bootstrap4.textLeft, "project-list" ])(Data_Functor.map(Data_Functor.functorArray)(mkProject)(Data_Array.filter(filtr)(prjkts))) ]);
       };
   };
-  var render = function (v) {
-      if (v instanceof Loading) {
-          return Category.categoryHidden("projects")("Projects")([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.spinnerBorder), Halogen_HTML_Properties_ARIA.role("status") ])([ Halogen_HTML_Elements.span([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.srOnly) ])([  ]) ]) ]);
+  var render = function (state) {
+      var renderProjects = function (v) {
+          if (v instanceof Loading) {
+              return Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.spinnerBorder), Halogen_HTML_Properties_ARIA.role("status") ])([ Halogen_HTML_Elements.span([ Halogen_HTML_Properties.class_(Halogen_Themes_Bootstrap4.srOnly) ])([  ]) ]);
+          };
+          if (v instanceof LoadingError) {
+              return mkErrorMsg(Affjax.printError(v.value0));
+          };
+          if (v instanceof Loaded) {
+              return Data_Either.either(mkErrorMsg)(mkProjectList(v.value0.languageFilter))(v.value0.projects);
+          };
+          throw new Error("Failed pattern match at Projects (line 170, column 3 - line 170, column 65): " + [ v.constructor.name ]);
       };
-      if (v instanceof LoadingError) {
-          return Category.categoryHidden("projects")("Projects")([ mkErrorMsg(Affjax.printError(v.value0)) ]);
-      };
-      if (v instanceof Loaded) {
-          var content = Data_Either.either(mkErrorMsg)(mkProjectList(v.value0.languageFilter))(v.value0.projects);
-          return Category.categoryHidden("projects")("Projects")([ content ]);
-      };
-      throw new Error("Failed pattern match at Projects (line 142, column 1 - line 142, column 65): " + [ v.constructor.name ]);
+      return Category.categoryHidden("projects")("Projects")([ Category.subcategory("featured")("Featured")([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.textLeft, Halogen_Themes_Bootstrap4.m2 ]) ])([ Halogen_HTML_Elements.h2_([ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://sylvainleclercq.com/conduit.purs"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Conduit") ]) ]), Format.para("Conduit is a clone of the popular blogging website Medium, intended to showcase how a real world\x0a              website is implemented using various backend and frontend frameworks. This particular front-end implementation is my\x0a              own and uses Purescript and Halogen."), Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("While I am working on a backend implementation, it pulls its content from a public testing API, \x0a                  containing mostly nonsense. Feel free to "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://sylvainleclercq.com/conduit.purs/#/register"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("register") ]), Halogen_HTML_Core.text(" and play with the app.") ]), Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("The code is available on "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/conduit.purs"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text(" my Github.") ]) ]), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_("iframe-wrapper") ])([ Halogen_HTML_Elements.iframe([ Halogen_HTML_Properties.src("https://sylvainleclercq.com/conduit.purs") ]) ]) ]) ]), Category.subcategoryHidden("github")("Github Repositories")([ renderProjects(state) ]) ]);
   };
   var handleAction = function (dictMonadAff) {
       var adaptFilter = function (v) {
@@ -12928,7 +12938,7 @@ var PS = {};
           if (v instanceof Toggle) {
               return Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(adaptFilter(v.value0));
           };
-          throw new Error("Failed pattern match at Projects (line 161, column 16 - line 165, column 46): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Projects (line 181, column 16 - line 185, column 46): " + [ v.constructor.name ]);
       };
   };
   var component = function (dictMonadAff) {
