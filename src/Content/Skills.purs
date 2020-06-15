@@ -488,7 +488,7 @@ mkSkillLink id desc =
     [ modal id
         ( \a ->
             HH.button
-              (a `snoc` HP.title desc.title)
+              (a `snoc` HP.title desc.title `snoc` HP.class_ (HH.ClassName "skillButton"))
               [ A.iconS desc.icon [ HP.class_ (HH.ClassName "skillIcon") ]
               ]
         )

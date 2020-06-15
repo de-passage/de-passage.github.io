@@ -4,18 +4,17 @@ import Affjax (Error, printError)
 import Affjax as AX
 import Affjax.ResponseFormat as AXRF
 import Assets as A
-import Category (categoryHidden)
+import Category (categoryHidden, subcategory, subcategoryHidden)
 import Data.Argonaut (Json, jsonParser)
 import Data.Argonaut.Decode (decodeJson)
 import Data.Array (filter, mapMaybe, nub, snoc, sort)
 import Data.Const (Const)
 import Data.Either (Either, either)
-import Data.Foldable (elem)
-import Data.List (List(..), (:))
 import Data.Map (Map, fromFoldable, lookup)
 import Data.Maybe (Maybe(..), fromMaybe, maybe)
 import Data.Tuple.Nested ((/\))
 import Effect.Aff.Class (class MonadAff)
+import Format (para)
 import Format as F
 import Halogen as H
 import Halogen.HTML as HH
@@ -24,7 +23,7 @@ import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
 import Lists (ListItem, listGroupC, listItem_)
-import Prelude (Unit, Void, bind, const, map, otherwise, pure, (#), ($), (==), (>=>), (>>>), (||))
+import Prelude (Unit, Void, bind, const, map, pure, (#), ($), (==), (>=>), (>>>), (||))
 
 type Project
   = { html_url :: String
@@ -140,22 +139,43 @@ component =
     }
 
 render :: forall m. State -> H.ComponentHTML Action ChildSlots m
-render Loading =
+render state =
   categoryHidden "projects" "Projects"
-    [ HH.div
-        [ HP.class_ BS.spinnerBorder, ARIA.role "status" ]
-        [ HH.span [ HP.class_ BS.srOnly ] [] ]
+    [ subcategory "featured" "Featured"
+        [ HH.div [ HP.classes [ BS.textLeft, BS.m2 ] ]
+            [ HH.h2_ [ HH.a [ HP.href "https://sylvainleclercq.com/conduit.purs", HP.target "_blank" ] [ HH.text "Conduit" ] ]
+            , para
+                """Conduit is a clone of the popular blogging website Medium, intended to showcase how a real world
+              website is implemented using various backend and frontend frameworks. This particular front-end implementation is my
+              own and uses Purescript and Halogen."""
+            , HH.p_
+                [ HH.text
+                    """While I am working on a backend implementation, it pulls its content from a public testing API, 
+                  containing mostly nonsense. Feel free to """
+                , HH.a [ HP.href "https://sylvainleclercq.com/conduit.purs/#/register", HP.target "_blank" ] [ HH.text "register" ]
+                , HH.text " and play with the app."
+                ]
+            , HH.p_
+                [ HH.text "The code is available on "
+                , HH.a [ HP.href "https://github.com/de-passage/conduit.purs", HP.target "_blank" ] [ HH.text " my Github." ]
+                ]
+            , HH.div [ HP.class_ (H.ClassName "iframe-wrapper") ]
+                [ HH.iframe [ HP.src "https://sylvainleclercq.com/conduit.purs" ]
+                ]
+            ]
+        ]
+    , subcategoryHidden "github" "Github Repositories" [ renderProjects state ]
     ]
+  where
+  renderProjects :: State -> H.ComponentHTML Action ChildSlots m
+  renderProjects Loading =
+    HH.div
+      [ HP.class_ BS.spinnerBorder, ARIA.role "status" ]
+      [ HH.span [ HP.class_ BS.srOnly ] [] ]
 
-render (LoadingError s) =
-  categoryHidden "projects" "Projects"
-    [ mkErrorMsg (printError s) ]
+  renderProjects (LoadingError s) = mkErrorMsg (printError s)
 
-render (Loaded s) =
-  let
-    content = either mkErrorMsg (mkProjectList s.languageFilter) s.projects
-  in
-    categoryHidden "projects" "Projects" [ content ]
+  renderProjects (Loaded s) = either mkErrorMsg (mkProjectList s.languageFilter) s.projects
 
 handleAction :: forall o m. MonadAff m => Action -> H.HalogenM State Action ChildSlots o m Unit
 handleAction = case _ of
@@ -166,6 +186,7 @@ handleAction = case _ of
   where
   adaptFilter :: String -> LoadStatus -> LoadStatus
   adaptFilter lang (Loaded s) = Loaded $ s { languageFilter = if s.languageFilter == lang then "" else lang }
+
   adaptFilter _ s = s
 
 parse :: String -> Either String (Array Project)
