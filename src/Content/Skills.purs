@@ -27,7 +27,7 @@ import Data.Array (snoc)
 import Data.Maybe as M
 import Data.Tuple (Tuple(..))
 import Format (para, h6)
-import Halogen.HTML (p_, text)
+import Halogen.HTML (li_, text, ul_)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
@@ -76,10 +76,29 @@ purescript =
           which slows down learning. My experience with the language is fairly limited but I expect to write a lot
           more code using it."""
       , projectTitle
-      , p_
-          [ text "This website is written using Purescript and Halogen."
-          , HH.br_
-          , HH.a [ HP.href "https://https://github.com/de-passage/de-passage.github.io", HP.target "_blank" ] [ HH.text "Code" ]
+      , ul_
+          [ li_
+              [ text "This website is written using Purescript and Halogen."
+              , HH.br_
+              , HH.a
+                  [ HP.href "https://github.com/de-passage/de-passage.github.io", HP.target "_blank" ]
+                  [ HH.text "Code" ]
+              ]
+          , li_ 
+              [ text "A feature-complete implementation of a "
+              , HH.a [ HP.href "https://realworld.io/", HP.target "_blank" ] [ text "Conduit" ]
+              , text " front-end. Conduit is simple clone of the popular blogging plateform "
+              , HH.a [HP.href "https://medium.com", HP.target "_blank"] [ text "Medium"]
+              , text ". This implementation is made with Halogen."
+              , HH.br_
+              , HH.a
+                  [ HP.href "https://github.com/de-passage/conduit.purs", HP.target "_blank" ]
+                  [ HH.text "Code" ]
+              , HH.br_
+              , HH.a
+                [ HP.href "https://sylvainleclercq.com/conduit.purs", HP.target "_blank"]
+                [ HH.text "Live" ]
+              ]
           ]
       ]
   , quote:
