@@ -84,11 +84,11 @@ purescript =
                   [ HP.href "https://github.com/de-passage/de-passage.github.io", HP.target "_blank" ]
                   [ HH.text "Code" ]
               ]
-          , li_ 
+          , li_
               [ text "A feature-complete implementation of a "
               , HH.a [ HP.href "https://realworld.io/", HP.target "_blank" ] [ text "Conduit" ]
               , text " front-end. Conduit is simple clone of the popular blogging plateform "
-              , HH.a [HP.href "https://medium.com", HP.target "_blank"] [ text "Medium"]
+              , HH.a [ HP.href "https://medium.com", HP.target "_blank" ] [ text "Medium" ]
               , text ". This implementation is made with Halogen."
               , HH.br_
               , HH.a
@@ -96,8 +96,8 @@ purescript =
                   [ HH.text "Code" ]
               , HH.br_
               , HH.a
-                [ HP.href "https://sylvainleclercq.com/conduit.purs", HP.target "_blank"]
-                [ HH.text "Live" ]
+                  [ HP.href "https://sylvainleclercq.com/conduit.purs", HP.target "_blank" ]
+                  [ HH.text "Live" ]
               ]
           ]
       ]
@@ -447,8 +447,8 @@ rust =
   , content:
       [ para
           """I originally started playing with Rust as a potential competitor for C++. The
-            promise of sensible defaults and compiler enforced lifetime management soundedd appealing, but at 
-            the time, support and documentation for macros was limited and the possibilities for EDSL development
+            promise of sensible defaults and compiler enforced lifetime management sounded appealing, but at 
+            the time, support and documentation for macros was lacking and the possibilities for EDSL development
             and metaprogramming felt limited."""
       , para
           """Moreover, although the reference lifetime system is a wonderful feature, it feels like a 
@@ -457,6 +457,23 @@ rust =
             to track information that is usually known at runtime (is the reference valid or not) at compile time. It
             would have been interesting to be able to manage more information at compile time, such as collection sizes
             or value ranges."""
+      , para
+          """I've since revisited Rust, while working on a backend implementation of Conduit, and 
+            was pleasantly surprised by the evolution of the language. Although the speed (or rather the slowness)
+            of compilation of expressions involving complex generics and the lack of maturity of some parts of the
+            ecosystem were frustrating, it now feels like a language I could see myself investing time into learning
+            in greater depths."""
+      , projectTitle
+      , HH.p_
+          [ HH.text
+              """ I wrote a backend implementation of Conduit, a simple clone of the blogging website Medium in Rust.
+        I used the Rocket framework for routing, Postgresql as the database. I selected Diesel as an ORM, but I 
+        eventually dropped the idea of exploiting its DSL and fell back to hand written SQL queries, because of its 
+        severe limitations regarding subqueries, and the difficulty in getting anything moderately complicated 
+        past the type checker."""
+          , HH.br_
+          , HH.a [ HP.href "https://github.com/de-passage/conduit-rocket.rust" ] [ HH.text "Code" ]
+          ]
       ]
   }
 

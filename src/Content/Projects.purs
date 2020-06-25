@@ -149,10 +149,12 @@ render state =
               website is implemented using various backend and frontend frameworks. This particular front-end implementation is my
               own and uses Purescript and Halogen."""
             , HH.p_
-                [ HH.text
-                    """While I am working on a backend implementation, it pulls its content from a public testing API, 
-                  containing mostly nonsense. Feel free to """
-                , HH.a [ HP.href "https://sylvainleclercq.com/conduit.purs/#/register", HP.target "_blank" ] [ HH.text "register" ]
+                [ HH.text "While I am working on a backend implementation "
+                , HH.a [ HP.href "https://github.com/de-passage/conduit-rocket.rust", HP.target "_blank" ]
+                    [ HH.text "(this one, in Rust)" ]
+                , HH.text ", it pulls its content from a public testing API, containing mostly nonsense. Feel free to "
+                , HH.a [ HP.href "https://sylvainleclercq.com/conduit.purs/#/register", HP.target "_blank" ]
+                    [ HH.text "register" ]
                 , HH.text " and play with the app."
                 ]
             , HH.p_
