@@ -7564,19 +7564,6 @@ var PS = {};
       };
       return USource;
   })();
-  var rust = {
-      icon: Assets.rustIcon,
-      title: "Rust",
-      url: "https://www.rust-lang.org/",
-      quote: new Data_Maybe.Just({
-          text: "A language empowering everyone to build reliable and efficient software.",
-          source: new USource({
-              url: "https://www.rust-lang.org/",
-              name: "rust-lang.org"
-          })
-      }),
-      content: [ Format.para("I originally started playing with Rust as a potential competitor for C++. The\x0a            promise of sensible defaults and compiler enforced lifetime management soundedd appealing, but at \x0a            the time, support and documentation for macros was limited and the possibilities for EDSL development\x0a            and metaprogramming felt limited."), Format.para("Moreover, although the reference lifetime system is a wonderful feature, it feels like a \x0a            missed opportunity. As it is not extensible by any mean, there is no way that I found to encode strong \x0a            invariants about the program using it. It is a limited form of dependent typing, allowing the compiler \x0a            to track information that is usually known at runtime (is the reference valid or not) at compile time. It\x0a            would have been interesting to be able to manage more information at compile time, such as collection sizes\x0a            or value ranges.") ]
-  };
   var ruby = {
       icon: Assets.rubyIcon,
       title: "Ruby",
@@ -7604,6 +7591,19 @@ var PS = {};
       url: "https://www.python.org/",
       content: [ Format.para("Most of my knowledge of Python actually comes from translating my experience with Ruby to this \x0a        language. Python is very popular in the space of interpreted, dynamically typed languages, but I believe\x0a        that it suffers from the same kind of problems as Ruby, namely poor performances and the lack of a strong\x0a        type system. Even though Python performances are better than Ruby, they are nowhere near that of compiled\x0a        languages."), Format.para("I also find its syntax less clean than that of Ruby and the strict formatting annoying."), projectTitle, Format.para("I wrote a small website in Python using Django as a framework, but the code is not public as of now.") ],
       quote: Data_Maybe.Nothing.value
+  };
+  var rust = {
+      icon: Assets.rustIcon,
+      title: "Rust",
+      url: "https://www.rust-lang.org/",
+      quote: new Data_Maybe.Just({
+          text: "A language empowering everyone to build reliable and efficient software.",
+          source: new USource({
+              url: "https://www.rust-lang.org/",
+              name: "rust-lang.org"
+          })
+      }),
+      content: [ Format.para("I originally started playing with Rust as a potential competitor for C++. The\x0a            promise of sensible defaults and compiler enforced lifetime management sounded appealing, but at \x0a            the time, support and documentation for macros was lacking and the possibilities for EDSL development\x0a            and metaprogramming felt limited."), Format.para("Moreover, although the reference lifetime system is a wonderful feature, it feels like a \x0a            missed opportunity. As it is not extensible by any mean, there is no way that I found to encode strong \x0a            invariants about the program using it. It is a limited form of dependent typing, allowing the compiler \x0a            to track information that is usually known at runtime (is the reference valid or not) at compile time. It\x0a            would have been interesting to be able to manage more information at compile time, such as collection sizes\x0a            or value ranges."), Format.para("I've since revisited Rust, while working on a backend implementation of Conduit, and \x0a            was pleasantly surprised by the evolution of the language. Although the speed (or rather the slowness)\x0a            of compilation of expressions involving complex generics and the lack of maturity of some parts of the\x0a            ecosystem were frustrating, it now feels like a language I could see myself investing time into learning\x0a            in greater depths."), projectTitle, Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text(" I wrote a backend implementation of Conduit, a simple clone of the blogging website Medium in Rust.\x0a        I used the Rocket framework for routing, Postgresql as the database. I selected Diesel as an ORM, but I \x0a        eventually dropped the idea of exploiting its DSL and fell back to hand written SQL queries, because of its \x0a        severe limitations regarding subqueries, and the difficulty in getting anything moderately complicated \x0a        past the type checker."), Halogen_HTML_Elements.br_, Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/conduit-rocket.rust") ])([ Halogen_HTML_Core.text("Code") ]) ]) ]
   };
   var lua = {
       icon: Assets.luaIcon,
@@ -7687,7 +7687,7 @@ var PS = {};
       if (v instanceof Source) {
           return [ Halogen_HTML_Elements.cite([ Halogen_HTML_Properties.title(v.value0) ])([ Halogen_HTML_Core.text(v.value0) ]) ];
       };
-      throw new Error("Failed pattern match at Content.Skills (line 463, column 1 - line 463, column 50): " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Content.Skills (line 480, column 1 - line 480, column 50): " + [ v.constructor.name ]);
   };
   var quote = function (v) {
       return function (content) {
@@ -7700,7 +7700,7 @@ var PS = {};
               };
               return [ format(v.value0), Halogen_HTML_Elements.div_(content) ];
           };
-          throw new Error("Failed pattern match at Content.Skills (line 468, column 1 - line 468, column 81): " + [ v.constructor.name, content.constructor.name ]);
+          throw new Error("Failed pattern match at Content.Skills (line 485, column 1 - line 485, column 81): " + [ v.constructor.name, content.constructor.name ]);
       };
   };
   var mkSkillLink = function (id) {
@@ -12903,9 +12903,9 @@ var PS = {};
           if (v instanceof Loaded) {
               return Data_Either.either(mkErrorMsg)(mkProjectList(v.value0.languageFilter))(v.value0.projects);
           };
-          throw new Error("Failed pattern match at Projects (line 170, column 3 - line 170, column 65): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Projects (line 172, column 3 - line 172, column 65): " + [ v.constructor.name ]);
       };
-      return Category.categoryHidden("projects")("Projects")([ Category.subcategory("featured")("Featured")([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.textLeft, Halogen_Themes_Bootstrap4.m2 ]) ])([ Halogen_HTML_Elements.h2_([ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://sylvainleclercq.com/conduit.purs"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Conduit") ]) ]), Format.para("Conduit is a clone of the popular blogging website Medium, intended to showcase how a real world\x0a              website is implemented using various backend and frontend frameworks. This particular front-end implementation is my\x0a              own and uses Purescript and Halogen."), Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("While I am working on a backend implementation, it pulls its content from a public testing API, \x0a                  containing mostly nonsense. Feel free to "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://sylvainleclercq.com/conduit.purs/#/register"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("register") ]), Halogen_HTML_Core.text(" and play with the app.") ]), Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("The code is available on "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/conduit.purs"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text(" my Github.") ]) ]), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_("iframe-wrapper") ])([ Halogen_HTML_Elements.iframe([ Halogen_HTML_Properties.src("https://sylvainleclercq.com/conduit.purs") ]) ]) ]) ]), Category.subcategoryHidden("github")("Github Repositories")([ renderProjects(state) ]) ]);
+      return Category.categoryHidden("projects")("Projects")([ Category.subcategory("featured")("Featured")([ Halogen_HTML_Elements.div([ Halogen_HTML_Properties.classes([ Halogen_Themes_Bootstrap4.textLeft, Halogen_Themes_Bootstrap4.m2 ]) ])([ Halogen_HTML_Elements.h2_([ Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://sylvainleclercq.com/conduit.purs"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("Conduit") ]) ]), Format.para("Conduit is a clone of the popular blogging website Medium, intended to showcase how a real world\x0a              website is implemented using various backend and frontend frameworks. This particular front-end implementation is my\x0a              own and uses Purescript and Halogen."), Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("While I am working on a backend implementation "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/conduit-rocket.rust"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("(this one, in Rust)") ]), Halogen_HTML_Core.text(", it pulls its content from a public testing API, containing mostly nonsense. Feel free to "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://sylvainleclercq.com/conduit.purs/#/register"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text("register") ]), Halogen_HTML_Core.text(" and play with the app.") ]), Halogen_HTML_Elements.p_([ Halogen_HTML_Core.text("The code is available on "), Halogen_HTML_Elements.a([ Halogen_HTML_Properties.href("https://github.com/de-passage/conduit.purs"), Halogen_HTML_Properties.target("_blank") ])([ Halogen_HTML_Core.text(" my Github.") ]) ]), Halogen_HTML_Elements.div([ Halogen_HTML_Properties.class_("iframe-wrapper") ])([ Halogen_HTML_Elements.iframe([ Halogen_HTML_Properties.src("https://sylvainleclercq.com/conduit.purs") ]) ]) ]) ]), Category.subcategoryHidden("github")("Github Repositories")([ renderProjects(state) ]) ]);
   };
   var handleAction = function (dictMonadAff) {
       var adaptFilter = function (v) {
@@ -12938,7 +12938,7 @@ var PS = {};
           if (v instanceof Toggle) {
               return Control_Monad_State_Class.modify_(Halogen_Query_HalogenM.monadStateHalogenM)(adaptFilter(v.value0));
           };
-          throw new Error("Failed pattern match at Projects (line 181, column 16 - line 185, column 46): " + [ v.constructor.name ]);
+          throw new Error("Failed pattern match at Projects (line 183, column 16 - line 187, column 46): " + [ v.constructor.name ]);
       };
   };
   var component = function (dictMonadAff) {
