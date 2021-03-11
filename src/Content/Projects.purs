@@ -14,7 +14,7 @@ import Data.Map (Map, fromFoldable, lookup)
 import Data.Maybe (Maybe(..), fromMaybe, maybe)
 import Data.Tuple.Nested ((/\))
 import Effect.Aff.Class (class MonadAff)
-import Format (para)
+import Format (para, em, strong)
 import Format as F
 import Halogen as H
 import Halogen.HTML as HH
@@ -149,17 +149,31 @@ render state =
               website is implemented using various backend and frontend frameworks. This particular front-end implementation is my
               own and uses Purescript and Halogen."""
             , HH.p_
-                [ HH.text "While I am working on a backend implementation "
+                [ HH.text "For demonstration purposes, it has the capability of changing the back-end it connects to. By default, the public test API of the Conduit project is selected and shows whatever garbage is currently on the server. A clean database is available through "
                 , HH.a [ HP.href "https://github.com/de-passage/conduit-rocket.rust", HP.target "_blank" ]
-                    [ HH.text "(this one, in Rust)" ]
-                , HH.text ", it pulls its content from a public testing API, containing mostly nonsense. Feel free to "
+                    [ HH.text "my own Rust back-end." ]
+                , HH.text " In order to use it, select "
+                , strong "Custom backend", HH.text " on the "
+                , HH.a [ HP.href "https://sylvainleclercq.com/conduit.purs/#/dev", HP.target "_blank" ]
+                    [ HH.text "Developers" ]
+                , HH.text " page and set the URL to "
+                , em "https://conduit-rocket.herokuapp.com/api/"
+                , HH.text " ." ]
+              , HH.p_ [
+                HH.text "Feel free to "
                 , HH.a [ HP.href "https://sylvainleclercq.com/conduit.purs/#/register", HP.target "_blank" ]
                     [ HH.text "register" ]
-                , HH.text " and play with the app."
+                , HH.text " and play with the app. The content of the database is reset every 24 hours."
                 ]
             , HH.p_
-                [ HH.text "The code is available on "
-                , HH.a [ HP.href "https://github.com/de-passage/conduit.purs", HP.target "_blank" ] [ HH.text " my Github." ]
+                [ HH.text "The code for both the front and back-end are available on"
+                , HH.a [ HP.href "https://github.com/de-passage/", HP.target "_blank" ] [ HH.text " my Github." ]
+                , HH.br_ 
+                , HH.text "Front-end: "
+                , HH.a [ HP.href "https://github.com/de-passage/conduit.purs", HP.target "_blank" ] [ HH.text "de-passage/conduit.purs" ]
+                , HH.br_ 
+                , HH.text "Back-end: "
+                , HH.a [ HP.href "https://github.com/de-passage/conduit-rocket.rust", HP.target "_blank" ] [ HH.text " de-passage/conduit-rocket.rust" ]
                 ]
             , HH.div [ HP.class_ (H.ClassName "iframe-wrapper") ]
                 [ HH.iframe [ HP.src "https://sylvainleclercq.com/conduit.purs" ]

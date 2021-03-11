@@ -1,4 +1,4 @@
-module Format (para, h1, h2, h3, h4, h5, h6) where 
+module Format (para, h1, h2, h3, h4, h5, h6, em, strong) where 
 
 import Halogen.HTML as HH
 
@@ -30,4 +30,8 @@ h6 :: forall w i. String -> HH.HTML w i
 h6 t = 
     HH.h6_ [ HH.text t ]
 
+em :: forall w i. String -> HH.HTML w i
+em t = HH.em_ [ HH.text t ]
 
+strong :: forall w i. String -> HH.HTML w i
+strong t = HH.strong_ [ HH.text t ]

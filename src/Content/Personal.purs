@@ -144,7 +144,7 @@ aboutMe =
       [ HH.tbody_
           [ tableRow "Birthday" [ HH.text "26/03/1990" ]
           , tableRow "Email" [ HH.a [ HP.href mailMe ] [ HH.text "contact@sylvainleclercq.com" ] ]
-          , tableRow "Address" [ HH.text "Kowloon City, Hong Kong SAR" ]
+          , tableRow "Address" [ HH.text "Montigny-le-Bretonneux, France" ]
           ]
       ]
   , h5 """Biography"""
