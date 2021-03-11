@@ -152,7 +152,7 @@ render state =
                 [ HH.text "For demonstration purposes, it has the capability of changing the back-end it connects to. By default, the public test API of the Conduit project is selected and shows whatever garbage is currently on the server. A clean database is available through "
                 , HH.a [ HP.href "https://github.com/de-passage/conduit-rocket.rust", HP.target "_blank" ]
                     [ HH.text "my own Rust back-end." ]
-                , HH.text " In order to use it, select "
+                , HH.text " The content of the database is reset every 24 hours. In order to use it, select "
                 , strong "Custom backend", HH.text " on the "
                 , HH.a [ HP.href "https://sylvainleclercq.com/conduit.purs/#/dev", HP.target "_blank" ]
                     [ HH.text "Developers" ]
@@ -163,7 +163,7 @@ render state =
                 HH.text "Feel free to "
                 , HH.a [ HP.href "https://sylvainleclercq.com/conduit.purs/#/register", HP.target "_blank" ]
                     [ HH.text "register" ]
-                , HH.text " and play with the app. The content of the database is reset every 24 hours."
+                , HH.text " and play with the app."
                 ]
             , HH.p_
                 [ HH.text "The code for both the front and back-end are available on"
