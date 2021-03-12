@@ -40,6 +40,10 @@
     background-color: transparent;
 }
 
+.embedded-resume {
+    width: 100%
+}
+
 @media (min-width: 374px) {
     .skillIcon {
         width: 4.5em;
@@ -53,6 +57,10 @@
         width: 5em;
         height: 5em;
     } 
+
+    .embedded-resume {
+        height: 70vh;
+    }
 }
 
 @media (min-width: 768px) {

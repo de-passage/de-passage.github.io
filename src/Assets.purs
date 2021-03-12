@@ -1,6 +1,5 @@
 module Assets
   ( Icon
-  , Language(..)
   , icon
   , iconS
   , purescriptIcon
@@ -20,21 +19,14 @@ module Assets
   , resume
   ) where
 
+import Internationalization (Language)
 import CSS as CSS
 import DOM.HTML.Indexed (HTMLimg)
 import Data.Array (snoc)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
-import Prelude (($), (<>), discard, bind, pure, show, class Show)
-
-data Language
-  = En
-  | Fr
-
-instance showLanguage :: Show Language where
-  show En = "en"
-  show Fr = "fr"
+import Prelude (($), (<>), discard, bind, pure, show)
 
 type Icon w i
   = Number -> HH.HTML w i

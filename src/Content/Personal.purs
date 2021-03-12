@@ -15,9 +15,11 @@ import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
+import Internationalization as I
 import Lists (listGroup, listItem)
 import Modal (modal)
 import Prelude (map, (<>), discard, (*>))
+import State (State, languageSelection, Action)
 
 type Media
   = { title :: String, id :: String, url :: String }
@@ -48,7 +50,7 @@ blog =
   , url: "/blog"
   }
 
-resume :: forall w i. A.Language -> Array (HH.IProp HTMLa i) -> Array (HH.HTML w i) -> HH.HTML w i
+resume :: forall w i. I.Language -> Array (HH.IProp HTMLa i) -> Array (HH.HTML w i) -> HH.HTML w i
 resume lang props =
   HH.a
     ( props
@@ -59,8 +61,8 @@ resume lang props =
           ]
     )
 
-personalInformation :: forall w i. HH.HTML w i
-personalInformation =
+personalInformation :: forall w. State -> HH.HTML w Action
+personalInformation model =
   let
     mkClass id = HP.class_ (HH.ClassName ("fa fa-" <> id <> " fa-2x"))
 
@@ -78,7 +80,6 @@ personalInformation =
 
     socialMedia r = HH.a [ HP.title r.title, HP.href r.url, mkClass r.id, HC.style linkStyle, HP.target "_blank" ] []
 
-    socialMediaS :: Media -> CSS.CSS -> HH.HTML w i
     socialMediaS r s = HH.a [ HP.title r.title, HP.href r.url, mkClass r.id, HC.style (linkStyle *> s), HP.target "_blank" ] []
 
     additionalStyle = do
@@ -103,7 +104,7 @@ personalInformation =
                 [ HH.text "Resume" ]
             ]
         )
-        downloadWindow
+        (downloadWindow model)
   in
     category "personal" "Sylvain Leclercq"
       [ listGroup
@@ -154,7 +155,7 @@ aboutMe =
       skill for a job."""
           ]
       ]
-  , HH.div_ [ resume A.En [] [ HH.text "Download resume as pdf" ] ]
+  , HH.div_ [ resume I.En [] [ HH.text "Download resume as pdf" ] ]
   , HH.table [ HP.classes [ BS.tableStriped, BS.table ] ]
       [ HH.tbody_
           [ tableRow "Birthday" [ HH.text "26/03/1990" ]
@@ -188,18 +189,14 @@ aboutMe =
       before growing sufficiently dissatisfied with the management of the IT projects and quitting in December 2019."""
   ]
 
-downloadWindow :: forall w i. Array (HH.HTML w i)
-downloadWindow =
+downloadWindow :: forall w. State -> Array (HH.HTML w Action)
+downloadWindow model =
   let
-    frame lang text =
+    frame lang =
       HH.div [ HP.class_ BS.row ]
-        [ HH.div [ HP.classes [ BS.col12, BS.colMd2, BS.textCenter ] ] [ resume lang [] [ HH.text text ] ]
-        , HH.div [ HP.classes [ BS.col12, BS.colMd10 ] ]
+        [ HH.div [ HP.classes [ BS.col12, BS.colMd10 ] ]
             [ HH.embed
-                [ HC.style
-                    ( sequence_
-                        [ CSS.height (CSS.vh 35.0), CSS.width (CSS.pct 100.0) ]
-                    )
+                [ HP.class_ (HH.ClassName "embedded-resume")
                 , HP.src (A.resume lang)
                 , HP.type_ (MT.MediaType "application/pdf")
                 , (HP.attr (HH.AttrName "scrolling") "auto")
@@ -208,10 +205,22 @@ downloadWindow =
                 []
             ]
         ]
+
+    em1 = (CSS.em 1.0)
+
+    padding = HC.style (CSS.padding em1 em1 em1 em1)
   in
     [ h2 "Download resume as PDF"
-    , frame A.En "Download in English"
-    , frame A.Fr "Télécharger en français"
+    , HH.div [ HP.class_ BS.row, padding ]
+        [ HH.div
+            [ HP.classes [ BS.col6, BS.colSm2, BS.textCenter ] ]
+            [ languageSelection model.language
+            ]
+        , HH.div [ HP.classes [ BS.col6, BS.colSm10, BS.textLeft ] ]
+            [ resume model.language [ HP.class_ BS.alignMiddle ] [ HH.text (I.translate model.language I.DownloadText) ]
+            ]
+        ]
+    , frame model.language
     ]
 
 tableRow :: forall w i. String -> Array (HH.HTML w i) -> HH.HTML w i
