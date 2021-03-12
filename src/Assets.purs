@@ -1,5 +1,6 @@
 module Assets
   ( Icon
+  , Language(..)
   , icon
   , iconS
   , purescriptIcon
@@ -25,7 +26,15 @@ import Data.Array (snoc)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
-import Prelude (($), (<>), discard, bind, pure)
+import Prelude (($), (<>), discard, bind, pure, show, class Show)
+
+data Language
+  = En
+  | Fr
+
+instance showLanguage :: Show Language where
+  show En = "en"
+  show Fr = "fr"
 
 type Icon w i
   = Number -> HH.HTML w i
@@ -34,19 +43,20 @@ source :: forall i r. String -> HH.IProp ( src :: String | r ) i
 source name = HP.src $ "https://unpkg.com/simple-icons@latest/icons/" <> name <> ".svg"
 
 icon :: forall w i. String -> Icon w i
-icon name =
-    do
-      iconDimension <- CSS.em
-      let em1 = CSS.em 1.0
-      let
-        style = do
-          CSS.padding em1 em1 em1 em1
-          CSS.height iconDimension
-          CSS.width iconDimension
-      pure $ HH.img
-            [ source name
-            , HC.style style
-            ]
+icon name = do
+  iconDimension <- CSS.em
+  let
+    em1 = CSS.em 1.0
+  let
+    style = do
+      CSS.padding em1 em1 em1 em1
+      CSS.height iconDimension
+      CSS.width iconDimension
+  pure
+    $ HH.img
+        [ source name
+        , HC.style style
+        ]
 
 iconS :: forall w i. String -> Array (HH.IProp HTMLimg i) -> HH.HTML w i
 iconS name a = HH.img (a `snoc` (source name))
@@ -93,5 +103,8 @@ cssIcon = "css3"
 rustIcon :: String
 rustIcon = "rust"
 
-resume :: String 
-resume = "assets/resume_sylvain_leclercq.pdf"
+resumeUrl :: String -> String
+resumeUrl lang = "assets/resume_sylvain_leclercq_" <> lang <> ".pdf"
+
+resume :: Language -> String
+resume lang = resumeUrl $ show lang

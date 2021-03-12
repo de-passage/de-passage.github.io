@@ -46,12 +46,12 @@ blog =
   , url: "/blog"
   }
 
-resume :: forall w i. Array (HH.IProp HTMLa i) -> Array (HH.HTML w i) -> HH.HTML w i
-resume props =
+resume :: forall w i. A.Language -> Array (HH.IProp HTMLa i) -> Array (HH.HTML w i) -> HH.HTML w i
+resume lang props =
   HH.a
     ( props
         <> [ HP.title "Download"
-          , HP.href A.resume
+          , HP.href (A.resume lang)
           , HP.download "Sylvain Leclercq"
           , HP.target "_blank"
           ]
@@ -84,7 +84,7 @@ personalInformation =
       CSS.fontSize (CSS.em 3.0)
 
     dl =
-      resume
+      resume A.En
         [ mkClass "download"
         , HC.style linkStyle
         ]
@@ -139,7 +139,7 @@ aboutMe =
       skill for a job."""
           ]
       ]
-  , HH.div_ [ resume [] [ HH.text "Download resume as pdf" ] ]
+  , HH.div_ [ resume A.En [] [ HH.text "Download resume as pdf" ] ]
   , HH.table [ HP.classes [ BS.tableStriped, BS.table ] ]
       [ HH.tbody_
           [ tableRow "Birthday" [ HH.text "26/03/1990" ]
