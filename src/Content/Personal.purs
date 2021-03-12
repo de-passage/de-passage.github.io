@@ -8,7 +8,6 @@ import Category (category)
 import DOM.HTML.Indexed (HTMLa)
 import Data.Array (snoc)
 import Data.MediaType as MT
-import Data.Traversable (sequence_)
 import Format (h2, h5, para)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
@@ -194,7 +193,7 @@ downloadWindow model =
   let
     frame lang =
       HH.div [ HP.class_ BS.row ]
-        [ HH.div [ HP.classes [ BS.col12, BS.colMd10 ] ]
+        [ HH.div [ HP.classes [ BS.col12 ] ]
             [ HH.embed
                 [ HP.class_ (HH.ClassName "embedded-resume")
                 , HP.src (A.resume lang)
