@@ -7,7 +7,9 @@ import CSS.Common (auto, none)
 import Category (category)
 import DOM.HTML.Indexed (HTMLa)
 import Data.Array (snoc)
-import Format (h5, para)
+import Data.MediaType as MT
+import Data.Traversable (sequence_)
+import Format (h2, h5, para)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
@@ -83,12 +85,25 @@ personalInformation =
       CSS.margin auto auto auto auto
       CSS.fontSize (CSS.em 3.0)
 
-    dl =
-      resume A.En
-        [ mkClass "download"
-        , HC.style linkStyle
-        ]
-        []
+    resumeModal =
+      modal "Resume"
+        ( \a ->
+            HH.a
+              ( [ ARIA.role "button"
+                , HP.title "Resume"
+                , mkClass "download"
+                , HC.style (linkStyle *> additionalStyle)
+                ]
+                  <> a
+              )
+              []
+        )
+        ( \a ->
+            [ HH.h3 ([ HC.style (CSS.margin auto auto auto auto) ] <> a)
+                [ HH.text "Resume" ]
+            ]
+        )
+        downloadWindow
   in
     category "personal" "Sylvain Leclercq"
       [ listGroup
@@ -97,7 +112,7 @@ personalInformation =
                   [ HH.div [ HP.classes [ BS.col ] ]
                       [ HH.img [ HP.class_ (HH.ClassName "profile-picture"), HP.src "/assets/me.jpg" ] ]
                   , HH.div [ HP.classes [ BS.col ], HC.style css ]
-                      [ HH.div [ HC.style (CSS.display CSS.flex)] [ socialMediaS blog additionalStyle ]
+                      [ HH.div [ HC.style (CSS.display CSS.flex) ] [ socialMediaS blog additionalStyle ]
                       , modal "Bio"
                           ( \a ->
                               HH.a
@@ -119,7 +134,7 @@ personalInformation =
                       ]
                   ]
               ]
-          , listItem [ HC.style css ] (map socialMedia medias `snoc` dl)
+          , listItem [ HC.style css ] (map socialMedia medias `snoc` resumeModal)
           ]
       ]
 
@@ -172,6 +187,32 @@ aboutMe =
       self study. I worked for almost two years as a C++ and C# engineer on desktop applications at Nexter Systems, 
       before growing sufficiently dissatisfied with the management of the IT projects and quitting in December 2019."""
   ]
+
+downloadWindow :: forall w i. Array (HH.HTML w i)
+downloadWindow =
+  let
+    frame lang text =
+      HH.div [ HP.class_ BS.row ]
+        [ HH.div [ HP.classes [ BS.col12, BS.colMd2, BS.textCenter ] ] [ resume lang [] [ HH.text text ] ]
+        , HH.div [ HP.classes [ BS.col12, BS.colMd10 ] ]
+            [ HH.embed
+                [ HC.style
+                    ( sequence_
+                        [ CSS.height (CSS.vh 35.0), CSS.width (CSS.pct 100.0) ]
+                    )
+                , HP.src (A.resume lang)
+                , HP.type_ (MT.MediaType "application/pdf")
+                , (HP.attr (HH.AttrName "scrolling") "auto")
+                , (HP.attr (HH.AttrName "frameborder") "0")
+                ]
+                []
+            ]
+        ]
+  in
+    [ h2 "Download resume as PDF"
+    , frame A.En "Download in English"
+    , frame A.Fr "Télécharger en français"
+    ]
 
 tableRow :: forall w i. String -> Array (HH.HTML w i) -> HH.HTML w i
 tableRow title content =
