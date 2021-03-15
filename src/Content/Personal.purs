@@ -17,7 +17,7 @@ import Internationalization as I
 import Lists (listGroup, listItem)
 import Modal (modal)
 import Prelude (map, (<>), discard, (*>))
-import State (State, languageSelection, Action)
+import State (State, languageSelection, Action, localize)
 
 type Media
   = { title :: String, id :: String, url :: String }
@@ -104,7 +104,9 @@ personalInformation model =
         )
         content
 
-    resumeModal = modalWindow "Resume" "download" linkStyle "Resume" (downloadWindow model)
+    resumeTxt = localize "resume" model
+
+    resumeModal = modalWindow resumeTxt "download" linkStyle resumeTxt (downloadWindow model)
 
     bio = modalWindow "Biography" "info-circle" (linkStyle *> additionalStyle) "About me" (aboutMe model)
 

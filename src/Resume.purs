@@ -7,20 +7,16 @@ import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
 import Halogen.Themes.Bootstrap4 as BS
-import Internationalization as I
 import Languages as L
 import Personal (personalInformation)
-import Prelude (Unit, absurd, unit, ($))
+import Prelude (Unit, absurd, identity, unit, ($))
 import Projects as Projects
-import State (State, Action(..))
+import State (State, Input, Action(..))
 import Work as W
 
 type ChildSlots
   = ( projects :: Projects.Slot Unit
     )
-
-type Input
-  = I.Language
 
 _projects :: SProxy "projects"
 _projects = SProxy
@@ -28,16 +24,11 @@ _projects = SProxy
 component :: forall q o m. MonadAff m => H.Component HH.HTML q Input o m
 component =
   H.mkComponent
-    { initialState: initialState
+    { initialState: identity
     , render
     , eval: H.mkEval $ H.defaultEval { handleAction = handleAction }
     }
   where
-  initialState :: Input -> State
-  initialState lang =
-    { language: lang
-    }
-
   handleAction action = case action of
     LanguageChanged lang -> H.modify_ (_ { language = lang })
 

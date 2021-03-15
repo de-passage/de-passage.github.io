@@ -1,4 +1,11 @@
-module Internationalization (Language(..), class Translate, translate, supportedLanguages, DownloadText(..)) where
+module Internationalization
+  ( Language(..)
+  , class Translate
+  , translate
+  , supportedLanguages
+  , DownloadText(..)
+  , LocalizedString(..)
+  ) where
 
 import Data.Argonaut.Decode (class DecodeJson, decodeJson)
 import Data.Bifunctor (rmap)

@@ -1,8 +1,10 @@
-module State (State(..), Action(..), languageSelection) where
+module State (State(..), Action(..), Dictionary(..), Input(..), languageSelection, localize) where
 
 import Prelude
 import Data.Array as Array
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe(..), fromMaybe)
+import Foreign.Object (lookup)
+import Foreign.Object as FO
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
@@ -10,8 +12,16 @@ import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
 import Internationalization as I
 
+type Dictionary
+  = FO.Object I.LocalizedString
+
 type State
-  = { language :: I.Language }
+  = { language :: I.Language
+    , content :: Dictionary
+    }
+
+type Input
+  = State
 
 data Action
   = LanguageChanged I.Language
@@ -38,3 +48,6 @@ languageSelection currentLanguage =
           ]
       , HH.div [ HP.class_ BS.dropdownMenu, ARIA.labelledBy elId ] remainingLanguages
       ]
+
+localize :: String -> State -> String
+localize key model = fromMaybe "<String Missing>" $ I.translate model.language <$> lookup key model.content
