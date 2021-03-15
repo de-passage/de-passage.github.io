@@ -1,11 +1,9 @@
 module State (State(..), Action(..), languageSelection) where
 
 import Prelude
-import CSS as CSS
 import Data.Array as Array
 import Data.Maybe (Maybe(..))
 import Halogen.HTML as HH
-import Halogen.HTML.CSS as HC
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
