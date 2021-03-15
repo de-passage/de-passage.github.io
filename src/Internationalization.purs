@@ -3,13 +3,13 @@ module Internationalization
   , class Translate
   , translate
   , supportedLanguages
-  , DownloadText(..)
   , LocalizedString(..)
   ) where
 
-import Data.Argonaut.Decode (class DecodeJson, decodeJson)
+import Data.Argonaut.Decode (class DecodeJson, decodeJson, (.:), (.:?))
 import Data.Bifunctor (rmap)
 import Data.Maybe (Maybe, fromMaybe)
+import Prelude (bind, pure, ($))
 import Prelude (class Eq, class Show)
 
 data Language
@@ -40,15 +40,7 @@ instance translateLanguage :: Translate Language where
 derive instance eqLanguage :: Eq Language
 
 supportedLanguages :: Array Language
-supportedLanguages = [ En, Fr ]
-
-data DownloadText
-  = DownloadText
-
-instance translateDownloadText :: Translate DownloadText where
-  translate En _ = "Download"
-  translate Fr _ = "Télécharger"
-  translate Jp _ = "ダウンロード"
+supportedLanguages = [ En, Fr, Jp ]
 
 instance translateLocalizedString :: Translate LocalizedString where
   translate En (LocalizedString str) = str.en
@@ -56,4 +48,9 @@ instance translateLocalizedString :: Translate LocalizedString where
   translate Jp (LocalizedString str) = fromMaybe str.en str.ja
 
 instance decodeJsonLocalizedString :: DecodeJson LocalizedString where
-  decodeJson str = rmap LocalizedString (decodeJson str)
+  decodeJson json = do
+    obj <- decodeJson json
+    en <- obj .: "en"
+    ja <- obj .:? "ja"
+    fr <- obj .:? "fr"
+    pure $ LocalizedString { en, fr, ja }

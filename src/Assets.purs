@@ -19,7 +19,7 @@ module Assets
   , resume
   ) where
 
-import Internationalization (Language)
+import Internationalization (Language(..))
 import CSS as CSS
 import DOM.HTML.Indexed (HTMLimg)
 import Data.Array (snoc)
@@ -99,4 +99,6 @@ resumeUrl :: String -> String
 resumeUrl lang = "assets/resume_sylvain_leclercq_" <> lang <> ".pdf"
 
 resume :: Language -> String
+resume Jp = resume En
+
 resume lang = resumeUrl $ show lang

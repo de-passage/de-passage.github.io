@@ -13,14 +13,28 @@ import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
-import Internationalization as I
 import Lists (listGroup, listItem)
 import Modal (modal)
 import Prelude (map, (<>), discard, (*>))
-import State (State, languageSelection, Action, localize)
+import State (Action, State, languageSelection, localize)
 
 type Media
   = { title :: String, id :: String, url :: String }
+
+type Localizer
+  = State -> String
+
+resumeL :: Localizer
+resumeL = localize "resume"
+
+downloadL :: Localizer
+downloadL = localize "download"
+
+downloadLongL :: Localizer
+downloadLongL = localize "download-long"
+
+settingsL :: Localizer
+settingsL = localize "settings"
 
 mailMe :: String
 mailMe = "mailto:contact@sylvainleclercq.com"
@@ -48,13 +62,13 @@ blog =
   , url: "/blog"
   }
 
-resume :: forall w i. I.Language -> Array (HH.IProp HTMLa i) -> Array (HH.HTML w i) -> HH.HTML w i
-resume lang props =
+resume :: forall w i. State -> Array (HH.IProp HTMLa i) -> Array (HH.HTML w i) -> HH.HTML w i
+resume model props =
   HH.a
     ( props
-        <> [ HP.title "Download"
-          , HP.href (A.resume lang)
-          , HP.download "Sylvain Leclercq"
+        <> [ HP.title (downloadL model)
+          , HP.href (A.resume model.language)
+          , HP.download ("Sylvain Leclercq " <> resumeL model)
           , HP.target "_blank"
           ]
     )
@@ -104,13 +118,15 @@ personalInformation model =
         )
         content
 
-    resumeTxt = localize "resume" model
+    resumeTxt = resumeL model
+
+    settingsText = settingsL model
 
     resumeModal = modalWindow resumeTxt "download" linkStyle resumeTxt (downloadWindow model)
 
     bio = modalWindow "Biography" "info-circle" (linkStyle *> additionalStyle) "About me" (aboutMe model)
 
-    settings = modalWindow "Settings" "cog" linkStyle "Settings" (settingsWindow model)
+    settings = modalWindow settingsText "cog" linkStyle settingsText (settingsWindow model)
   in
     category "personal" "Sylvain Leclercq"
       [ listGroup
@@ -144,7 +160,7 @@ aboutMe model =
       skill for a job."""
           ]
       ]
-  , HH.div_ [ resume model.language [] [ HH.text "Download resume as pdf" ] ]
+  , HH.div_ [ resume model [] [ HH.text "Download resume as pdf" ] ]
   , HH.table [ HP.classes [ BS.tableStriped, BS.table ] ]
       [ HH.tbody_
           [ tableRow "Birthday" [ HH.text "26/03/1990" ]
@@ -206,14 +222,14 @@ downloadWindow model =
             [ languageSelection model.language
             ]
         , HH.div [ HP.classes [ BS.col6, BS.colSm10, BS.textLeft ] ]
-            [ resume model.language [ HP.class_ BS.alignMiddle ] [ HH.text (I.translate model.language I.DownloadText) ]
+            [ resume model [ HP.class_ BS.alignMiddle ] [ HH.text (downloadL model) ]
             ]
         ]
     , frame model.language
     ]
 
 settingsWindow :: forall w. State -> Array (HH.HTML w Action)
-settingsWindow model = [ h2 "Settings", languageSelection model.language ]
+settingsWindow model = [ h2 (settingsL model), languageSelection model.language ]
 
 tableRow :: forall w i. String -> Array (HH.HTML w i) -> HH.HTML w i
 tableRow title content =

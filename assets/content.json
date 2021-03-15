@@ -3,5 +3,24 @@
         "en": "Resume",
         "fr": "CV",
         "ja": "履歴書"
+    },
+    "download": {
+        "en": "Download",
+        "fr": "Télécharger",
+        "ja": "ダウンロード"
+    },
+    "download-long": {
+        "en": "Download resume as PDF",
+        "fr": "Télécharger le CV en PDF",
+        "ja": "履歴書をPDFでダウンロード"
+    },
+    "settings": {
+        "en": "Settings",
+        "ja": "設定"
+    },
+    "close": {
+        "en": "Close",
+        "fr": "Fermer",
+        "ja": "閉じる"
     }
 }
