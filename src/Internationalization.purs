@@ -7,10 +7,8 @@ module Internationalization
   ) where
 
 import Data.Argonaut.Decode (class DecodeJson, decodeJson, (.:), (.:?))
-import Data.Bifunctor (rmap)
 import Data.Maybe (Maybe, fromMaybe)
-import Prelude (bind, pure, ($))
-import Prelude (class Eq, class Show)
+import Prelude (bind, pure, ($), class Eq, class Show)
 
 data Language
   = En

@@ -16,13 +16,10 @@ import Halogen.Themes.Bootstrap4 as BS
 import Lists (listGroup, listItem)
 import Modal (modal)
 import Prelude (map, (<>), discard, (*>))
-import State (Action, State, languageSelection, localize)
+import State (Action, State, Localizer, languageSelection, localize)
 
 type Media
   = { title :: String, id :: String, url :: String }
-
-type Localizer
-  = State -> String
 
 resumeL :: Localizer
 resumeL = localize "resume"
@@ -117,6 +114,7 @@ personalInformation model =
             ]
         )
         content
+        model
 
     resumeTxt = resumeL model
 

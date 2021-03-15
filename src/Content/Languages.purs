@@ -13,9 +13,10 @@ import Halogen.Themes.Bootstrap4 as BS
 import Lists (listGroup, listItem_, ListItem)
 import Modal (modal)
 import Prelude (discard, map, ($), (*>), (<>))
+import State (State)
 
-languages :: forall w i. HH.HTML w i
-languages =
+languages :: forall w i. State -> HH.HTML w i
+languages model =
   let
     css = do
       CSS.display CSS.inlineBlock
@@ -85,11 +86,12 @@ languages =
                   ]
             )
             ( \a ->
-                  [ HH.h3 a [ HH.text lang ]
-                  , HH.h4 [ HC.style (CSS.marginTop auto) ] [ HH.text prof ]
-                  ]
+                [ HH.h3 a [ HH.text lang ]
+                , HH.h4 [ HC.style (CSS.marginTop auto) ] [ HH.text prof ]
+                ]
             )
             desc
+            model
         ]
 
     mkEducationItem :: Education w i -> ListItem w i

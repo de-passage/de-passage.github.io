@@ -1,4 +1,4 @@
-module State (State(..), Action(..), Dictionary(..), Input(..), languageSelection, localize) where
+module State (State(..), Action(..), Dictionary(..), Input(..), languageSelection, localize, Localizer(..)) where
 
 import Prelude
 import Data.Array as Array
@@ -25,6 +25,9 @@ type Input
 
 data Action
   = LanguageChanged I.Language
+
+type Localizer
+  = State -> String
 
 languageSelection :: forall w. I.Language -> HH.HTML w Action
 languageSelection currentLanguage =

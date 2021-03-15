@@ -1,7 +1,6 @@
 module Modal where
 
 import Prelude
-
 import Attributes (dataBackdrop, dataDismiss, dataTarget, dataToggle)
 import CSS as CSS
 import DOM.HTML.Indexed (HTMLh1)
@@ -10,6 +9,10 @@ import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
+import State (State, Localizer, localize)
+
+closeL :: Localizer
+closeL = localize "close"
 
 modal ::
   forall r w i.
@@ -17,9 +20,10 @@ modal ::
   (Array (HH.IProp r i) -> HH.HTML w i) ->
   (Array (HH.IProp HTMLh1 i) -> Array (HH.HTML w i)) ->
   Array (HH.HTML w i) ->
+  State ->
   HH.HTML w i
-modal id btn title content =
-  HH.div [ HC.style (CSS.display CSS.flex)]
+modal id btn title content model =
+  HH.div [ HC.style (CSS.display CSS.flex) ]
     [ btn [ dataToggle "modal", dataTarget ("#modal" <> id) ]
     , HH.div
         [ HP.classes [ BS.modal, BS.fade ]
@@ -44,7 +48,7 @@ modal id btn title content =
                         , dataDismiss "modal"
                         , HP.type_ HP.ButtonButton
                         ]
-                        [ HH.text "Close" ]
+                        [ HH.text (closeL model) ]
                     ]
                 ]
             ]

@@ -34,6 +34,7 @@ import Halogen.HTML.Properties as HP
 import Halogen.Themes.Bootstrap4 as BS
 import Modal (modal)
 import Prelude (($), map, discard)
+import State (State)
 
 type UrlSource
   = { url :: String
@@ -498,29 +499,8 @@ quote (M.Just qu) content =
       , HH.footer [ HP.class_ BS.blockquoteFooter ] $ cite q.source
       ]
 
-mkSkillLink :: forall w i. String -> SkillDescription w i -> HH.HTML w i
-mkSkillLink id desc =
-  HH.div
-    [ HP.class_ BS.card, HC.style (CSS.display CSS.inlineBlock) ]
-    [ modal id
-        ( \a ->
-            HH.button
-              (a `snoc` HP.title desc.title `snoc` HP.class_ (HH.ClassName "skillButton"))
-              [ A.iconS desc.icon [ HP.class_ (HH.ClassName "skillIcon") ]
-              ]
-        )
-        ( \a ->
-            [ A.icon desc.icon 5.0
-            , HH.h3
-                (a `snoc` HC.style (CSS.margin auto auto auto auto))
-                [ HH.a [ HP.href desc.url ] [ HH.text desc.title ] ]
-            ]
-        )
-        (quote desc.quote desc.content)
-    ]
-
-technicalSkills :: forall w i. HH.HTML w i
-technicalSkills =
+technicalSkills :: forall w i. State -> HH.HTML w i
+technicalSkills model =
   let
     st = do
       CSS.justifyContent CSS.spaceAround
@@ -575,4 +555,26 @@ technicalSkills =
                   , "JIRA"
                   ]
           ]
+      ]
+  where
+  mkSkillLink :: String -> SkillDescription w i -> HH.HTML w i
+  mkSkillLink id desc =
+    HH.div
+      [ HP.class_ BS.card, HC.style (CSS.display CSS.inlineBlock) ]
+      [ modal id
+          ( \a ->
+              HH.button
+                (a `snoc` HP.title desc.title `snoc` HP.class_ (HH.ClassName "skillButton"))
+                [ A.iconS desc.icon [ HP.class_ (HH.ClassName "skillIcon") ]
+                ]
+          )
+          ( \a ->
+              [ A.icon desc.icon 5.0
+              , HH.h3
+                  (a `snoc` HC.style (CSS.margin auto auto auto auto))
+                  [ HH.a [ HP.href desc.url ] [ HH.text desc.title ] ]
+              ]
+          )
+          (quote desc.quote desc.content)
+          model
       ]

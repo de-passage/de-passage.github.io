@@ -35,12 +35,12 @@ component =
 render :: forall m. MonadAff m => State -> H.ComponentHTML Action ChildSlots m
 render state =
   let
-    personal = HH.div [ HP.classes [ BS.colMd4, BS.colSm5, BS.col12 ] ] [ personalInformation state, L.languages ]
+    personal = HH.div [ HP.classes [ BS.colMd4, BS.colSm5, BS.col12 ] ] [ personalInformation state, L.languages state ]
 
     skill =
       HH.div [ HP.classes [ BS.colMd8, BS.colSm7, BS.col12 ] ]
         [ W.workExperience
-        , S.technicalSkills
+        , S.technicalSkills state
         , HH.slot _projects unit Projects.component unit absurd
         ]
   in
