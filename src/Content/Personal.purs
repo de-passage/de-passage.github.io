@@ -6,7 +6,6 @@ import CSS as CSS
 import CSS.Common (auto, none)
 import Category (category)
 import DOM.HTML.Indexed (HTMLa)
-import Data.Array (snoc)
 import Data.MediaType as MT
 import Format (h2, h5, para)
 import Halogen.HTML as HH
@@ -85,14 +84,14 @@ personalInformation model =
       CSS.margin auto auto auto auto
       CSS.fontSize (CSS.em 3.0)
 
-    resumeModal =
-      modal "Resume"
+    modalWindow btn icon style title content =
+      modal btn
         ( \a ->
             HH.a
               ( [ ARIA.role "button"
-                , HP.title "Resume"
-                , mkClass "download"
-                , HC.style (linkStyle *> additionalStyle)
+                , HP.title btn
+                , mkClass icon
+                , HC.style style
                 ]
                   <> a
               )
@@ -100,10 +99,16 @@ personalInformation model =
         )
         ( \a ->
             [ HH.h3 ([ HC.style (CSS.margin auto auto auto auto) ] <> a)
-                [ HH.text "Resume" ]
+                [ HH.text title ]
             ]
         )
-        (downloadWindow model)
+        content
+
+    resumeModal = modalWindow "Resume" "download" linkStyle "Resume" (downloadWindow model)
+
+    bio = modalWindow "Biography" "info-circle" (linkStyle *> additionalStyle) "About me" (aboutMe model)
+
+    settings = modalWindow "Settings" "cog" linkStyle "Settings" (settingsWindow model)
   in
     category "personal" "Sylvain Leclercq"
       [ listGroup
@@ -113,33 +118,16 @@ personalInformation model =
                       [ HH.img [ HP.class_ (HH.ClassName "profile-picture"), HP.src "/assets/me.jpg" ] ]
                   , HH.div [ HP.classes [ BS.col ], HC.style css ]
                       [ HH.div [ HC.style (CSS.display CSS.flex) ] [ socialMediaS blog additionalStyle ]
-                      , modal "Bio"
-                          ( \a ->
-                              HH.a
-                                ( [ ARIA.role "button"
-                                  , HP.title "Biography"
-                                  , mkClass "info-circle"
-                                  , HC.style (linkStyle *> additionalStyle)
-                                  ]
-                                    <> a
-                                )
-                                []
-                          )
-                          ( \a ->
-                              [ HH.h3 ([ HC.style (CSS.margin auto auto auto auto) ] <> a)
-                                  [ HH.text "About me" ]
-                              ]
-                          )
-                          aboutMe
+                      , bio
                       ]
                   ]
               ]
-          , listItem [ HC.style css ] (map socialMedia medias `snoc` resumeModal)
+          , listItem [ HC.style css ] (map socialMedia medias <> [ resumeModal, settings ])
           ]
       ]
 
-aboutMe :: forall w i. Array (HH.HTML w i)
-aboutMe =
+aboutMe :: forall w i. State -> Array (HH.HTML w i)
+aboutMe model =
   [ HH.div [ HC.style (CSS.width (CSS.pct 100.0)) ]
       [ HH.img [ HP.class_ (HH.ClassName "bio-picture"), HP.src "/assets/me.jpg" ]
       , HH.p [ HC.style (CSS.float none) ]
@@ -154,7 +142,7 @@ aboutMe =
       skill for a job."""
           ]
       ]
-  , HH.div_ [ resume I.En [] [ HH.text "Download resume as pdf" ] ]
+  , HH.div_ [ resume model.language [] [ HH.text "Download resume as pdf" ] ]
   , HH.table [ HP.classes [ BS.tableStriped, BS.table ] ]
       [ HH.tbody_
           [ tableRow "Birthday" [ HH.text "26/03/1990" ]
@@ -221,6 +209,9 @@ downloadWindow model =
         ]
     , frame model.language
     ]
+
+settingsWindow :: forall w. State -> Array (HH.HTML w Action)
+settingsWindow model = [ h2 "Settings", languageSelection model.language ]
 
 tableRow :: forall w i. String -> Array (HH.HTML w i) -> HH.HTML w i
 tableRow title content =

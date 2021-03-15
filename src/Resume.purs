@@ -10,7 +10,7 @@ import Halogen.Themes.Bootstrap4 as BS
 import Internationalization as I
 import Languages as L
 import Personal (personalInformation)
-import Prelude (Unit, absurd, const, unit, ($))
+import Prelude (Unit, absurd, unit, ($))
 import Projects as Projects
 import State (State, Action(..))
 import Work as W
@@ -19,20 +19,23 @@ type ChildSlots
   = ( projects :: Projects.Slot Unit
     )
 
+type Input
+  = I.Language
+
 _projects :: SProxy "projects"
 _projects = SProxy
 
-component :: forall q i o m. MonadAff m => H.Component HH.HTML q i o m
+component :: forall q o m. MonadAff m => H.Component HH.HTML q Input o m
 component =
   H.mkComponent
-    { initialState: const initialState
+    { initialState: initialState
     , render
     , eval: H.mkEval $ H.defaultEval { handleAction = handleAction }
     }
   where
-  initialState :: State
-  initialState =
-    { language: I.En
+  initialState :: Input -> State
+  initialState lang =
+    { language: lang
     }
 
   handleAction action = case action of

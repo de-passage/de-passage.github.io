@@ -1,19 +1,21 @@
 module Internationalization (Language(..), class Translate, translate, supportedLanguages, DownloadText(..)) where
 
-import Prelude (class Eq, class Show)
+import Data.Argonaut.Decode (class DecodeJson, decodeJson)
+import Data.Bifunctor (rmap)
 import Data.Maybe (Maybe, fromMaybe)
+import Prelude (class Eq, class Show)
 
 data Language
   = En
   | Fr
   | Jp
 
-data LocalizedString
+newtype LocalizedString
   = LocalizedString
-    { en :: String
-    , fr :: Maybe String
-    , jp :: Maybe String
-    }
+  { en :: String
+  , fr :: Maybe String
+  , ja :: Maybe String
+  }
 
 class Translate a where
   translate :: Language -> a -> String
@@ -21,7 +23,7 @@ class Translate a where
 instance showLanguage :: Show Language where
   show En = "en"
   show Fr = "fr"
-  show Jp = "jp"
+  show Jp = "ja"
 
 instance translateLanguage :: Translate Language where
   translate _ En = "English"
@@ -44,4 +46,7 @@ instance translateDownloadText :: Translate DownloadText where
 instance translateLocalizedString :: Translate LocalizedString where
   translate En (LocalizedString str) = str.en
   translate Fr (LocalizedString str) = fromMaybe str.en str.fr
-  translate Jp (LocalizedString str) = fromMaybe str.en str.jp
+  translate Jp (LocalizedString str) = fromMaybe str.en str.ja
+
+instance decodeJsonLocalizedString :: DecodeJson LocalizedString where
+  decodeJson str = rmap LocalizedString (decodeJson str)
