@@ -8,15 +8,16 @@ import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
 import Halogen.Themes.Bootstrap4 as BS
 import Languages as L
-import Personal (personalInformation)
+import Personal as P
 import Prelude (Unit, absurd, identity, unit, ($))
 import Projects as Projects
 import State (State, Input, Action(..))
 import Work as W
 
 type ChildSlots
-  = ( projects :: Projects.Slot Unit
-    )
+  = P.ChildSlots
+      ( projects :: Projects.Slot Unit
+      )
 
 _projects :: SProxy "projects"
 _projects = SProxy
@@ -35,7 +36,7 @@ component =
 render :: forall m. MonadAff m => State -> H.ComponentHTML Action ChildSlots m
 render state =
   let
-    personal = HH.div [ HP.classes [ BS.colMd4, BS.colSm5, BS.col12 ] ] [ personalInformation state, L.languages state ]
+    personal = HH.div [ HP.classes [ BS.colMd4, BS.colSm5, BS.col12 ] ] [ P.personalInformation state, L.languages state ]
 
     skill =
       HH.div [ HP.classes [ BS.colMd8, BS.colSm7, BS.col12 ] ]

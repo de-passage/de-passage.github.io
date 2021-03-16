@@ -1,26 +1,29 @@
 {
     "resume": {
-        "en": "Resume",
         "fr": "CV",
-        "ja": "履歴書"
+        "ja": "履歴書",
+        "en": "Resume\n\ntest"
     },
     "download": {
-        "en": "Download",
         "fr": "Télécharger",
-        "ja": "ダウンロード"
+        "ja": "ダウンロード",
+        "en": "Download"
     },
     "download-long": {
-        "en": "Download resume as PDF",
         "fr": "Télécharger le CV en PDF",
-        "ja": "履歴書をPDFでダウンロード"
+        "ja": "履歴書をPDFでダウンロード",
+        "en": "Download resume as PDF"
     },
     "settings": {
-        "en": "Settings",
-        "ja": "設定"
+        "ja": "設定",
+        "en": "Settings"
     },
     "close": {
-        "en": "Close",
         "fr": "Fermer",
-        "ja": "閉じる"
+        "ja": "閉じる",
+        "en": "Close"
+    },
+    "bio-long": {
+        "en": "##### Biography\n\nI wrote my first program during a boring math lecture in junior high school in France, around 2005. I discovered that my TI-82 scientific calculator could be programmed using some limited variant of BASIC and I became obsessed with it. I learned as much as I could from the manual but quickly hit performance issues as I graduated from writing trivial math programs to attempting to build games.\n\nI used the limited Internet access that my family had at the time to research ways to circumvent the issue, only to realize that all the solutions that I could find did not apply to the machine I had. In the process, I stumbled on the \\\"Site du Zéro\\\" (now OpenClassroom), the de-facto reference website for French speaking programming self-learners, where I learned first C, then C++, as those were the only two languages with comprehensive explanations.\n\nFrom then on I kept studying various programming languages and computing science. However as I reached the end of high school, I didn't see it as anything more than a hobby and I went on to study management in university.\n\nI moved to Japan in early 2012 as an exchange student, and lived there until mid-2014. I then dropped out of university as I realized that management wasn't my calling and went on to travel the world. From there, I spent a year in South Korea, 5 months in Taiwan and a year in Australia, before going back to France in late 2017.\n\n This was also the moment I decided I would pursue software engineering as a career, after over 13 years of self study. I worked for almost two years as a C++ and C# engineer on desktop applications at Nexter Systems, before growing sufficiently dissatisfied with the management of the IT projects and quitting in December 2019."
     }
 }

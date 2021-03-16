@@ -7,6 +7,8 @@ import CSS.Common (auto, none)
 import Category (category)
 import DOM.HTML.Indexed (HTMLa)
 import Data.MediaType as MT
+import Data.Symbol (SProxy(..))
+import Effect.Class (class MonadEffect)
 import Format (h2, h5, para)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
@@ -14,12 +16,20 @@ import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
 import Lists (listGroup, listItem)
+import Marked as M
 import Modal (modal)
-import Prelude (map, (<>), discard, (*>))
+import Prelude (Unit, absurd, discard, map, unit, (*>), (<>))
 import State (Action, State, Localizer, languageSelection, localize)
 
 type Media
   = { title :: String, id :: String, url :: String }
+
+type ChildSlots r
+  = ( bioLong :: M.Slot Unit, bioShort :: M.Slot Unit | r )
+
+_bioLong = SProxy :: SProxy "bioLong"
+
+_bioShort = SProxy :: SProxy "bioShort"
 
 resumeL :: Localizer
 resumeL = localize "resume"
@@ -32,6 +42,9 @@ downloadLongL = localize "download-long"
 
 settingsL :: Localizer
 settingsL = localize "settings"
+
+bioLongL :: Localizer
+bioLongL = localize "bio-long"
 
 mailMe :: String
 mailMe = "mailto:contact@sylvainleclercq.com"
@@ -70,7 +83,7 @@ resume model props =
           ]
     )
 
-personalInformation :: forall w. State -> HH.HTML w Action
+personalInformation :: forall r m. MonadEffect m => State -> HH.ComponentHTML Action (ChildSlots r) m
 personalInformation model =
   let
     mkClass id = HP.class_ (HH.ClassName ("fa fa-" <> id <> " fa-2x"))
@@ -142,7 +155,7 @@ personalInformation model =
           ]
       ]
 
-aboutMe :: forall w i. State -> Array (HH.HTML w i)
+aboutMe :: forall m r. MonadEffect m => State -> Array (HH.ComponentHTML Action (ChildSlots r) m)
 aboutMe model =
   [ HH.div [ HC.style (CSS.width (CSS.pct 100.0)) ]
       [ HH.img [ HP.class_ (HH.ClassName "bio-picture"), HP.src "/assets/me.jpg" ]
@@ -166,30 +179,7 @@ aboutMe model =
           , tableRow "Address" [ HH.text "Montigny-le-Bretonneux, France" ]
           ]
       ]
-  , h5 """Biography"""
-  , para
-      """ I wrote my first program during a boring math lecture in junior high school in France, around 2005. 
-      I discovered that my TI-82 scientific calculator could be programmed using some limited variant of BASIC
-      and I became obsessed with it. I learned as much as I could from the manual but quickly hit performance
-      issues as I graduated from writing trivial math programs to attempting to build games."""
-  , para
-      """I used the limited Internet access that my family had at the time to research ways to circumvent the
-      issue, only to realize that all the solutions that I could find did not apply to the machine I had. In the 
-      process, I stumbled on the "Site du Zéro" (now OpenClassroom), the de-facto reference website for French speaking
-      programming self-learners, where I learned first C, then C++, as those were the only two languages with 
-      comprehensive explanations."""
-  , para
-      """From then on I kept studying various programming languages and computing science. However as I 
-        reached the end of high school, I didn't see it as anything more than a hobby and I went on to study 
-        management in university."""
-  , para
-      """I moved to Japan in early 2012 as an exchange student, and lived there until mid-2014. I then dropped out of 
-      university as I realized that management wasn't my calling and went on to travel the world. From there, 
-      I spent a year in South Korea, 5 months in Taiwan and a year in Australia, before going back to France in late 2017."""
-  , para
-      """This was also the moment I decided I would pursue software engineering as a career, after over 13 years of 
-      self study. I worked for almost two years as a C++ and C# engineer on desktop applications at Nexter Systems, 
-      before growing sufficiently dissatisfied with the management of the IT projects and quitting in December 2019."""
+  , HH.slot _bioLong unit M.component { text: bioLongL model, id: "bio-long" } absurd
   ]
 
 downloadWindow :: forall w. State -> Array (HH.HTML w Action)
