@@ -18,11 +18,11 @@ import Halogen.Themes.Bootstrap4 as BS
 import Lists (listGroup, listItem)
 import Marked as M
 import Modal (modal)
-import Prelude (Unit, absurd, discard, map, unit, (*>), (<>))
+import Prelude (Unit, absurd, const, discard, map, unit, (*>), (<>))
 import State (Action, State, Localizer, languageSelection, localize)
 
 type Media
-  = { title :: String, id :: String, url :: String }
+  = { title :: Localizer, id :: String, url :: String }
 
 type ChildSlots r
   = ( bioLong :: M.Slot Unit, bioShort :: M.Slot Unit | r )
@@ -31,44 +31,52 @@ _bioLong = SProxy :: SProxy "bioLong"
 
 _bioShort = SProxy :: SProxy "bioShort"
 
-resumeL :: Localizer
-resumeL = localize "resume"
+resumeL = localize "resume" :: Localizer
 
-downloadL :: Localizer
-downloadL = localize "download"
+downloadL = localize "download" :: Localizer
 
-downloadLongL :: Localizer
-downloadLongL = localize "download-long"
+downloadLongL = localize "download-long" :: Localizer
 
-settingsL :: Localizer
-settingsL = localize "settings"
+settingsL = localize "settings" :: Localizer
 
-bioLongL :: Localizer
-bioLongL = localize "bio-long"
+bioLongL = localize "bio-long" :: Localizer
 
-bioShortL :: Localizer
-bioShortL = localize "bio-short"
+bioShortL = localize "bio-short" :: Localizer
 
-bioTitleL :: Localizer
-bioTitleL = localize "bio-title"
+bioTitleL = localize "bio-title" :: Localizer
 
-aboutMeL :: Localizer
-aboutMeL = localize "about-me"
+aboutMeL = localize "about-me" :: Localizer
+
+birthdayL = localize "birthday" :: Localizer
+
+birthdayTitleL = localize "birthday-title" :: Localizer
+
+emailL = localize "email" :: Localizer
+
+addressL = localize "address" :: Localizer
+
+addressTitleL = localize "address-title" :: Localizer
+
+blogL = localize "blog" :: Localizer
+
+githubL = const "GitHub" :: Localizer
+
+linkedinL = const "LinkedIn" :: Localizer
 
 mailMe :: String
 mailMe = "mailto:contact@sylvainleclercq.com"
 
 medias :: Array Media
 medias =
-  [ { title: "Email"
+  [ { title: emailL
     , id: "envelope"
     , url: mailMe
     }
-  , { title: "GitHub"
+  , { title: githubL
     , id: "github"
     , url: "https://github.com/de-passage"
     }
-  , { title: "LinkedIn"
+  , { title: linkedinL
     , id: "linkedin"
     , url: "https://www.linkedin.com/in/sylvain-leclercq-12b933154/"
     }
@@ -76,7 +84,7 @@ medias =
 
 blog :: Media
 blog =
-  { title: "Blog"
+  { title: blogL
   , id: "pencil"
   , url: "/blog"
   }
@@ -109,9 +117,9 @@ personalInformation model =
       CSS.paddingRight (CSS.px 2.0)
       CSS.key (CSS.fromString "cursor") "pointer"
 
-    socialMedia r = HH.a [ HP.title r.title, HP.href r.url, mkClass r.id, HC.style linkStyle, HP.target "_blank" ] []
+    socialMedia r = HH.a [ HP.title (r.title model), HP.href r.url, mkClass r.id, HC.style linkStyle, HP.target "_blank" ] []
 
-    socialMediaS r s = HH.a [ HP.title r.title, HP.href r.url, mkClass r.id, HC.style (linkStyle *> s), HP.target "_blank" ] []
+    socialMediaS r s = HH.a [ HP.title (r.title model), HP.href r.url, mkClass r.id, HC.style (linkStyle *> s), HP.target "_blank" ] []
 
     additionalStyle = do
       CSS.margin auto auto auto auto
@@ -170,12 +178,12 @@ aboutMe model =
       [ HH.img [ HP.class_ (HH.ClassName "bio-picture"), HP.src "/assets/me.jpg" ]
       , HH.slot _bioShort unit M.component { text: bioShortL model, id: "bio-short" } absurd
       ]
-  , HH.div_ [ resume model [] [ HH.text "Download resume as pdf" ] ]
+  , HH.div_ [ resume model [ HP.class_ BS.p1 ] [ HH.text (downloadLongL model) ] ]
   , HH.table [ HP.classes [ BS.tableStriped, BS.table ] ]
       [ HH.tbody_
-          [ tableRow "Birthday" [ HH.text "26/03/1990" ]
-          , tableRow "Email" [ HH.a [ HP.href mailMe ] [ HH.text "contact@sylvainleclercq.com" ] ]
-          , tableRow "Address" [ HH.text "Montigny-le-Bretonneux, France" ]
+          [ tableRow (birthdayTitleL model) [ HH.text (birthdayL model) ]
+          , tableRow (emailL model) [ HH.a [ HP.href mailMe ] [ HH.text "contact@sylvainleclercq.com" ] ]
+          , tableRow (addressTitleL model) [ HH.text (addressL model) ]
           ]
       ]
   , HH.slot _bioLong unit M.component { text: bioLongL model, id: "bio-long" } absurd
@@ -202,7 +210,7 @@ downloadWindow model =
 
     padding = HC.style (CSS.padding em1 em1 em1 em1)
   in
-    [ h2 "Download resume as PDF"
+    [ h2 (downloadLongL model)
     , HH.div [ HP.class_ BS.row, padding ]
         [ HH.div
             [ HP.classes [ BS.col6, BS.colSm2, BS.textCenter ] ]
