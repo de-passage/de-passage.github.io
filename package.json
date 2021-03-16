@@ -7,9 +7,12 @@
     "test": "test"
   },
   "dependencies": {
+    "marked": "^2.0.1",
     "parcel": "^1.12.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "parcel-plugin-static-files-copy": "^2.5.1"
+  },
   "scripts": {
     "test": "spago test",
     "dev": "spago build --watch & parcel index.html -p 8000"
@@ -23,5 +26,13 @@
   "bugs": {
     "url": "https://github.com/de-passage/de-passage.github.io/issues"
   },
-  "homepage": "https://github.com/de-passage/de-passage.github.io#readme"
+  "homepage": "https://github.com/de-passage/de-passage.github.io#readme",
+  "staticFiles": {
+    "staticPath": [
+      {
+        "staticPath": "assets",
+        "staticOutDir": "assets/"
+      }
+    ]
+  }
 }
