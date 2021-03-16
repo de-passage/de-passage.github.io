@@ -13,7 +13,7 @@ import Halogen.Themes.Bootstrap4 as BS
 import Lists (listGroup, listItem_, ListItem)
 import Modal (modal)
 import Prelude (discard, map, ($), (*>), (<>))
-import State (State)
+import State (State, localize)
 
 languages :: forall w i. State -> HH.HTML w i
 languages model =
@@ -24,7 +24,7 @@ languages model =
 
     langs :: forall r j. Array (Tuple3 String String (Array (HH.HTML r j)))
     langs =
-      [ tuple3 "French" "Native"
+      [ tuple3 "french" "native"
           [ HH.p [ HP.class_ BS.textJustify ]
               [ HH.text
                   """I was born and raised in France, near Paris.
@@ -32,7 +32,7 @@ languages model =
                 it is still my mother tongue."""
               ]
           ]
-      , tuple3 "English" "Near Bilingual"
+      , tuple3 "english" "near-bilingual"
           [ HH.p_
               [ HH.text
                   """ I learned English as a teenager watching American TV shows. As my
@@ -46,7 +46,7 @@ languages model =
           , HH.h6_ [ HH.text "Certifications" ]
           , HH.p_ [ HH.text "TOIEC Passed in 2013 with 990 points." ]
           ]
-      , tuple3 "Japanese" "Fluent"
+      , tuple3 "japanese" "fluent"
           [ HH.p_
               [ HH.text
                   """ I started learning Japanese at around 16 years old, but my language
@@ -72,22 +72,22 @@ languages model =
             ( \a ->
                 HH.button
                   ( [ HP.classes [ BS.btn, (H.ClassName "invisible-btn") ]
-                    , HP.title lang
+                    , HP.title (localize lang model)
                     ]
                       <> a
                   )
                   [ HH.div [ HP.class_ BS.row ]
                       [ HH.div [ HP.classes [ BS.textLeft, BS.col ] ]
-                          [ HH.text lang ]
+                          [ HH.text (localize lang model) ]
                       , HH.div [ HP.classes [ BS.textRight, BS.col ] ]
-                          [ HH.text prof ]
+                          [ HH.text (localize prof model) ]
                       , HH.div_ [ HH.i [ HP.classes [ BS.alignMiddle, (H.ClassName "fa fa-info-circle") ] ] [] ]
                       ]
                   ]
             )
             ( \a ->
-                [ HH.h3 a [ HH.text lang ]
-                , HH.h4 [ HC.style (CSS.marginTop auto) ] [ HH.text prof ]
+                [ HH.h3 a [ HH.text (localize lang model) ]
+                , HH.h4 [ HC.style (CSS.marginTop auto) ] [ HH.text (localize prof model) ]
                 ]
             )
             desc
@@ -104,9 +104,9 @@ languages model =
             ]
         ]
   in
-    categoryHidden "eduCategory" "Education"
-      [ subcategory "languages" "Languages" [ listGroup (map mkListItem langs) ]
-      , subcategoryHidden "education" "Formal Education"
+    categoryHidden "eduCategory" (localize "education" model)
+      [ subcategory "languages" (localize "languages" model) [ listGroup (map mkListItem langs) ]
+      , subcategoryHidden "education" (localize "formal-education" model)
           [ HH.div [ HC.style (CSS.Overflow.overflowX CSS.Overflow.overflowAuto *> CSS.maxHeight (CSS.vh 60.0)) ]
               [ listGroup $ map mkEducationItem education ]
           ]
