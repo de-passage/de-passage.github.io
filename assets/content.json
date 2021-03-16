@@ -1,29 +1,41 @@
 {
     "resume": {
-        "fr": "CV",
+        "fr": "cv",
         "ja": "履歴書",
-        "en": "Resume\n\ntest"
+        "en": "resume\n\ntest"
     },
     "download": {
-        "fr": "Télécharger",
+        "fr": "télécharger",
         "ja": "ダウンロード",
-        "en": "Download"
+        "en": "download"
     },
     "download-long": {
-        "fr": "Télécharger le CV en PDF",
-        "ja": "履歴書をPDFでダウンロード",
-        "en": "Download resume as PDF"
+        "fr": "télécharger le cv en pdf",
+        "ja": "履歴書をpdfでダウンロード",
+        "en": "download resume as pdf"
     },
     "settings": {
         "ja": "設定",
-        "en": "Settings"
+        "en": "settings"
     },
     "close": {
-        "fr": "Fermer",
+        "fr": "fermer",
         "ja": "閉じる",
-        "en": "Close"
+        "en": "close"
     },
     "bio-long": {
-        "en": "##### Biography\n\nI wrote my first program during a boring math lecture in junior high school in France, around 2005. I discovered that my TI-82 scientific calculator could be programmed using some limited variant of BASIC and I became obsessed with it. I learned as much as I could from the manual but quickly hit performance issues as I graduated from writing trivial math programs to attempting to build games.\n\nI used the limited Internet access that my family had at the time to research ways to circumvent the issue, only to realize that all the solutions that I could find did not apply to the machine I had. In the process, I stumbled on the \\\"Site du Zéro\\\" (now OpenClassroom), the de-facto reference website for French speaking programming self-learners, where I learned first C, then C++, as those were the only two languages with comprehensive explanations.\n\nFrom then on I kept studying various programming languages and computing science. However as I reached the end of high school, I didn't see it as anything more than a hobby and I went on to study management in university.\n\nI moved to Japan in early 2012 as an exchange student, and lived there until mid-2014. I then dropped out of university as I realized that management wasn't my calling and went on to travel the world. From there, I spent a year in South Korea, 5 months in Taiwan and a year in Australia, before going back to France in late 2017.\n\n This was also the moment I decided I would pursue software engineering as a career, after over 13 years of self study. I worked for almost two years as a C++ and C# engineer on desktop applications at Nexter Systems, before growing sufficiently dissatisfied with the management of the IT projects and quitting in December 2019."
+        "en": "##### biography\n\ni wrote my first program during a boring math lecture in junior high school in france, around 2005. i discovered that my ti-82 scientific calculator could be programmed using some limited variant of basic and i became obsessed with it. i learned as much as i could from the manual but quickly hit performance issues as i graduated from writing trivial math programs to attempting to build games.\n\ni used the limited internet access that my family had at the time to research ways to circumvent the issue, only to realize that all the solutions that i could find did not apply to the machine i had. in the process, i stumbled on the \\\"site du zéro\\\" (now openclassroom), the de-facto reference website for french speaking programming self-learners, where i learned first c, then c++, as those were the only two languages with comprehensive explanations.\n\nfrom then on i kept studying various programming languages and computing science. however as i reached the end of high school, i didn't see it as anything more than a hobby and i went on to study management in university.\n\ni moved to japan in early 2012 as an exchange student, and lived there until mid-2014. i then dropped out of university as i realized that management wasn't my calling and went on to travel the world. from there, i spent a year in south korea, 5 months in taiwan and a year in australia, before going back to france in late 2017.\n\n this was also the moment i decided i would pursue software engineering as a career, after over 13 years of self study. i worked for almost two years as a c++ and c# engineer on desktop applications at nexter systems, before growing sufficiently dissatisfied with the management of the it projects and quitting in december 2019."
+    },
+    "bio-title": {
+        "fr": "Biographie",
+        "en": "Biography"
+    },
+    "about-me": {
+        "fr": "À propos de moi",
+        "ja": "自己紹介",
+        "en": "About me"
+    },
+    "bio-short": {
+        "en": "After almost 15 years of programming as a passion, I decided a couple years ago to follow my calling and become a full-time software engineer.\n\nI focus on using my long experience and modern tools to build high-reliability, high-maintanability software. I have a particular fondness for C++, Haskell and other strongly typed languages but I have had the occasion to use a wide array of technologies and I am always happy to learn a new skill for a job."
     }
 }

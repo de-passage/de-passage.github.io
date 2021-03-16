@@ -46,6 +46,15 @@ settingsL = localize "settings"
 bioLongL :: Localizer
 bioLongL = localize "bio-long"
 
+bioShortL :: Localizer
+bioShortL = localize "bio-short"
+
+bioTitleL :: Localizer
+bioTitleL = localize "bio-title"
+
+aboutMeL :: Localizer
+aboutMeL = localize "about-me"
+
 mailMe :: String
 mailMe = "mailto:contact@sylvainleclercq.com"
 
@@ -135,7 +144,7 @@ personalInformation model =
 
     resumeModal = modalWindow resumeTxt "download" linkStyle resumeTxt (downloadWindow model)
 
-    bio = modalWindow "Biography" "info-circle" (linkStyle *> additionalStyle) "About me" (aboutMe model)
+    bio = modalWindow (bioTitleL model) "info-circle" (linkStyle *> additionalStyle) (aboutMeL model) (aboutMe model)
 
     settings = modalWindow settingsText "cog" linkStyle settingsText (settingsWindow model)
   in
@@ -159,17 +168,7 @@ aboutMe :: forall m r. MonadEffect m => State -> Array (HH.ComponentHTML Action 
 aboutMe model =
   [ HH.div [ HC.style (CSS.width (CSS.pct 100.0)) ]
       [ HH.img [ HP.class_ (HH.ClassName "bio-picture"), HP.src "/assets/me.jpg" ]
-      , HH.p [ HC.style (CSS.float none) ]
-          [ HH.text
-              """After almost 15 years of programming as a passion, I decided a couple years 
-        ago to follow my calling and become a full-time software engineer."""
-          , HH.br_
-          , HH.text
-              """ I focus on using my long experience and modern tools to build high-reliability, 
-      high-maintanability software. I have a particular fondness for C++, Haskell and other strongly typed languages
-      but I have had the occasion to use a wide array of technologies and I am always happy to learn a new 
-      skill for a job."""
-          ]
+      , HH.slot _bioShort unit M.component { text: bioShortL model, id: "bio-short" } absurd
       ]
   , HH.div_ [ resume model [] [ HH.text "Download resume as pdf" ] ]
   , HH.table [ HP.classes [ BS.tableStriped, BS.table ] ]
