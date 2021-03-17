@@ -16,7 +16,6 @@ import Data.Symbol (SProxy(..))
 import Data.Tuple.Nested ((/\))
 import Effect.Aff.Class (class MonadAff)
 import Effect.Class (class MonadEffect)
-import Format (para, em, strong)
 import Format as F
 import Halogen as H
 import Halogen.HTML as HH
@@ -27,8 +26,17 @@ import Halogen.Themes.Bootstrap4 as BS
 import Lists (ListItem, listGroupC, listItem_)
 import Marked as M
 import Prelude (Unit, Void, absurd, bind, const, map, pure, unit, (#), ($), (==), (>=>), (>>>), (||))
-import State (localize)
 import State as S
+
+projectsL = S.localize "projects" :: S.Localizer
+
+reposL = S.localize "github-repos" :: S.Localizer
+
+featuredL = S.localize "featured" :: S.Localizer
+
+conduitL = S.localize conduitS :: S.Localizer
+
+conduitS = "conduit-description" :: String
 
 type Project
   = { html_url :: String
@@ -153,17 +161,17 @@ component =
   initialState globalState = { globalState, status: Loading }
 
 render :: forall m. MonadEffect m => State -> H.ComponentHTML Action ChildSlots m
-render state =
-  categoryHidden "projects" "Projects"
-    [ subcategory "featured" "Featured"
+render state@{ globalState } =
+  categoryHidden "projects" (projectsL globalState)
+    [ subcategory "featured" (featuredL globalState)
         [ HH.div [ HP.classes [ BS.textLeft, BS.m2 ] ]
-            [ HH.slot _conduitDescription unit M.component { text: localize "conduit-description" state.globalState, id: "conduit-description" } absurd
+            [ HH.slot _conduitDescription unit M.component { text: conduitL globalState, id: conduitS } absurd
             , HH.div [ HP.class_ (H.ClassName "iframe-wrapper") ]
                 [ HH.iframe [ HP.src "https://sylvainleclercq.com/conduit.purs" ]
                 ]
             ]
         ]
-    , subcategoryHidden "github" "Github Repositories" [ renderProjects state.status ]
+    , subcategoryHidden "github" (reposL globalState) [ renderProjects state.status ]
     ]
   where
   renderProjects :: LoadStatus -> H.ComponentHTML Action ChildSlots m
