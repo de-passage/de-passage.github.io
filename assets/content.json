@@ -164,10 +164,6 @@
         "ja": "ソフトウェアエンジニア",
         "en": "Software Engineer"
     },
-    "nexter": {
-        "fr": "<a href=\"https://www.nexter-group.fr\" target=\"_blank\">Nexter Systems</a>",
-        "en": "<a href=\"https://www.nexter-group.fr/en\" target=\"_blank\">Nexter Systems</a>"
-    },
     "nexter-period": {
         "fr": "Avril 2018 - Décembre 2019",
         "ja": " ２０１８年４月－２０１９年１２月",
@@ -301,5 +297,24 @@
         "fr": "Lieu",
         "ja": "場所",
         "en": "Location"
+    },
+    "technical-skills": {
+        "fr": "Compétences Techniques",
+        "ja": "技術",
+        "en": "Technical Skills"
+    },
+    "other-technical-skills": {
+        "fr": "Autres Compétences Techniques ",
+        "ja": "その他の技術",
+        "en": "Other Technical Skills"
+    },
+    "programing-languages": {
+        "fr": "Langages de programmation",
+        "ja": "プログラミング言語",
+        "en": "Programing Languages "
+    },
+    "other-skills-description": {
+        "fr": "Une liste non-exhaustive de technologies et frameworks avec lesquels j'ai travaillé.",
+        "en": "A non exhaustive list of technologies and frameworks I have worked with."
     }
 }

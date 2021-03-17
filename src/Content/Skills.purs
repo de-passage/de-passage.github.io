@@ -34,7 +34,7 @@ import Halogen.HTML.Properties as HP
 import Halogen.Themes.Bootstrap4 as BS
 import Modal (modal)
 import Prelude (($), map, discard)
-import State (State)
+import State (State, Localizer, localize)
 
 type UrlSource
   = { url :: String
@@ -478,6 +478,14 @@ rust =
       ]
   }
 
+technicalSkillL = localize "technical-skills" :: Localizer
+
+otherTechnicalSkillL = localize "other-technical-skills" :: Localizer
+
+programingLanguagesL = localize "programing-languages" :: Localizer
+
+otherSkillDescL = localize "other-skills-description" :: Localizer
+
 cite :: forall w i. Source -> Array (HH.HTML w i)
 cite (USource source) = [ HH.cite [ HP.title source.name ] [ HH.a [ HP.href source.url, HP.target "_blank" ] [ HH.text source.name ] ] ]
 
@@ -507,8 +515,8 @@ technicalSkills model =
       CSS.paddingTop (CSS.px 10.0)
       CSS.paddingBottom (CSS.px 10.0)
   in
-    category "skills" "Technical skills"
-      [ subcategory "progLanguage" "Languages"
+    category "skills" (technicalSkillL model)
+      [ subcategory "progLanguage" (programingLanguagesL model)
           [ HH.div [ HC.style st ]
               $ map (\(Tuple s i) -> mkSkillLink s i)
                   [ (Tuple "purescript" purescript)
@@ -527,8 +535,8 @@ technicalSkills model =
                   , (Tuple "rust" rust)
                   ]
           ]
-      , subcategoryHidden "progTech" "Other technologies"
-          [ para """A non exhaustive list of technologies and frameworks I have worked with."""
+      , subcategoryHidden "progTech" (otherTechnicalSkillL model)
+          [ para (otherSkillDescL model)
           , HH.ul [ HP.classes [ BS.listInline ] ]
               $ map
                   ( \s ->

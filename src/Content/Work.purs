@@ -12,6 +12,7 @@ import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
 import Halogen.Themes.Bootstrap4 as BS
+import Internationalization (Language(..))
 import Marked as M
 import State (State, Localizer, localize)
 
@@ -27,13 +28,12 @@ type Experience
     , description :: String
     , period :: String
     , company :: String
+    , url :: Localizer
     }
 
 softwareEngineerS = "software-engineer" :: String
 
 nexterPeriodS = "nexter-period" :: String
-
-nexterCompanyS = "nexter" :: String
 
 nexterDescriptionS = "nexter-description" :: String
 
@@ -51,11 +51,17 @@ jobL = localize "job" :: Localizer
 
 locationL = localize "location" :: Localizer
 
+nexterUrl :: Localizer
+nexterUrl model = case model.language of
+  Fr -> "https://www.nexter-group.fr"
+  _ -> "https://www.nexter-group.fr/en"
+
 nexter :: Experience
 nexter =
   { job: softwareEngineerS
   , period: nexterPeriodS
-  , company: nexterCompanyS
+  , company: "Nexter Systems"
+  , url: nexterUrl
   , description: nexterDescriptionS
   }
 
@@ -91,7 +97,7 @@ workExperience model =
           [ HP.classes [ BS.row, BS.mb2 ] ]
           [ HH.h3
               [ HP.classes [ BS.col12, BS.colMd6, BS.mtAuto ] ]
-              [ HH.slot _companyName unit M.component { text: localize exp.company model, id: exp.company } absurd
+              [ HH.a [ HP.href (exp.url model), HP.target "_blank" ] [ HH.text exp.company ]
               ]
           , HH.h5 [ HP.classes [ BS.col12, BS.mtAuto, BS.colMd6 ] ] [ HH.text (localize exp.job model) ]
           ]
