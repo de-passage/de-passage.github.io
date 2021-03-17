@@ -186,5 +186,120 @@
     "other-work-description": {
         "fr": "Entre 2011 et 2017, j'ai effectué un certain nombre d'emplois non qualifiés à travers le monde. La plupart étaient de courte durée, parfois du volontariat, et en général sans rapport avec ma situation actuelle. ",
         "en": "From 2011 to 2017 I occupied a number of unqualified positions around the world. Most of them were short term, sometimes volunteering, and in general irrelevant to my current situation."
+    },
+    "duration-6-months": {
+        "fr": "6 mois",
+        "ja": "六ヶ月",
+        "en": "6 months"
+    },
+    "duration-４-months": {
+        "fr": "4 mois",
+        "ja": "四か月",
+        "en": "4 months"
+    },
+    "duration-3-months": {
+        "fr": "3 mois",
+        "ja": "三ヶ月",
+        "en": "3 months"
+    },
+    "duration-4-months": {
+        "fr": "4 mois",
+        "ja": "四ヶ月",
+        "en": "4 months"
+    },
+    "duration-2-months": {
+        "fr": "2 mois",
+        "ja": "二ヶ月",
+        "en": "2 months"
+    },
+    "duration-1-months": {
+        "fr": "1 mois",
+        "ja": "一ヶ月",
+        "en": "1 month"
+    },
+    "duration-1-year": {
+        "fr": "1 an",
+        "ja": "一年間",
+        "en": "1 year"
+    },
+    "various-australia": {
+        "fr": "Différents endroits en Australie",
+        "ja": "オーストラリアの数か所",
+        "en": "Various places in Australia"
+    },
+    "victoria-australia": {
+        "fr": "Victoria, Australie",
+        "ja": "オーストラリア、ビクトリア州",
+        "en": "Victoria, Australia"
+    },
+    "various-taiwan": {
+        "fr": "Plusieurs endroits à Taïwan",
+        "ja": "台湾の数か所",
+        "en": "Several places in Taiwan"
+    },
+    "tokyo-japan": {
+        "fr": "Tokyo, Japon",
+        "ja": "日本、東京都",
+        "en": "Tokyo, Japan"
+    },
+    "busan-korea": {
+        "fr": "Busan, Corée du Sud",
+        "ja": "韓国、釜山",
+        "en": "Busan, South Korea"
+    },
+    "mlb-france": {
+        "fr": "Montigny-le-Bx, France",
+        "ja": "フランス",
+        "en": "France"
+    },
+    "job-farm-hand": {
+        "fr": "Employé agricole",
+        "en": "Farm Hand"
+    },
+    "job-factory-hand": {
+        "fr": "Employé en usine",
+        "en": "Factory hand"
+    },
+    "job-hostel-employee": {
+        "fr": "Employé hôtellerie",
+        "en": "Hostel employee"
+    },
+    "job-receptionist": {
+        "fr": "Réceptionniste ",
+        "en": "Hotel receptionist"
+    },
+    "job-kitchen-hand": {
+        "fr": "Employé de cuisine",
+        "en": "Kitchen hand"
+    },
+    "job-english-conversation": {
+        "fr": "Assistant de conversation en anglais",
+        "ja": "英会話アシスタント",
+        "en": "English conversation assistant"
+    },
+    "job-shop-clerk": {
+        "fr": "Employé en magasin",
+        "ja": "店員",
+        "en": "Shop clerk"
+    },
+    "year": {
+        "fr": "Année",
+        "ja": "年",
+        "en": "Year"
+    },
+    "duration": {
+        "fr": "Durée",
+        "ja": "期間",
+        "en": "Duration"
+    },
+    "job": {
+        "fr": "Emploi",
+        "ja": "職業",
+        "en": "Job"
+    },
+    "location": {
+        "fr": "Lieu",
+        "ja": "場所",
+        "en": "Location"
     }
 }

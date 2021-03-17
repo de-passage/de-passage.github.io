@@ -43,6 +43,14 @@ otherWorkExperienceL = localize "other-work-experience" :: Localizer
 
 otherDescriptionL = localize "other-work-description" :: Localizer
 
+yearL = localize "year" :: Localizer
+
+durationL = localize "duration" :: Localizer
+
+jobL = localize "job" :: Localizer
+
+locationL = localize "location" :: Localizer
+
 nexter :: Experience
 nexter =
   { job: softwareEngineerS
@@ -64,10 +72,10 @@ workExperience model =
             [ HH.table [ HP.class_ BS.table ]
                 [ HH.thead_
                     [ HH.tr_
-                        [ HH.th [ scopeCol ] [ HH.text "Year" ]
-                        , HH.th [ scopeCol ] [ HH.text "Duration" ]
-                        , HH.th [ scopeCol ] [ HH.text "Job" ]
-                        , HH.th [ scopeCol ] [ HH.text "Location" ]
+                        [ HH.th [ scopeCol ] [ HH.text (yearL model) ]
+                        , HH.th [ scopeCol ] [ HH.text (durationL model) ]
+                        , HH.th [ scopeCol ] [ HH.text (jobL model) ]
+                        , HH.th [ scopeCol ] [ HH.text (locationL model) ]
                         ]
                     ]
                 , HH.tbody_ $ map mkRow jobs
@@ -91,14 +99,14 @@ workExperience model =
       , HH.slot _nexterDescription unit M.component { text: localize exp.description model, id: exp.description } absurd
       ]
 
-mkRow :: forall w i. Job -> HH.HTML w i
-mkRow job =
-  HH.tr_
-    [ HH.th [ scopeRow ] [ HH.text job.year ]
-    , HH.td_ [ HH.text job.duration ]
-    , HH.td_ [ HH.text job.job ]
-    , HH.td_ [ HH.text job.location ]
-    ]
+  mkRow :: forall w i. Job -> HH.HTML w i
+  mkRow job =
+    HH.tr_
+      [ HH.th [ scopeRow ] [ HH.text job.year ]
+      , HH.td_ [ HH.text (localize job.duration model) ]
+      , HH.td_ [ HH.text (localize job.job model) ]
+      , HH.td_ [ HH.text (localize job.location model) ]
+      ]
 
 type Job
   = { job :: String
@@ -107,51 +115,89 @@ type Job
     , duration :: String
     }
 
+duration1Months = "duration-1-months" :: String
+
+duration2Months = "duration-2-months" :: String
+
+duration3Months = "duration-3-months" :: String
+
+duration4Months = "duration-4-months" :: String
+
+duration6Months = "duration-6-months" :: String
+
+duration1Year = "duration-1-year" :: String
+
+locationAustraliaMisc = "various-australia" :: String
+
+locationAustraliaVic = "victoria-australia" :: String
+
+locationTaiwanMisc = "various-taiwan" :: String
+
+locationJapanTokyo = "tokyo-japan" :: String
+
+locationSKoreaBusan = "busan-korea" :: String
+
+locationFrance = "mlb-france" :: String
+
+jobFarmHand = "job-farm-hand" :: String
+
+jobFactoryHand = "job-factory-hand" :: String
+
+jobKitchenHand = "job-kitchen-hand" :: String
+
+jobHostelEmployee = "job-hostel-employee" :: String
+
+jobReceptionist = "job-receptionist" :: String
+
+jobEnglishConversation = "job-english-conversation" :: String
+
+jobShopClerk = "job-shop-clerk" :: String
+
 jobs :: Array Job
 jobs =
   [ { year: "2017 - 2018"
-    , duration: "6 months"
-    , job: "Farm hand"
-    , location: "Various places in Australia"
+    , duration: duration6Months
+    , job: jobFarmHand
+    , location: locationAustraliaMisc
     }
   , { year: "2017"
-    , duration: "2 months"
-    , job: "Factory hand"
-    , location: "Victoria, Australia"
+    , duration: duration1Months
+    , job: jobFactoryHand
+    , location: locationAustraliaVic
     }
   , { year: "2016"
-    , duration: "4 months"
-    , job: "Hostel employee"
-    , location: "Several places in Taiwan"
+    , duration: duration4Months
+    , job: jobHostelEmployee
+    , location: locationTaiwanMisc
     }
   , { year: "2016"
-    , duration: "2 months"
-    , job: "Hotel receptionist"
-    , location: "Tokyo, Japan"
+    , duration: duration2Months
+    , job: jobReceptionist
+    , location: locationJapanTokyo
     }
   , { year: "2015"
-    , duration: "4 months"
-    , job: "Kitchen hand"
-    , location: "Busan, South Korea"
+    , duration: duration4Months
+    , job: jobKitchenHand
+    , location: locationSKoreaBusan
     }
   , { year: "2015"
-    , duration: "1 months"
-    , job: "English conversation assistant"
-    , location: "Busan, South Korea"
+    , duration: duration1Months
+    , job: jobEnglishConversation
+    , location: locationSKoreaBusan
     }
   , { year: "2013 - 2014"
-    , duration: "1 year"
-    , job: "Shop clerk"
-    , location: "Tokyo, Japan"
+    , duration: duration1Year
+    , job: jobShopClerk
+    , location: locationJapanTokyo
     }
   , { year: "2013"
-    , duration: "4 months"
-    , job: "Hostel employee"
-    , location: "Tokyo, Japan"
+    , duration: duration4Months
+    , job: jobHostelEmployee
+    , location: locationJapanTokyo
     }
   , { year: "2012"
-    , duration: "3 months"
-    , job: "Shop clerk"
-    , location: "France"
+    , duration: duration3Months
+    , job: jobShopClerk
+    , location: locationFrance
     }
   ]
