@@ -16,9 +16,11 @@ import Work as W
 
 type ChildSlots
   = W.ChildSlots
-      ( P.ChildSlots
-          ( L.ChildSlots
-              ( projects :: Projects.Slot Unit
+      ( S.ChildSlots
+          ( P.ChildSlots
+              ( L.ChildSlots
+                  ( projects :: Projects.Slot Unit
+                  )
               )
           )
       )

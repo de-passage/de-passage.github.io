@@ -21,7 +21,6 @@ import State as S
 import Text.Parsing.Parser (Parser, runParser)
 import Text.Parsing.Parser.Combinators (choice)
 import Text.Parsing.Parser.String (string)
-import Unsafe.Coerce (unsafeCoerce)
 import Web.HTML (window) as DOM
 import Web.HTML.Location (search) as DOM
 import Web.HTML.Navigator (language) as DOM
@@ -61,12 +60,7 @@ main = do
         H.liftEffect $ log $ "Content loading failed: " <> AX.printError error
         pure empty
       Right response -> do
-        H.liftEffect
-          $ do
-              log $ "Content loading succeeded "
-              log $ unsafeCoerce response.body
         pure $ parseContent response.body
-    H.liftEffect $ log $ unsafeCoerce dic
     runUI R.component { language: lang, content: dic } body
   where
   selectFromBrowser :: forall a. a -> Effect Language
