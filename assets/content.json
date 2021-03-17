@@ -153,6 +153,38 @@
         "en": "GitHub Repositories"
     },
     "featured": {
+        "fr": "Mis en avant",
         "en": "Featured"
+    },
+    "nexter-description": {
+        "en": "Although I was technically employed by <a href=\"https://www.akka-technologies.com/\" target=\"_blank\">AKKA technologies</a>, I only went to the office a handful of times. Most of my time was spent working at the customer's office, working on the customer's project under their management.\n\nThe project was about the development of a guidance and communication system for military armored vehicles. My responsibilities involved: \n + Design and implementation of a custom database synchronization system (C++).\n + Refactoring of a legacy code base to improve reliability and modularity (C#).\n + Implementation of business-critical features in a large application (C#).\n + Set up of unit testing frameworks and implementation of unit tests (C++ and C#).\n + Profiling and performance improvements (C#).\n + Implementation of tools to help the development and quality analysis process (C# and C++).\n + Analysis and documentation of legacy code bases (C++ and C#).\" ]\n\n###### Technical Environment:\n + **Languages:** C++, C#\n + **Tools:** JIRA, Git, WPF, NUnit, dotTrace/dotMemory, Microsoft CppUnitTestFramework"
+    },
+    "software-engineer": {
+        "fr": "Ingénieur logiciel",
+        "ja": "ソフトウェアエンジニア",
+        "en": "Software Engineer"
+    },
+    "nexter": {
+        "fr": "<a href=\"https://www.nexter-group.fr\" target=\"_blank\">Nexter Systems</a>",
+        "en": "<a href=\"https://www.nexter-group.fr/en\" target=\"_blank\">Nexter Systems</a>"
+    },
+    "nexter-period": {
+        "fr": "Avril 2018 - Décembre 2019",
+        "ja": " ２０１８年４月－２０１９年１２月",
+        "en": "April 2018 - December 2019"
+    },
+    "work-experience": {
+        "fr": "Expérience Professionnelle",
+        "ja": "職歴",
+        "en": "Work Experience"
+    },
+    "other-work-experience": {
+        "fr": "Autres expériences professionnelles",
+        "ja": "その他の職歴",
+        "en": "Other work experience"
+    },
+    "other-work-description": {
+        "fr": "Entre 2011 et 2017, j'ai effectué un certain nombre d'emplois non qualifiés à travers le monde. La plupart étaient de courte durée, parfois du volontariat, et en général sans rapport avec ma situation actuelle. ",
+        "en": "From 2011 to 2017 I occupied a number of unqualified positions around the world. Most of them were short term, sometimes volunteering, and in general irrelevant to my current situation."
     }
 }

@@ -15,9 +15,11 @@ import State (State, Input, Action(..))
 import Work as W
 
 type ChildSlots
-  = P.ChildSlots
-      ( L.ChildSlots
-          ( projects :: Projects.Slot Unit
+  = W.ChildSlots
+      ( P.ChildSlots
+          ( L.ChildSlots
+              ( projects :: Projects.Slot Unit
+              )
           )
       )
 
@@ -42,7 +44,7 @@ render state =
 
     skill =
       HH.div [ HP.classes [ BS.colMd8, BS.colSm7, BS.col12 ] ]
-        [ W.workExperience
+        [ W.workExperience state
         , S.technicalSkills state
         , HH.slot _projects unit Projects.component state absurd
         ]
