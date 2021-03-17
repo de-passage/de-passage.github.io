@@ -16,7 +16,9 @@ import Work as W
 
 type ChildSlots
   = P.ChildSlots
-      ( projects :: Projects.Slot Unit
+      ( L.ChildSlots
+          ( projects :: Projects.Slot Unit
+          )
       )
 
 _projects :: SProxy "projects"

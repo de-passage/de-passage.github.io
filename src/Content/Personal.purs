@@ -178,7 +178,7 @@ aboutMe model =
       [ HH.img [ HP.class_ (HH.ClassName "bio-picture"), HP.src "/assets/me.jpg" ]
       , HH.slot _bioShort unit M.component { text: bioShortL model, id: "bio-short" } absurd
       ]
-  , HH.div_ [ resume model [ HP.class_ BS.p1 ] [ HH.text (downloadLongL model) ] ]
+  , HH.div [ HP.class_ BS.p2 ] [ resume model [] [ HH.text (downloadLongL model) ] ]
   , HH.table [ HP.classes [ BS.tableStriped, BS.table ] ]
       [ HH.tbody_
           [ tableRow (birthdayTitleL model) [ HH.text (birthdayL model) ]

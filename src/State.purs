@@ -53,4 +53,4 @@ languageSelection currentLanguage =
       ]
 
 localize :: String -> State -> String
-localize key model = fromMaybe "<String Missing>" $ I.translate model.language <$> lookup key model.content
+localize key model = fromMaybe ("{string missing: " <> key <> "}") $ I.translate model.language <$> lookup key model.content

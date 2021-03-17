@@ -15,8 +15,8 @@
         "en": "Download resume as pdf"
     },
     "settings": {
-        "ja": "設定",
         "fr": "Paramètres",
+        "ja": "設定",
         "en": "Settings"
     },
     "close": {
@@ -109,5 +109,34 @@
         "fr": "Langues",
         "ja": "語学力",
         "en": "Languages"
+    },
+    "french-description": {
+        "en": "I was born and raised in France, near Paris. Although most of my productions are English, French is my mother tongue."
+    },
+    "english-description": {
+        "en": "I learned English as a teenager watching American TV shows. As my interests expanded into programming and I started living abroad, I naturally had both the incentive and the opportunity to improve my language abilities by reading technical litterature, watching various online content and interacting in English with others.   \nNowadays, most of my life is conducted in English.\n###### Certifications\nTOIEC Passed in 2012 with 990 points."
+    },
+    "japanese-description": {
+        "en": "I started learning Japanese at around 16 years old, but my language ability only really took off during my studies at Meiji University, Japan, between 2012 and 2014. I studied on my own and achieved a fairly high level by the time I left Japan.  \nI have since then done my best to maintain fluency both in speaking and writting.\n###### Certifications\nJLPT N1 Passed in 2014."
+    },
+    "escem-description": {
+        "en": "<a href=\"https://en.wikipedia.org/wiki/Grandes_%C3%A9coles\" target=\"_blank\">Grande école</a> (business school), 4th and 5th semester spent as an exchange student in Meiji University, Japan"
+    },
+    "escem-title": {
+        "en": "Ecole Supérieure de Commerce et de Management"
+    },
+    "cpge-title": {
+        "en": "<a href=\"https://en.wikipedia.org/wiki/Classe_pr%C3%A9paratoire_aux_grandes_%C3%A9coles\" target=\"_blank\">CPGE</a>"
+    },
+    "cpge-description": {
+        "fr": "Voie économique",
+        "en": "2 years of preparatory classes for the entrance exams to the french  <a href=\"https://en.wikipedia.org/wiki/Grandes_%C3%A9coles\" target=\"_blank\">grandes écoles</a>"
+    },
+    "bac-description": {
+        "fr": "Voie économique et sociale",
+        "en": "French high school degree"
+    },
+    "bac-title": {
+        "en": "<a href=\"https://en.wikipedia.org/wiki/Baccalaur%C3%A9at\" target=\"_blank\">Baccalauréat</a>"
     }
 }
