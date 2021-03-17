@@ -16,7 +16,7 @@ import Halogen.Themes.Bootstrap4 as BS
 import Lists (listGroup, listItem_, ListItem)
 import Marked as M
 import Modal (modal)
-import Prelude (absurd, discard, map, ($), (*>), (<>))
+import Prelude (absurd, discard, ($), (*>), (<>))
 import State (State, localize)
 
 type ChildSlots r
@@ -99,28 +99,14 @@ education :: Array Education
 education =
   [ { period: "2010 - 2014"
     , name: "escem-title"
-    --   [ HH.text "Ecole Supérieure de Commerce et de Management" ]
     , comment: "escem-description"
-    -- [ HH.a [ HP.href "https://en.wikipedia.org/wiki/Grandes_%C3%A9coles", HP.target "_blank" ] [ HH.text "Grande école" ]
-    -- , HH.text " (business school), 4th and 5th semester spent as an exchange student in Meiji University, Japan"
-    -- ]
     }
   , { period: "2008 - 2010"
     , name: "cpge-title"
-    -- [ HH.a [ HP.href "https://en.wikipedia.org/wiki/Classe_pr%C3%A9paratoire_aux_grandes_%C3%A9coles", HP.target "_blank" ]
-    --     [ HH.text "CPGE" ]
-    -- ]
     , comment: "cpge-description"
-    -- [ HH.text "2 years of preparatory classes for the entrance exams to the french  "
-    -- , HH.a [ HP.href "https://en.wikipedia.org/wiki/Grandes_%C3%A9coles", HP.target "_blank" ] [ HH.text "grande écoles" ]
-    -- ]
     }
   , { period: "2008"
     , name: "bac-title"
-    -- [ HH.a [ HP.href "https://en.wikipedia.org/wiki/Baccalaur%C3%A9at", HP.target "_blank" ]
-    --     [ HH.text "Baccalauréat" ]
-    -- ]
     , comment: "bac-description"
-    -- [ HH.text "French high school degree" ]
     }
   ]

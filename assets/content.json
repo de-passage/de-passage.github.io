@@ -138,5 +138,8 @@
     },
     "bac-title": {
         "en": "<a href=\"https://en.wikipedia.org/wiki/Baccalaur%C3%A9at\" target=\"_blank\">Baccalauréat</a>"
+    },
+    "conduit-description": {
+        "en": "## <a href=\"https://sylvainleclercq.com/conduit.purs\" target=\"_blank\" >Conduit</a>\nConduit is a clone of the popular blogging website Medium, intended to showcase how a real world is implemented using various backend and frontend frameworks. This particular front-end implementation is my own and uses Purescript and Halogen.\n\nFor demonstration purposes, it has the capability of changing the back-end it connects to. By default, the public test API of the Conduit project is selected and shows whatever garbage is currently on the server. A clean database is available through <a href=\"https://github.com/de-passage/conduit-rocket.rust\" target=\"_blank\">my own Rust back-end.</a> The content of the database is reset every 24 hours. In order to use it, select **Custom backend** on the <a href=\"https://sylvainleclercq.com/conduit.purs/#/dev\" target=\"_blank\" >Developers</a> page and set the URL to `https://conduit-rocket.herokuapp.com/api/`. Feel free to <a href=\"https://sylvainleclercq.com/conduit.purs/#/register\" target=\"_blank\">register</a> and play with the app.\n\nThe code for both the front and back-end are available on <a href=\"https://github.com/de-passage/\" target=\"_blank\">my Github</a>.  \nFront-end: \n                <a href=\"https://github.com/de-passage/conduit.purs\" target=\"_blank\">de-passage/conduit.purs</a>  \nBack-end:<a href=\"https://github.com/de-passage/conduit-rocket.rust\" target=\"_blank\">de-passage/conduit-rocket.rust</a>"
     }
 }

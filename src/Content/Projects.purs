@@ -12,8 +12,10 @@ import Data.Const (Const)
 import Data.Either (Either, either)
 import Data.Map (Map, fromFoldable, lookup)
 import Data.Maybe (Maybe(..), fromMaybe, maybe)
+import Data.Symbol (SProxy(..))
 import Data.Tuple.Nested ((/\))
 import Effect.Aff.Class (class MonadAff)
+import Effect.Class (class MonadEffect)
 import Format (para, em, strong)
 import Format as F
 import Halogen as H
@@ -23,7 +25,10 @@ import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.Themes.Bootstrap4 as BS
 import Lists (ListItem, listGroupC, listItem_)
-import Prelude (Unit, Void, bind, const, map, pure, (#), ($), (==), (>=>), (>>>), (||))
+import Marked as M
+import Prelude (Unit, Void, absurd, bind, const, map, pure, unit, (#), ($), (==), (>=>), (>>>), (||))
+import State (localize)
+import State as S
 
 type Project
   = { html_url :: String
@@ -48,7 +53,12 @@ data LoadStatus
     }
 
 type State
-  = LoadStatus
+  = { status :: LoadStatus
+    , globalState :: S.State
+    }
+
+type Input
+  = S.State
 
 type Slot
   = H.Slot Query Message
@@ -58,7 +68,9 @@ data Action
   | Toggle String
 
 type ChildSlots
-  = ()
+  = ( conduitDescription :: M.Slot Unit )
+
+_conduitDescription = SProxy :: SProxy "conduitDescription"
 
 icons :: Map String String
 icons =
@@ -130,60 +142,31 @@ mkLanguageButton f p =
       ]
       [ HH.text p ]
 
-component :: forall i m. MonadAff m => H.Component HH.HTML Query i Void m
+component :: forall m. MonadAff m => H.Component HH.HTML Query Input Void m
 component =
   H.mkComponent
-    { initialState: const Loading
+    { initialState
     , render
     , eval: H.mkEval $ H.defaultEval { handleAction = handleAction, initialize = Just Init }
     }
+  where
+  initialState globalState = { globalState, status: Loading }
 
-render :: forall m. State -> H.ComponentHTML Action ChildSlots m
+render :: forall m. MonadEffect m => State -> H.ComponentHTML Action ChildSlots m
 render state =
   categoryHidden "projects" "Projects"
     [ subcategory "featured" "Featured"
         [ HH.div [ HP.classes [ BS.textLeft, BS.m2 ] ]
-            [ HH.h2_ [ HH.a [ HP.href "https://sylvainleclercq.com/conduit.purs", HP.target "_blank" ] [ HH.text "Conduit" ] ]
-            , para
-                """Conduit is a clone of the popular blogging website Medium, intended to showcase how a real world
-              website is implemented using various backend and frontend frameworks. This particular front-end implementation is my
-              own and uses Purescript and Halogen."""
-            , HH.p_
-                [ HH.text "For demonstration purposes, it has the capability of changing the back-end it connects to. By default, the public test API of the Conduit project is selected and shows whatever garbage is currently on the server. A clean database is available through "
-                , HH.a [ HP.href "https://github.com/de-passage/conduit-rocket.rust", HP.target "_blank" ]
-                    [ HH.text "my own Rust back-end." ]
-                , HH.text " The content of the database is reset every 24 hours. In order to use it, select "
-                , strong "Custom backend", HH.text " on the "
-                , HH.a [ HP.href "https://sylvainleclercq.com/conduit.purs/#/dev", HP.target "_blank" ]
-                    [ HH.text "Developers" ]
-                , HH.text " page and set the URL to "
-                , em "https://conduit-rocket.herokuapp.com/api/"
-                , HH.text " ." ]
-              , HH.p_ [
-                HH.text "Feel free to "
-                , HH.a [ HP.href "https://sylvainleclercq.com/conduit.purs/#/register", HP.target "_blank" ]
-                    [ HH.text "register" ]
-                , HH.text " and play with the app."
-                ]
-            , HH.p_
-                [ HH.text "The code for both the front and back-end are available on"
-                , HH.a [ HP.href "https://github.com/de-passage/", HP.target "_blank" ] [ HH.text " my Github." ]
-                , HH.br_ 
-                , HH.text "Front-end: "
-                , HH.a [ HP.href "https://github.com/de-passage/conduit.purs", HP.target "_blank" ] [ HH.text "de-passage/conduit.purs" ]
-                , HH.br_ 
-                , HH.text "Back-end: "
-                , HH.a [ HP.href "https://github.com/de-passage/conduit-rocket.rust", HP.target "_blank" ] [ HH.text " de-passage/conduit-rocket.rust" ]
-                ]
+            [ HH.slot _conduitDescription unit M.component { text: localize "conduit-description" state.globalState, id: "conduit-description" } absurd
             , HH.div [ HP.class_ (H.ClassName "iframe-wrapper") ]
                 [ HH.iframe [ HP.src "https://sylvainleclercq.com/conduit.purs" ]
                 ]
             ]
         ]
-    , subcategoryHidden "github" "Github Repositories" [ renderProjects state ]
+    , subcategoryHidden "github" "Github Repositories" [ renderProjects state.status ]
     ]
   where
-  renderProjects :: State -> H.ComponentHTML Action ChildSlots m
+  renderProjects :: LoadStatus -> H.ComponentHTML Action ChildSlots m
   renderProjects Loading =
     HH.div
       [ HP.class_ BS.spinnerBorder, ARIA.role "status" ]
@@ -197,8 +180,8 @@ handleAction :: forall o m. MonadAff m => Action -> H.HalogenM State Action Chil
 handleAction = case _ of
   Init -> do
     response <- H.liftAff $ AX.get AXRF.string "https://api.github.com/users/de-passage/repos?sort=updated"
-    H.put (either LoadingError (_.body >>> parse >>> loaded) response)
-  Toggle lang -> H.modify_ (adaptFilter lang)
+    H.modify_ _ { status = (either LoadingError (_.body >>> parse >>> loaded) response) }
+  Toggle lang -> H.modify_ (\s -> s { status = adaptFilter lang s.status })
   where
   adaptFilter :: String -> LoadStatus -> LoadStatus
   adaptFilter lang (Loaded s) = Loaded $ s { languageFilter = if s.languageFilter == lang then "" else lang }

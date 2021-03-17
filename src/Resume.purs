@@ -44,7 +44,7 @@ render state =
       HH.div [ HP.classes [ BS.colMd8, BS.colSm7, BS.col12 ] ]
         [ W.workExperience
         , S.technicalSkills state
-        , HH.slot _projects unit Projects.component unit absurd
+        , HH.slot _projects unit Projects.component state absurd
         ]
   in
     HH.div [ HP.class_ BS.containerFluid ]
