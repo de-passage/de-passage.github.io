@@ -3,13 +3,13 @@ module Personal where
 import Assets as A
 import Attributes (scopeRow)
 import CSS as CSS
-import CSS.Common (auto, none)
+import CSS.Common (auto)
 import Category (category)
 import DOM.HTML.Indexed (HTMLa)
 import Data.MediaType as MT
 import Data.Symbol (SProxy(..))
 import Effect.Class (class MonadEffect)
-import Format (h2, h5, para)
+import Format (h2)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
@@ -125,8 +125,8 @@ personalInformation model =
       CSS.margin auto auto auto auto
       CSS.fontSize (CSS.em 3.0)
 
-    modalWindow btn icon style title content =
-      modal btn
+    modalWindow id btn icon style title content =
+      modal id
         ( \a ->
             HH.a
               ( [ ARIA.role "button"
@@ -150,11 +150,11 @@ personalInformation model =
 
     settingsText = settingsL model
 
-    resumeModal = modalWindow resumeTxt "download" linkStyle resumeTxt (downloadWindow model)
+    resumeModal = modalWindow "resume" resumeTxt "download" linkStyle resumeTxt (downloadWindow model)
 
-    bio = modalWindow (bioTitleL model) "info-circle" (linkStyle *> additionalStyle) (aboutMeL model) (aboutMe model)
+    bio = modalWindow "bio" (bioTitleL model) "info-circle" (linkStyle *> additionalStyle) (aboutMeL model) (aboutMe model)
 
-    settings = modalWindow settingsText "cog" linkStyle settingsText (settingsWindow model)
+    settings = modalWindow "settings" settingsText "cog" linkStyle settingsText (settingsWindow model)
   in
     category "personal" "Sylvain Leclercq"
       [ listGroup
