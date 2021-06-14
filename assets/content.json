@@ -25,7 +25,7 @@
         "en": "Close"
     },
     "bio-long": {
-        "en": "##### Biography\n\nI wrote my first program during a boring math lecture in junior high school in france, around 2005. I discovered that my TI-82 scientific calculator could be programmed using some limited variant of basic and I became obsessed with it. I learned as much as i could from the manual but quickly hit performance issues as I graduated from writing trivial math programs to attempting to build games.\n\nI used the limited internet access that my family had at the time to research ways to circumvent the issue, only to realize that all the solutions that I could find did not apply to the machine I had. In the process, I stumbled on the \"Site du Zéro\" (now OpenClassroom), the de-facto reference website for french-speaking programming self-learners, where I learned first C, then C++, as those were the only two languages with comprehensive explanations at the time.\n\nFrom then on I kept studying various programming languages and computing science. However as I reached the end of high school, I didn't see it as anything more than a hobby and iIwent on to study management in university.\n\nI moved to Japan in early 2012 as an exchange student, and lived there until mid-2014. I then dropped out of university as I realized that management wasn't my calling and went on to travel the world. From there, I spent a year in South Korea, 5 months in Taiwan and a year in australia, before going back to France in late 2017.\n\nThis was also the moment I decided I would pursue software engineering as a career, after over 13 years of self study. I worked for almost two years as a C++ and C# engineer on desktop applications at Nexter Systems, before growing sufficiently dissatisfied with the management of the IT projects to quit, in december 2019."
+        "en": "##### Biography\n\nI wrote my first program during a boring math lecture in junior high school in france, around 2005. I discovered that my TI-82 scientific calculator could be programmed using some limited variant of basic and I became obsessed with it. I learned as much as i could from the manual but quickly hit performance issues as I graduated from writing trivial math programs to attempting to build games.\n\nI used the limited internet access that my family had at the time to research ways to circumvent the issue, only to realize that all the solutions that I could find did not apply to the machine I had. In the process, I stumbled on the \"Site du Zéro\" (now OpenClassroom), the de-facto reference website for french-speaking programming self-learners, where I learned first C, then C++, as those were the only two languages with comprehensive explanations at the time.\n\nFrom then on I kept studying various programming languages and computing science. However as I reached the end of high school, I didn't see it as anything more than a hobby and iIwent on to study management in university.\n\nI moved to Japan in early 2012 as an exchange student, and lived there until mid-2014. I then dropped out of university as I realized that management wasn't my calling and went on to travel the world. From there, I spent a year in South Korea, 5 months in Taiwan and a year in australia, before going back to France in late 2017.\n\nThis was also the moment I decided I would pursue software engineering as a career, after over 13 years of self study. I worked for almost two years as a C++ and C# engineer on desktop applications at Nexter Systems, before growing sufficiently dissatisfied with the management of the IT projects to quit, in december 2019.\n\nA year-long break in Hong-Kong later, I found a new job at SII working as a consultant at Thales."
     },
     "bio-title": {
         "fr": "Biographie",
@@ -38,7 +38,8 @@
         "en": "About me"
     },
     "bio-short": {
-        "en": "After almost 15 years of programming as a passion, I decided a couple years ago to follow my calling and become a full-time software engineer.\n\nI focus on using my long experience and modern tools to build high-reliability, high-maintanability software. I have a particular fondness for C++, Haskell and other strongly typed languages but I have had the occasion to use a wide array of technologies and I am always happy to learn a new skill for a job."
+        "en": "After almost 15 years of programming as a passion, I decided a couple years ago to follow my calling and become a full-time software engineer.\n\nI focus on using my long experience and modern tools to build high-reliability, high-maintanability software. I have a particular fondness for C++, Haskell and other strongly typed languages but I have had the occasion to use a wide array of technologies and I am always happy to learn a new skill for a job.",
+        "fr": "Après près de 15 de passion pour la programmation j'ai décidé en 2018 de poursuivre ma vocation en devenant ingénieur logiciel à temps plein.\n\nJ'emploie ma longue expérience et des outils modernes pour écrire du code fiable et maintenable. J'ai une affection particulière pour le C++, le Haskell et les autres langages fortement typés mais j'ai eu l'occasion au fil des ans d'utiliser un large éventail de technologies et je suis toujours avide d'acquérir de nouvelles compétences pour le travail."
     },
     "address-title": {
         "fr": "Adresse",
@@ -47,7 +48,7 @@
     },
     "address": {
         "ja": "フランス、モンティニー＝ル＝ブルトンヌー",
-        "en": "Montigny-le-Bretonneux, France"
+        "en": "Gennevilliers, France"
     },
     "email": {
         "fr": "E-mail",
@@ -61,7 +62,8 @@
     },
     "birthday": {
         "ja": "平成2年３月26日",
-        "en": "26/03/1990"
+        "en": "03/26/1990",
+        "fr": "26/03/1990"
     },
     "blog": {
         "ja": "ブログ",
@@ -111,13 +113,16 @@
         "en": "Languages"
     },
     "french-description": {
-        "en": "I was born and raised in France, near Paris. Although most of my productions are English, French is my mother tongue."
+        "en": "I was born and raised in France, near Paris. Although most of my productions are English, French is my mother tongue.",
+        "fr": "Je suis né et ai grandi en région parisienne. Le français est donc ma langue maternelle, même si la plupart de mes travaux sont en anglais."
     },
     "english-description": {
-        "en": "I learned English as a teenager watching American TV shows. As my interests expanded into programming and I started living abroad, I naturally had both the incentive and the opportunity to improve my language abilities by reading technical litterature, watching various online content and interacting in English with others.   \nNowadays, most of my life is conducted in English.\n###### Certifications\nTOIEC Passed in 2012 with 990 points."
+        "en": "I learned English as a teenager watching American TV shows. As my interests expanded into programming and I started living abroad, I naturally had both the incentive and the opportunity to improve my language abilities by reading technical litterature, watching various online content and interacting in English with others.   \nNowadays, most of my life is conducted in English.\n###### Certifications\nTOIEC Passed in 2012 with 990 points.",
+        "fr": "J'ai appris l'anglais en regardant des séries américaines lorsque j'étais adolescent. Quand la programmation est devenu un de mes centres d'intérêts et que j'ai commencé à vivre à l'étranger, j'ai naturellement eu à la fois l'opportunité et la motivation d'améliorer mes compétences linguistiques en lisant de la littérature technique, en surfant sur internet et en communiquant avec les gens autours de moi.\nJ'utilise aujourd'hui l'anglais dans la plupart de ma vie.\n###### Certifications\nTOIEC Passé en 2012 avec 990 points."
     },
     "japanese-description": {
-        "en": "I started learning Japanese at around 16 years old, but my language ability only really took off during my studies at Meiji University, Japan, between 2012 and 2014. I studied on my own and achieved a fairly high level by the time I left Japan.  \nI have since then done my best to maintain fluency both in speaking and writting.\n###### Certifications\nJLPT N1 Passed in 2014."
+        "en": "I started learning Japanese at around 16 years old, but my language ability only really took off during my studies at Meiji University, Japan, between 2012 and 2014. I studied on my own and achieved a fairly high level by the time I left Japan.  \nI have since then done my best to maintain fluency both in speaking and writting.\n###### Certifications\nJLPT N1 Passed in 2014.",
+        "fr": "J'ai commencé à apprendre l'anglais à environ 16 ans, mais ma capacité à le parler n'a vraiment décolé que lorsque j'ai fais mes études à Meiji University, au Japon, entre 2012 et 2014. J'ai étudié par moi même et atteint un assez haut niveau au moment où je suis parti du Japon.\nDepuis lors, j'ai fais de mon mieux pour converver une certaine aisance à l'écris comme à l'oral.\n###### Certifications\nJLPT N1 Obtenu en 2014."
     },
     "escem-description": {
         "en": "<a href=\"https://en.wikipedia.org/wiki/Grandes_%C3%A9coles\" target=\"_blank\">Grande école</a> (business school), 4th and 5th semester spent as an exchange student in Meiji University, Japan"
