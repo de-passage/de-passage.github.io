@@ -7,7 +7,7 @@
     "test": "test"
   },
   "dependencies": {
-    "marked": "^2.0.1",
+    "marked": "^4.0.10",
     "parcel": "^2.8.1"
   },
   "devDependencies": {
