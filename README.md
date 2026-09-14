@@ -14,7 +14,8 @@ npm run dev
 
 Open <http://localhost:8000/index_dev.html>, or use the forwarded Coder app URL
 for port 8000. The development server listens on all interfaces so it can be
-accessed through that external connection. It compiles the source first, watches
+accessed through that external connection, and proxies Coder's public Host header
+to the local esbuild server. It compiles the source first, watches
 `src` for PureScript and FFI changes, and reloads the browser when the bundle
 changes. Compilation errors appear in the terminal. Restart the server after
 changing `spago.yaml`; refresh the page after editing static assets. Set `PORT` or
