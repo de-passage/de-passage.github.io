@@ -28,23 +28,30 @@ regenerated `index.js` with source changes when preparing a site update. Develop
 output goes into the ignored `.dev/` directory. Keep both `package-lock.json` and
 `spago.lock` committed for reproducible dependency versions.
 
-## Migration
+## Deploying to GitHub Pages
 
-The previous Dhall package set, `psc-0.13.6-20200331`, targeted PureScript 0.13.6
-and selected Halogen 5.0.0-rc.7. The project now uses PureScript **0.15.16**,
-Halogen **7.0.0**, Spago **1.0.4**, and Registry package set **81.1.0**. The set's
-0.15.15 compiler baseline is compatible with the 0.15.16 compiler.
+GitHub Pages serves the repository's `master` branch from its root directory. The
+production bundle is checked in as `index.js`, so publish a new version by building
+that file and pushing it together with any source or asset changes:
 
-Changes follow the upstream migration instructions:
+```sh
+git fetch upstream
+git switch master
+git pull --ff-only upstream master
+npm ci
+npm test
+npm run bundle
+git add index.js assets/ src/ package.json package-lock.json spago.yaml spago.lock CNAME
+git commit -m "Deploy website update"
+git push upstream master
+```
 
-- [PureScript 0.14 guide](https://github.com/purescript/documentation/blob/master/migration-guides/0.14-Migration-Guide.md): replace `SProxy` with `Type.Proxy`.
-- [PureScript 0.15 guide](https://github.com/purescript/documentation/blob/master/migration-guides/0.15-Migration-Guide.md): convert CommonJS FFI and application entry points to ES modules.
-- [Halogen 6 guide](https://purescript-halogen.github.io/purescript-halogen/changelog/v6.html) and [Halogen 7 release](https://github.com/purescript-halogen/purescript-halogen/releases/tag/v7.0.0): remove the component surface parameter, return actions directly from event handlers, and replace `HP.id_` with `HP.id`.
-- [Spago migration guidance](https://github.com/purescript/spago#migrate-from-spagodhall-to-spagoyaml): replace Dhall configuration with `spago.yaml` and a Registry package set.
-- [Affjax changelog](https://github.com/purescript-contrib/purescript-affjax/blob/main/CHANGELOG.md): use the browser driver from `affjax-web`. Parsing imports and Argonaut decode errors also use their current APIs.
+Only stage the paths that changed in the update. `npm run bundle` compiles the
+PureScript sources and writes the browser bundle to `index.js`; `index.html`,
+`assets/`, and `CNAME` are then served directly by Pages. After the push, GitHub
+Pages publishes the `master` root automatically. The custom domain is kept by the
+tracked `CNAME` file, which should remain `sylvainleclercq.com`.
 
-`halogen-bootstrap4` has no PureScript 0.15 release, so `src/Bootstrap.purs`
-defines just the class names used here, preserving Bootstrap 4 styling and behavior.
-The unused `halogen-svg` dependency, formerly pinned to `master`, is removed.
-esbuild replaces the old Parcel setup and bundles the installed Marked package
-through its named ES module export.
+When working from a feature branch or pull request, run `npm run bundle` and commit
+the regenerated `index.js` before merging. After the pull request is merged, the
+same `master` deployment steps above publish the new version.
