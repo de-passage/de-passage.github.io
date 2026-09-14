@@ -2,14 +2,14 @@ module State (State(..), Action(..), Dictionary(..), Input(..), languageSelectio
 
 import Prelude
 import Data.Array as Array
-import Data.Maybe (Maybe(..), fromMaybe)
+import Data.Maybe (fromMaybe)
 import Foreign.Object (lookup)
 import Foreign.Object as FO
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
-import Halogen.Themes.Bootstrap4 as BS
+import Bootstrap as BS
 import Internationalization as I
 
 type Dictionary
@@ -34,7 +34,7 @@ languageSelection currentLanguage =
   let
     elId = "languageSelectDropdown"
 
-    ddItem lang = HH.a [ HP.class_ BS.dropdownItem, HP.href "#", HE.onClick (\_ -> Just (LanguageChanged lang)) ] [ HH.text (I.translate currentLanguage lang) ]
+    ddItem lang = HH.a [ HP.class_ BS.dropdownItem, HP.href "#", HE.onClick (\_ -> LanguageChanged lang) ] [ HH.text (I.translate currentLanguage lang) ]
 
     remainingLanguages = map ddItem (Array.delete currentLanguage I.supportedLanguages)
   in
@@ -42,7 +42,7 @@ languageSelection currentLanguage =
       [ HH.button
           [ HP.classes [ BS.btn, BS.btnOutlinePrimary, BS.dropdownToggle ]
           , HP.type_ HP.ButtonButton
-          , HP.id_ elId
+          , HP.id elId
           , ARIA.hasPopup "true"
           , ARIA.expanded "false"
           , HP.attr (HH.AttrName "data-toggle") "dropdown"

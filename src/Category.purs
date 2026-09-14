@@ -9,7 +9,7 @@ import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
-import Halogen.Themes.Bootstrap4 as BS
+import Bootstrap as BS
 import Prelude ((<>), discard)
 
 category :: forall w i. String -> String -> Array (HH.HTML w i) -> HH.HTML w i
@@ -48,7 +48,7 @@ categoryRaw h b id title content =
               [ HH.text title ]
           ]
       , HH.div
-          [ HP.classes (if b then [ BS.collapse, BS.show, BS.p0 ] else [ BS.collapse, BS.p0 ]), HP.id_ collapseId ]
+          [ HP.classes (if b then [ BS.collapse, BS.show, BS.p0 ] else [ BS.collapse, BS.p0 ]), HP.id collapseId ]
           [ HH.div
               [ HP.classes [ BS.cardBody, BS.textCenter, BS.p0 ] ]
               content
@@ -63,9 +63,6 @@ subcategory = subcategoryB true
 
 subcategoryHidden :: forall w i. String -> String -> Array (HH.HTML w i) -> HH.HTML w i 
 subcategoryHidden = subcategoryB false
-
-categoryStyle :: CSS
-categoryStyle = do CSS.color (CSS.black)
 
 categoryTitleStyle :: CSS
 categoryTitleStyle = do

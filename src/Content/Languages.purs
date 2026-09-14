@@ -5,36 +5,32 @@ import CSS.Common (auto)
 import CSS.Overflow as CSS.Overflow
 import Category (categoryHidden, subcategory, subcategoryHidden)
 import Data.Array (mapWithIndex)
-import Data.Symbol (SProxy(..))
+import Type.Proxy (Proxy(..))
 import Data.Tuple.Nested (Tuple3, tuple3, (/\))
 import Effect.Class (class MonadEffect)
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
-import Halogen.Themes.Bootstrap4 as BS
+import Bootstrap as BS
 import Lists (listGroup, listItem_, ListItem)
 import Marked as M
 import Modal (modal)
-import Prelude (absurd, discard, ($), (*>), (<>))
+import Prelude (absurd, ($), (*>), (<>))
 import State (State, localize)
 
 type ChildSlots r
   = ( modalLang :: M.Slot Int, educationDescription :: M.Slot Int, educationTitle :: M.Slot Int | r )
 
-_modalLang = SProxy :: SProxy "modalLang"
+_modalLang = Proxy :: Proxy "modalLang"
 
-_educationDescription = SProxy :: SProxy "educationDescription"
+_educationDescription = Proxy :: Proxy "educationDescription"
 
-_educationTitle = SProxy :: SProxy "educationTitle"
+_educationTitle = Proxy :: Proxy "educationTitle"
 
 languages :: forall m a r. MonadEffect m => State -> HH.ComponentHTML a (ChildSlots r) m
 languages model =
   let
-    css = do
-      CSS.display CSS.inlineBlock
-      CSS.paddingRight (CSS.px 4.0)
-
     langs :: Array (Tuple3 String String String)
     langs =
       [ tuple3 "french" "native" "french-description"
@@ -42,7 +38,7 @@ languages model =
       , tuple3 "japanese" "fluent" "japanese-description"
       ]
 
-    mkListItem :: Int -> Tuple3 String String String -> ListItem (H.ComponentSlot HH.HTML (ChildSlots r) m a) a
+    mkListItem :: Int -> Tuple3 String String String -> ListItem (H.ComponentSlot (ChildSlots r) m a) a
     mkListItem idx (lang /\ prof /\ desc /\ _) =
       listItem_
         [ modal lang
@@ -71,7 +67,7 @@ languages model =
             model
         ]
 
-    mkEducationItem :: Int -> Education -> ListItem (H.ComponentSlot HH.HTML (ChildSlots r) m a) a
+    mkEducationItem :: Int -> Education -> ListItem (H.ComponentSlot (ChildSlots r) m a) a
     mkEducationItem idx ed =
       listItem_
         [ HH.div [ HP.classes [ BS.row ] ]

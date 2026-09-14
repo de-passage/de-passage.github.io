@@ -2,20 +2,22 @@
   "name": "de-passage.github.io",
   "version": "1.0.0",
   "description": "Personal website",
-  "main": "index.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
-    "marked": "^4.0.10",
-    "parcel": "^2.8.1"
+    "marked": "^4.3.0"
   },
   "devDependencies": {
-    "parcel-plugin-static-files-copy": "^2.5.1"
+    "purescript": "0.15.16",
+    "spago": "1.0.4",
+    "esbuild": "0.28.2"
   },
   "scripts": {
-    "test": "spago test",
-    "dev": "spago build --watch & parcel index.html -p 8000"
+    "build": "spago build",
+    "bundle": "spago bundle",
+    "test": "spago test && node --test test/Markdown.mjs",
+    "dev": "node scripts/dev.mjs"
   },
   "repository": {
     "type": "git",
@@ -27,12 +29,13 @@
     "url": "https://github.com/de-passage/de-passage.github.io/issues"
   },
   "homepage": "https://github.com/de-passage/de-passage.github.io#readme",
-  "staticFiles": {
-    "staticPath": [
-      {
-        "staticPath": "assets",
-        "staticOutDir": "assets/"
-      }
-    ]
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "allowScripts": {
+    "purescript@0.15.16": true,
+    "esbuild@0.28.2": true
   }
 }

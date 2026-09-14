@@ -7,14 +7,14 @@ import CSS.Common (auto)
 import Category (category)
 import DOM.HTML.Indexed (HTMLa)
 import Data.MediaType as MT
-import Data.Symbol (SProxy(..))
+import Type.Proxy (Proxy(..))
 import Effect.Class (class MonadEffect)
 import Format (h2)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
-import Halogen.Themes.Bootstrap4 as BS
+import Bootstrap as BS
 import Lists (listGroup, listItem)
 import Marked as M
 import Modal (modal)
@@ -27,9 +27,9 @@ type Media
 type ChildSlots r
   = ( bioLong :: M.Slot Unit, bioShort :: M.Slot Unit | r )
 
-_bioLong = SProxy :: SProxy "bioLong"
+_bioLong = Proxy :: Proxy "bioLong"
 
-_bioShort = SProxy :: SProxy "bioShort"
+_bioShort = Proxy :: Proxy "bioShort"
 
 resumeL = localize "resume" :: Localizer
 

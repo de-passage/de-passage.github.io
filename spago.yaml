@@ -1,0 +1,42 @@
+package:
+  name: de-passage-website
+  dependencies:
+    - aff
+    - affjax
+    - affjax-web
+    - argonaut
+    - argonaut-codecs
+    - arrays
+    - bifunctors
+    - console
+    - const
+    - css
+    - dom-indexed
+    - effect
+    - either
+    - foldable-traversable
+    - foreign-object
+    - halogen
+    - halogen-css
+    - maybe
+    - media-types
+    - newtype
+    - ordered-collections
+    - parsing
+    - prelude
+    - strings
+    - tuples
+    - web-html
+  bundle:
+    module: Main
+    outfile: index.js
+    platform: browser
+    type: app
+    minify: true
+  test:
+    main: Test.Main
+    dependencies:
+      - exceptions
+workspace:
+  packageSet:
+    registry: 81.1.0

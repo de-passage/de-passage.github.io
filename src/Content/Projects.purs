@@ -1,18 +1,19 @@
 module Projects (component, Slot, Message(..), Query, LoadStatus) where
 
 import Affjax (Error, printError)
-import Affjax as AX
+import Affjax.Web as AX
 import Affjax.ResponseFormat as AXRF
 import Assets as A
 import Category (categoryHidden, subcategory, subcategoryHidden)
 import Data.Argonaut (Json, jsonParser)
-import Data.Argonaut.Decode (decodeJson)
+import Data.Argonaut.Decode (decodeJson, printJsonDecodeError)
+import Data.Bifunctor (lmap)
 import Data.Array (filter, mapMaybe, nub, snoc, sort)
 import Data.Const (Const)
 import Data.Either (Either, either)
 import Data.Map (Map, fromFoldable, lookup)
 import Data.Maybe (Maybe(..), fromMaybe, maybe)
-import Data.Symbol (SProxy(..))
+import Type.Proxy (Proxy(..))
 import Data.Tuple.Nested ((/\))
 import Effect.Aff.Class (class MonadAff)
 import Effect.Class (class MonadEffect)
@@ -22,7 +23,7 @@ import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
-import Halogen.Themes.Bootstrap4 as BS
+import Bootstrap as BS
 import Lists (ListItem, listGroupC, listItem_)
 import Marked as M
 import Prelude (Unit, Void, absurd, bind, const, map, pure, unit, (#), ($), (==), (>=>), (>>>), (||))
@@ -49,6 +50,7 @@ type Project
 type Message
   = Void
 
+type Query :: Type -> Type
 type Query
   = Const Void
 
@@ -78,7 +80,7 @@ data Action
 type ChildSlots
   = ( conduitDescription :: M.Slot Unit )
 
-_conduitDescription = SProxy :: SProxy "conduitDescription"
+_conduitDescription = Proxy :: Proxy "conduitDescription"
 
 icons :: Map String String
 icons =
@@ -97,7 +99,7 @@ icons =
     ]
 
 jsonToProject :: Json -> Either String (Array Project)
-jsonToProject = decodeJson
+jsonToProject = decodeJson >>> lmap printJsonDecodeError
 
 mkProject :: forall w i. Project -> ListItem w i
 mkProject pro =
@@ -145,12 +147,12 @@ mkLanguageButton f p =
     style = if p == f then BS.btnSecondary else BS.btnOutlineSecondary
   in
     HH.button
-      [ HE.onClick (const (Just $ Toggle p))
+      [ HE.onClick (const (Toggle p))
       , HP.classes [ BS.btn, BS.mr1, style ]
       ]
       [ HH.text p ]
 
-component :: forall m. MonadAff m => H.Component HH.HTML Query Input Void m
+component :: forall m. MonadAff m => H.Component Query Input Void m
 component =
   H.mkComponent
     { initialState

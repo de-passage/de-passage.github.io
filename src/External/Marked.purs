@@ -2,7 +2,6 @@ module Marked (component, Input(..), Slot(..)) where
 
 import Prelude
 import Data.Const (Const)
-import Data.Function.Uncurried (Fn2)
 import Data.Maybe (Maybe(..), maybe)
 import Effect (Effect)
 import Effect.Class (class MonadEffect)
@@ -12,8 +11,6 @@ import Halogen.HTML.Properties as HP
 import Web.HTML (HTMLElement)
 
 foreign import marked :: String -> Effect String
-
-foreign import markedByElementId :: Fn2 String String (Effect Unit)
 
 foreign import setHTML :: HTMLElement -> String -> Effect Unit
 
@@ -32,7 +29,7 @@ type State
 type Slot
   = H.Slot (Const Void) Void
 
-component :: forall q o m. MonadEffect m => H.Component HH.HTML q Input o m
+component :: forall q o m. MonadEffect m => H.Component q Input o m
 component =
   H.mkComponent
     { initialState
