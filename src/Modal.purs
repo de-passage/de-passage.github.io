@@ -8,7 +8,7 @@ import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
-import Halogen.Themes.Bootstrap4 as BS
+import Bootstrap as BS
 import State (State, Localizer, localize)
 
 closeL :: Localizer
@@ -27,7 +27,7 @@ modal id btn title content model =
     [ btn [ dataToggle "modal", dataTarget ("#modal" <> id) ]
     , HH.div
         [ HP.classes [ BS.modal, BS.fade ]
-        , HP.id_ ("modal" <> id)
+        , HP.id ("modal" <> id)
         , HP.tabIndex (-1)
         , dataBackdrop "static"
         , ARIA.role "dialog"
@@ -39,7 +39,7 @@ modal id btn title content model =
                 [ HH.div [ HP.class_ BS.modalHeader ]
                     $ title
                         [ HP.class_ BS.modalTitle
-                        , HP.id_ ("backdropLabel" <> id)
+                        , HP.id ("backdropLabel" <> id)
                         ]
                 , HH.div [ HP.classes [ BS.modalBody, BS.textJustify, (HH.ClassName "modal-content") ] ] content
                 , HH.div [ HP.class_ BS.modalFooter ]

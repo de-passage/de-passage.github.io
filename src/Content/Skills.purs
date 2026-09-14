@@ -26,7 +26,7 @@ import CSS.Common (auto)
 import Category (category, subcategory, subcategoryHidden)
 import Data.Array (snoc)
 import Data.Maybe (Maybe(..))
-import Data.Symbol (SProxy(..))
+import Type.Proxy (Proxy(..))
 import Data.Tuple (Tuple(..))
 import Effect.Class (class MonadEffect)
 import Format (para)
@@ -34,7 +34,7 @@ import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
-import Halogen.Themes.Bootstrap4 as BS
+import Bootstrap as BS
 import Marked as M
 import Modal (modal)
 import Prelude (absurd, discard, map, ($))
@@ -43,7 +43,7 @@ import State (Localizer, State, localize)
 type ChildSlots r
   = ( modalContent :: M.Slot String | r )
 
-_modalContent = SProxy :: SProxy "modalContent"
+_modalContent = Proxy :: Proxy "modalContent"
 
 type UrlSource
   = { url :: String
@@ -234,7 +234,7 @@ cite (USource source) = [ HH.cite [ HP.title source.name ] [ HH.a [ HP.href sour
 
 cite (Source source) = [ HH.cite [ HP.title source ] [ HH.text source ] ]
 
-technicalSkills :: forall a m r. MonadEffect m => State -> HH.HTML (H.ComponentSlot HH.HTML (ChildSlots r) m a) a
+technicalSkills :: forall a m r. MonadEffect m => State -> HH.HTML (H.ComponentSlot (ChildSlots r) m a) a
 technicalSkills model =
   let
     st = do
@@ -292,7 +292,7 @@ technicalSkills model =
           ]
       ]
   where
-  quote :: String -> Maybe Quote -> String -> Array (HH.HTML (H.ComponentSlot HH.HTML (ChildSlots r) m a) a)
+  quote :: String -> Maybe Quote -> String -> Array (HH.HTML (H.ComponentSlot (ChildSlots r) m a) a)
   quote id Nothing content = [ HH.slot _modalContent id M.component { text: localize content model, id: content } absurd ]
 
   quote id (Just qu) content =
@@ -308,7 +308,7 @@ technicalSkills model =
       , HH.footer [ HP.class_ BS.blockquoteFooter ] $ cite q.source
       ]
 
-  mkSkillLink :: String -> SkillDescription -> HH.HTML (H.ComponentSlot HH.HTML (ChildSlots r) m a) a
+  mkSkillLink :: String -> SkillDescription -> HH.HTML (H.ComponentSlot (ChildSlots r) m a) a
   mkSkillLink id desc =
     HH.div
       [ HP.class_ BS.card, HC.style (CSS.display CSS.inlineBlock) ]

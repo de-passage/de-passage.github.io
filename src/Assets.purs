@@ -32,7 +32,9 @@ type Icon w i
   = Number -> HH.HTML w i
 
 source :: forall i r. String -> HH.IProp ( src :: String | r ) i
-source name = HP.src $ "https://unpkg.com/simple-icons@latest/icons/" <> name <> ".svg"
+-- Keep this pinned: Simple Icons removed the C# icon after v12 and renamed
+-- CSS3, so using @latest makes both existing slugs return 404.
+source name = HP.src $ "https://unpkg.com/simple-icons@v12/icons/" <> name <> ".svg"
 
 icon :: forall w i. String -> Icon w i
 icon name = do

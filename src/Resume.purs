@@ -1,12 +1,12 @@
 module Resume (component) where
 
 import Content.Skills as S
-import Data.Symbol (SProxy(..))
+import Type.Proxy (Proxy(..))
 import Effect.Aff.Class (class MonadAff)
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
-import Halogen.Themes.Bootstrap4 as BS
+import Bootstrap as BS
 import Languages as L
 import Personal as P
 import Prelude (Unit, absurd, identity, unit, ($))
@@ -25,10 +25,10 @@ type ChildSlots
           )
       )
 
-_projects :: SProxy "projects"
-_projects = SProxy
+_projects :: Proxy "projects"
+_projects = Proxy
 
-component :: forall q o m. MonadAff m => H.Component HH.HTML q Input o m
+component :: forall q o m. MonadAff m => H.Component q Input o m
 component =
   H.mkComponent
     { initialState: identity

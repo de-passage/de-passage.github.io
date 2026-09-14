@@ -5,13 +5,13 @@ import Attributes (scopeRow, scopeCol)
 import CSS as CSS
 import CSS.Overflow as CSS.Overflow
 import Category (categoryHidden, subcategoryHidden)
-import Data.Symbol (SProxy(..))
+import Type.Proxy (Proxy(..))
 import Effect.Class (class MonadEffect)
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
-import Halogen.Themes.Bootstrap4 as BS
+import Bootstrap as BS
 import Internationalization (Language(..))
 import Marked as M
 import State (State, Localizer, localize)
@@ -19,9 +19,9 @@ import State (State, Localizer, localize)
 type ChildSlots r
   = ( companyDescription :: M.Slot Unit, companyName :: M.Slot Unit | r )
 
-_nexterDescription = SProxy :: SProxy "companyDescription"
+_nexterDescription = Proxy :: Proxy "companyDescription"
 
-_companyName = SProxy :: SProxy "companyName"
+_companyName = Proxy :: Proxy "companyName"
 
 type Experience
   = { job :: String
@@ -65,7 +65,7 @@ nexter =
   , description: nexterDescriptionS
   }
 
-workExperience :: forall r m a. MonadEffect m => State -> HH.HTML (H.ComponentSlot HH.HTML (ChildSlots r) m a) a
+workExperience :: forall r m a. MonadEffect m => State -> HH.HTML (H.ComponentSlot (ChildSlots r) m a) a
 workExperience model =
   categoryHidden "work" (workExperienceL model)
     [ HH.div [ HP.class_ (HH.ClassName "work-experience") ] $ map mkExperience [ nexter ]
@@ -90,7 +90,7 @@ workExperience model =
         ]
     ]
   where
-  mkExperience :: Experience -> HH.HTML (H.ComponentSlot HH.HTML (ChildSlots r) m a) a
+  mkExperience :: Experience -> HH.HTML (H.ComponentSlot (ChildSlots r) m a) a
   mkExperience exp =
     HH.div [ HP.classes [ BS.textJustify, BS.p2 ] ]
       [ HH.div

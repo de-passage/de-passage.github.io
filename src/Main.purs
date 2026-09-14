@@ -1,7 +1,7 @@
 module Main where
 
 import Prelude
-import Affjax as AX
+import Affjax.Web as AX
 import Affjax.ResponseFormat as AXRF
 import Data.Argonaut (Json, caseJsonObject, decodeJson)
 import Data.Either (Either(..), either, hush)
@@ -18,9 +18,9 @@ import Internationalization (Language(..), supportedLanguages)
 import Internationalization as I
 import Resume as R
 import State as S
-import Text.Parsing.Parser (Parser, runParser)
-import Text.Parsing.Parser.Combinators (choice)
-import Text.Parsing.Parser.String (string)
+import Parsing (Parser, runParser)
+import Parsing.Combinators (choice)
+import Parsing.String (string)
 import Web.HTML (window) as DOM
 import Web.HTML.Location (search) as DOM
 import Web.HTML.Navigator (language) as DOM
@@ -53,7 +53,7 @@ main = do
     e = (runParser q languageParser)
   lang <- either selectFromBrowser pure e
   HA.runHalogenAff do
-    content <- AX.get AXRF.json "/assets/content.json"
+    content <- AX.get AXRF.json "assets/content.json"
     body <- HA.awaitBody
     dic <- case content of
       Left error -> do

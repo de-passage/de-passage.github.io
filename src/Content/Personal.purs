@@ -7,14 +7,14 @@ import CSS.Common (auto)
 import Category (category)
 import DOM.HTML.Indexed (HTMLa)
 import Data.MediaType as MT
-import Data.Symbol (SProxy(..))
+import Type.Proxy (Proxy(..))
 import Effect.Class (class MonadEffect)
 import Format (h2)
 import Halogen.HTML as HH
 import Halogen.HTML.CSS as HC
 import Halogen.HTML.Properties as HP
 import Halogen.HTML.Properties.ARIA as ARIA
-import Halogen.Themes.Bootstrap4 as BS
+import Bootstrap as BS
 import Lists (listGroup, listItem)
 import Marked as M
 import Modal (modal)
@@ -27,9 +27,9 @@ type Media
 type ChildSlots r
   = ( bioLong :: M.Slot Unit, bioShort :: M.Slot Unit | r )
 
-_bioLong = SProxy :: SProxy "bioLong"
+_bioLong = Proxy :: Proxy "bioLong"
 
-_bioShort = SProxy :: SProxy "bioShort"
+_bioShort = Proxy :: Proxy "bioShort"
 
 resumeL = localize "resume" :: Localizer
 
@@ -161,7 +161,7 @@ personalInformation model =
           [ listItem []
               [ HH.div [ HP.class_ BS.row ]
                   [ HH.div [ HP.classes [ BS.col ] ]
-                      [ HH.img [ HP.class_ (HH.ClassName "profile-picture"), HP.src "/assets/me.jpg" ] ]
+                      [ HH.img [ HP.class_ (HH.ClassName "profile-picture"), HP.src "assets/me.jpg" ] ]
                   , HH.div [ HP.classes [ BS.col ], HC.style css ]
                       [ HH.div [ HC.style (CSS.display CSS.flex) ] [ socialMediaS blog additionalStyle ]
                       , bio
@@ -175,7 +175,7 @@ personalInformation model =
 aboutMe :: forall m r. MonadEffect m => State -> Array (HH.ComponentHTML Action (ChildSlots r) m)
 aboutMe model =
   [ HH.div [ HC.style (CSS.width (CSS.pct 100.0)) ]
-      [ HH.img [ HP.class_ (HH.ClassName "bio-picture"), HP.src "/assets/me.jpg" ]
+      [ HH.img [ HP.class_ (HH.ClassName "bio-picture"), HP.src "assets/me.jpg" ]
       , HH.slot _bioShort unit M.component { text: bioShortL model, id: "bio-short" } absurd
       ]
   , HH.div [ HP.class_ BS.p2 ] [ resume model [] [ HH.text (downloadLongL model) ] ]
