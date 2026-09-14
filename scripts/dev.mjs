@@ -28,8 +28,10 @@ const bundle = await context({
   },
 });
 await bundle.rebuild();
-const server = await bundle.serve({ servedir: ".", host: "127.0.0.1", port: 8000 });
-console.log(`Development site: http://127.0.0.1:${server.port}/index_dev.html`);
+const host = process.env.DEV_HOST ?? "0.0.0.0";
+const port = Number(process.env.PORT ?? 8000);
+const server = await bundle.serve({ servedir: ".", host, port });
+console.log(`Development site listening on ${host}:${server.port}/index_dev.html`);
 
 async function rebuild() {
   pending = true;

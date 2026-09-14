@@ -12,10 +12,13 @@ npm ci
 npm run dev
 ```
 
-Open <http://127.0.0.1:8000/index_dev.html>. The development server compiles the
-source first, watches `src` for PureScript and FFI changes, and reloads the browser
-when the bundle changes. Compilation errors appear in the terminal. Restart the
-server after changing `spago.yaml`; refresh the page after editing static assets.
+Open <http://localhost:8000/index_dev.html>, or use the forwarded Coder app URL
+for port 8000. The development server listens on all interfaces so it can be
+accessed through that external connection. It compiles the source first, watches
+`src` for PureScript and FFI changes, and reloads the browser when the bundle
+changes. Compilation errors appear in the terminal. Restart the server after
+changing `spago.yaml`; refresh the page after editing static assets. Set `PORT` or
+`DEV_HOST` to override the defaults when needed.
 
 ```sh
 npm run build  # Compile PureScript
