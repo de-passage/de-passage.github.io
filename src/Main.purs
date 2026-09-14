@@ -53,7 +53,7 @@ main = do
     e = (runParser q languageParser)
   lang <- either selectFromBrowser pure e
   HA.runHalogenAff do
-    content <- AX.get AXRF.json "/assets/content.json"
+    content <- AX.get AXRF.json "assets/content.json"
     body <- HA.awaitBody
     dic <- case content of
       Left error -> do

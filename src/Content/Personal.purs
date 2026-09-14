@@ -161,7 +161,7 @@ personalInformation model =
           [ listItem []
               [ HH.div [ HP.class_ BS.row ]
                   [ HH.div [ HP.classes [ BS.col ] ]
-                      [ HH.img [ HP.class_ (HH.ClassName "profile-picture"), HP.src "/assets/me.jpg" ] ]
+                      [ HH.img [ HP.class_ (HH.ClassName "profile-picture"), HP.src "assets/me.jpg" ] ]
                   , HH.div [ HP.classes [ BS.col ], HC.style css ]
                       [ HH.div [ HC.style (CSS.display CSS.flex) ] [ socialMediaS blog additionalStyle ]
                       , bio
@@ -175,7 +175,7 @@ personalInformation model =
 aboutMe :: forall m r. MonadEffect m => State -> Array (HH.ComponentHTML Action (ChildSlots r) m)
 aboutMe model =
   [ HH.div [ HC.style (CSS.width (CSS.pct 100.0)) ]
-      [ HH.img [ HP.class_ (HH.ClassName "bio-picture"), HP.src "/assets/me.jpg" ]
+      [ HH.img [ HP.class_ (HH.ClassName "bio-picture"), HP.src "assets/me.jpg" ]
       , HH.slot _bioShort unit M.component { text: bioShortL model, id: "bio-short" } absurd
       ]
   , HH.div [ HP.class_ BS.p2 ] [ resume model [] [ HH.text (downloadLongL model) ] ]
